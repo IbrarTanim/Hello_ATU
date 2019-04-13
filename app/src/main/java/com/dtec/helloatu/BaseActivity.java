@@ -3,7 +3,7 @@ package com.dtec.helloatu;
 import android.app.Activity;
 import android.os.Bundle;
 
-public class BaseActivity extends ActionBarActivity {
+public class BaseActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
