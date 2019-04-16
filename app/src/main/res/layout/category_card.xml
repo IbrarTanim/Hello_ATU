@@ -22,6 +22,7 @@
                 android:id="@+id/ivCtgPic"
                 android:layout_width="@dimen/hundred_fourty"
                 android:layout_height="@dimen/hundred_fourty"
+                android:layout_centerHorizontal="true"
                 android:background="@color/transparent"
                 android:padding="@dimen/thirty"
                 android:scaleType="fitCenter"
