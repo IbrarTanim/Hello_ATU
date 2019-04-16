@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -13,7 +14,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FormActivity extends Activity implements AdapterView.OnItemSelectedListener {
+public class FormActivity extends Activity implements AdapterView.OnItemSelectedListener, View.OnClickListener {
 
     FormActivity activity;
     public Spinner spDivision;
@@ -21,6 +22,7 @@ public class FormActivity extends Activity implements AdapterView.OnItemSelected
     public Spinner spThana;
     ImageButton ibtnBack;
     public int passedPosition;
+    Button btnSubmit, btnCancel;
 
 
     @Override
@@ -33,6 +35,12 @@ public class FormActivity extends Activity implements AdapterView.OnItemSelected
         spDistrict = (Spinner) findViewById(R.id.spDistrict);
         spThana = (Spinner) findViewById(R.id.spThana);
         ibtnBack = (ImageButton) findViewById(R.id.ibtnBack);
+
+        btnSubmit = (Button) findViewById(R.id.btnSubmit);
+        btnCancel = (Button) findViewById(R.id.btnCancel);
+
+        btnSubmit.setOnClickListener(this);
+        btnCancel.setOnClickListener(this);
 
         spDivision.setOnItemSelectedListener(this);
         spDistrict.setOnItemSelectedListener(this);
@@ -130,5 +138,18 @@ public class FormActivity extends Activity implements AdapterView.OnItemSelected
 
         finish();
 
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.btnSubmit:
+                Toast.makeText(activity, "Under Construction", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.btnCancel:
+                Toast.makeText(activity, "Under Construction", Toast.LENGTH_SHORT).show();
+                break;
+
+        }
     }
 }

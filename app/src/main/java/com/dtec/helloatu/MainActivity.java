@@ -11,6 +11,7 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.TypedValue;
 import android.view.View;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,12 +22,18 @@ public class MainActivity extends Activity {
     RecyclerView recyclerView;
     private CategoryAdapter adapter;
     private List<Category> categoryList;
+    TextView tvMarque;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         activity = this;
+
+
+        tvMarque = (TextView) findViewById(R.id.tvMarque);
+        tvMarque.setSelected(true);
+
 
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
         categoryList = new ArrayList<>();
