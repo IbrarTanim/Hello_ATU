@@ -4,299 +4,322 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/album_title">
+    android:background="@color/app_color">
 
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="@dimen/ten"
+        android:orientation="vertical">
+
+        <ImageButton
+            android:id="@+id/ibtnBack"
+            android:layout_width="@dimen/thirty"
+            android:layout_height="@dimen/thirty"
+            android:background="@color/transparent"
+            android:padding="@dimen/five"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_back" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/zero"
+            android:layout_weight="1"
+            android:text="@string/crime_info"
+            android:textAlignment="gravity"
+            android:textColor="@color/white"
+            android:textStyle="bold" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/zero"
+            android:layout_margin="5dp"
+            android:layout_weight="1"
+            android:background="@drawable/cell_border"
+            android:cursorVisible="false"
+            android:gravity="center"
+            android:hint="@string/type_here"
+            android:inputType="textMultiLine"
+            android:padding="5dp"
+            android:scaleType="fitCenter"
+            android:textColor="@color/black"
+            android:textSize="20dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/zero"
+            android:layout_weight="1"
+            android:text="বিভাগ"
+            android:textAlignment="gravity"
+            android:textColor="@color/white"
+            android:textStyle="bold" />
+
+        <Spinner
+            android:id="@+id/spDivision"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/fifty"
+            android:layout_weight="2"
+            android:background="@drawable/cell_border" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/zero"
+            android:layout_weight="1"
+            android:text="জেলা"
+            android:textAlignment="gravity"
+            android:textColor="@color/white"
+            android:textStyle="bold" />
+
+        <Spinner
+            android:id="@+id/spDistrict"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/fifty"
+            android:layout_weight="2"
+            android:background="@drawable/cell_border" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/zero"
+            android:layout_weight="1"
+            android:text="থানা "
+            android:textAlignment="gravity"
+            android:textColor="@color/white"
+            android:textStyle="bold" />
+
+        <Spinner
+            android:id="@+id/spThana"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/fifty"
+            android:layout_weight="2"
+            android:background="@drawable/cell_border" />
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/zero"
+            android:layout_weight="1"
+            android:text="তথ্য দাতার পরিচয় (Optional)"
+            android:textAlignment="gravity"
+            android:textColor="@color/white"
+            android:textStyle="bold" />
+
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/zero"
+            android:layout_margin="5dp"
+            android:layout_weight="1"
+            android:background="@drawable/cell_border"
+            android:cursorVisible="false"
+            android:gravity="center"
+            android:hint="ফোন নম্বর"
+            android:inputType="textMultiLine"
+            android:padding="5dp"
+            android:scaleType="fitCenter"
+            android:textColor="@color/black"
+            android:textSize="20dp" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/zero"
+            android:layout_margin="5dp"
+            android:layout_weight="1"
+            android:background="@drawable/cell_border"
+            android:cursorVisible="false"
+            android:gravity="center"
+            android:hint="ঠিকানা"
+            android:inputType="textMultiLine"
+            android:padding="5dp"
+            android:scaleType="fitCenter"
+            android:textColor="@color/black"
+            android:textSize="20dp" />
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/zero"
+            android:layout_weight="1"
+            android:text="প্রদত্ত তথ্য সংক্রান্ত কোন ছবি, অডিও,  বা ভিডিও যদি থাকে সংযুক্ত করুন"
+            android:textAlignment="gravity"
+            android:textColor="@color/white"
+            android:textStyle="bold" />
 
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_height="@dimen/zero"
+            android:layout_weight="1"
+            android:orientation="horizontal"
+            android:weightSum="14.5">
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/zero"
-                android:layout_weight="1"
-                android:text="@string/app_name"
-                android:textAlignment="gravity"
-                android:textColor="@color/black" />
-
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/zero"
-                android:layout_margin="5dp"
-                android:layout_weight="1"
-                android:background="@drawable/cell_border"
-                android:gravity="center"
-                android:hint="@string/app_name"
-                android:inputType="textMultiLine"
-                android:padding="5dp"
-                android:scaleType="fitCenter"
-                android:textColor="@color/black"
-                android:textSize="20dp" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/zero"
-                android:layout_weight="1"
-                android:text="@string/app_name"
-                android:textAlignment="gravity"
-                android:textColor="@color/black" />
-
-            <Spinner
-                android:id="@+id/spDivision"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/zero"
-                android:background="@drawable/cell_border"
-                android:layout_weight="1" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/zero"
-                android:layout_weight="1"
-                android:text="@string/app_name"
-                android:textAlignment="gravity"
-                android:textColor="@color/black" />
-
-            <Spinner
-                android:id="@+id/spDistrict"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/zero"
-                android:background="@drawable/cell_border"
-                android:layout_weight="1" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/zero"
-                android:layout_weight="1"
-                android:text="@string/app_name"
-                android:textAlignment="gravity"
-                android:textColor="@color/black" />
-
-            <Spinner
-                android:id="@+id/spThana"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/zero"
-                android:background="@drawable/cell_border"
-                android:layout_weight="1" />
-
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/zero"
-                android:layout_weight="1"
-                android:text="@string/app_name"
-                android:textAlignment="gravity"
-                android:textColor="@color/black" />
-
-
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/zero"
-                android:layout_margin="5dp"
-                android:layout_weight="1"
-                android:background="@drawable/cell_border"
-                android:gravity="center"
-                android:hint="@string/app_name"
-                android:inputType="textMultiLine"
-                android:padding="5dp"
-                android:scaleType="fitCenter"
-                android:textColor="@color/black"
-                android:textSize="20dp" />
-
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/zero"
-                android:layout_margin="5dp"
-                android:layout_weight="1"
-                android:background="@drawable/cell_border"
-                android:gravity="center"
-                android:hint="@string/app_name"
-                android:inputType="textMultiLine"
-                android:padding="5dp"
-                android:scaleType="fitCenter"
-                android:textColor="@color/black"
-                android:textSize="20dp" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/zero"
-                android:layout_weight="1"
-                android:text="@string/app_name"
-                android:textAlignment="gravity"
-                android:textColor="@color/black" />
-
+            <View
+                android:layout_width="@dimen/zero"
+                android:layout_height="match_parent"
+                android:layout_weight=".5" />
 
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/zero"
-                android:layout_weight="1"
-                android:orientation="horizontal"
-                android:weightSum="14.5">
+                android:layout_width="@dimen/zero"
+                android:layout_height="@dimen/hundred"
+                android:layout_weight="3"
+                android:background="@drawable/cell_border"
+                android:orientation="vertical"
+                android:weightSum="3">
 
-                <View
-                    android:layout_width="@dimen/zero"
-                    android:layout_height="match_parent"
-                    android:layout_weight=".5" />
+                <ImageButton
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/zero"
+                    android:layout_weight="2"
+                    android:background="@color/transparent"
+                    android:padding="@dimen/ten"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/ic_camera" />
 
-                <LinearLayout
-                    android:layout_width="@dimen/zero"
-                    android:layout_height="@dimen/hundred"
-                    android:layout_weight="3"
-                    android:background="@drawable/cell_border"
-                    android:orientation="vertical"
-                    android:weightSum="3">
-
-                    <ImageButton
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/zero"
-                        android:layout_weight="2"
-                        android:background="@color/transparent"
-                        android:padding="@dimen/ten"
-                        android:scaleType="fitCenter"
-                        android:src="@drawable/ic_camera" />
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/zero"
-                        android:layout_weight="1"
-                        android:gravity="top|center"
-                        android:text="@string/app_name"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/twelve"
-                        android:textStyle="bold" />
-
-
-                </LinearLayout>
-
-                <View
-                    android:layout_width="@dimen/zero"
-                    android:layout_height="match_parent"
-                    android:layout_weight=".5" />
-
-                <LinearLayout
-                    android:layout_width="@dimen/zero"
-                    android:layout_height="@dimen/hundred"
-                    android:layout_weight="3"
-                    android:background="@drawable/cell_border"
-                    android:orientation="vertical"
-                    android:weightSum="3">
-
-                    <ImageButton
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/zero"
-                        android:layout_weight="2"
-                        android:background="@color/transparent"
-                        android:padding="@dimen/ten"
-                        android:scaleType="fitCenter"
-                        android:src="@drawable/ic_video" />
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/zero"
-                        android:layout_weight="1"
-                        android:gravity="top|center"
-                        android:text="@string/app_name"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/twelve"
-                        android:textStyle="bold" />
-
-
-                </LinearLayout>
-
-                <View
-                    android:layout_width="@dimen/zero"
-                    android:layout_height="match_parent"
-                    android:layout_weight=".5" />
-
-                <LinearLayout
-                    android:layout_width="@dimen/zero"
-                    android:layout_height="@dimen/hundred"
-                    android:layout_weight="3"
-                    android:background="@drawable/cell_border"
-                    android:orientation="vertical"
-                    android:weightSum="3">
-
-                    <ImageButton
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/zero"
-                        android:layout_weight="2"
-                        android:background="@color/transparent"
-                        android:padding="@dimen/ten"
-                        android:scaleType="fitCenter"
-                        android:src="@drawable/ic_microphone" />
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/zero"
-                        android:layout_weight="1"
-                        android:gravity="top|center"
-                        android:text="@string/app_name"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/twelve"
-                        android:textStyle="bold" />
-
-
-                </LinearLayout>
-
-                <View
-                    android:layout_width="@dimen/zero"
-                    android:layout_height="match_parent"
-                    android:layout_weight=".5" />
-
-                <LinearLayout
-                    android:layout_width="@dimen/zero"
-                    android:layout_height="@dimen/hundred"
-                    android:layout_weight="3"
-                    android:background="@drawable/cell_border"
-                    android:orientation="vertical"
-                    android:weightSum="3">
-
-                    <ImageButton
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/zero"
-                        android:layout_weight="2"
-                        android:background="@color/transparent"
-                        android:padding="@dimen/ten"
-                        android:scaleType="fitCenter"
-                        android:src="@drawable/ic_document" />
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/zero"
-                        android:layout_weight="1"
-                        android:gravity="top|center"
-                        android:text="@string/app_name"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/twelve"
-                        android:textStyle="bold" />
-
-
-                </LinearLayout>
-
-                <View
-                    android:layout_width="@dimen/zero"
-                    android:layout_height="match_parent"
-                    android:layout_weight=".5" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/zero"
+                    android:layout_weight="1"
+                    android:gravity="top|center"
+                    android:text="ছবি"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/twelve"
+                    android:textStyle="bold" />
 
 
             </LinearLayout>
 
+            <View
+                android:layout_width="@dimen/zero"
+                android:layout_height="match_parent"
+                android:layout_weight=".5" />
 
-            <Button
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/zero"
-                android:layout_weight="1"
-                android:text="SUBMIT" />
+            <LinearLayout
+                android:layout_width="@dimen/zero"
+                android:layout_height="@dimen/hundred"
+                android:layout_weight="3"
+                android:background="@drawable/cell_border"
+                android:orientation="vertical"
+                android:weightSum="3">
 
-            <Button
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/zero"
-                android:layout_weight="1"
-                android:text="SUBMIT" />
+                <ImageButton
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/zero"
+                    android:layout_weight="2"
+                    android:background="@color/transparent"
+                    android:padding="@dimen/ten"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/ic_video" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/zero"
+                    android:layout_weight="1"
+                    android:gravity="top|center"
+                    android:text="ভিডিও"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/twelve"
+                    android:textStyle="bold" />
+
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="@dimen/zero"
+                android:layout_height="match_parent"
+                android:layout_weight=".5" />
+
+            <LinearLayout
+                android:layout_width="@dimen/zero"
+                android:layout_height="@dimen/hundred"
+                android:layout_weight="3"
+                android:background="@drawable/cell_border"
+                android:orientation="vertical"
+                android:weightSum="3">
+
+                <ImageButton
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/zero"
+                    android:layout_weight="2"
+                    android:background="@color/transparent"
+                    android:padding="@dimen/ten"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/ic_microphone" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/zero"
+                    android:layout_weight="1"
+                    android:gravity="top|center"
+                    android:text="অডিও"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/twelve"
+                    android:textStyle="bold" />
+
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="@dimen/zero"
+                android:layout_height="match_parent"
+                android:layout_weight=".5" />
+
+            <LinearLayout
+                android:layout_width="@dimen/zero"
+                android:layout_height="@dimen/hundred"
+                android:layout_weight="3"
+                android:background="@drawable/cell_border"
+                android:orientation="vertical"
+                android:weightSum="3">
+
+                <ImageButton
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/zero"
+                    android:layout_weight="2"
+                    android:background="@color/transparent"
+                    android:padding="@dimen/ten"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/ic_document" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/zero"
+                    android:layout_weight="1"
+                    android:gravity="top|center"
+                    android:text="ডকুমেন্ট"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/twelve"
+                    android:textStyle="bold" />
+
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="@dimen/zero"
+                android:layout_height="match_parent"
+                android:layout_weight=".5" />
 
 
         </LinearLayout>
+
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/zero"
+            android:layout_weight="1"
+            android:textColor="@color/white"
+            android:text="SUBMIT"
+            android:textStyle="bold" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/zero"
+            android:layout_weight="1"
+            android:textColor="@color/white"
+            android:text="CANCEL"
+            android:textStyle="bold" />
+
+
+    </LinearLayout>
 
 
 </ScrollView>

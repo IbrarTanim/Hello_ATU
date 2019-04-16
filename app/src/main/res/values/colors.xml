@@ -5,10 +5,9 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
     <color name="white">#FFFFFF</color>
-    <color name="album_title">#B3B3B3</color>
     <color name="transparent">#00ffffff</color>
     <color name="black">#1A1A1A</color>
-    <color name="app_color">#B3B3B3</color>
+    <color name="app_color">#2D2F67</color>
 
 
 </resources>

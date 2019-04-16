@@ -18,7 +18,9 @@
         </activity>
         <activity android:name=".MainActivity" />
         <activity android:name=".BaseActivity" />
-        <activity android:name=".FormActivity"></activity>
+        <activity android:name=".FormActivity" />
+        <activity android:name=".InformationActivity" />
+        <activity android:name=".WantedActivity"></activity>
     </application>
 
 </manifest>

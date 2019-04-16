@@ -1,8 +1,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@drawable/cell_border">
+    android:layout_height="wrap_content">
 
     <android.support.v7.widget.CardView
         android:id="@+id/card_view"
@@ -10,22 +9,21 @@
         android:layout_height="match_parent"
         android:layout_gravity="center"
         android:layout_margin="@dimen/card_margin"
-        android:background="@color/album_title"
         android:elevation="3dp"
         card_view:cardCornerRadius="@dimen/card_album_radius">
 
         <RelativeLayout
             android:id="@+id/rlCtgBgColor"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/album_title">
+            android:clickable="true"
+            android:layout_height="match_parent">
 
             <ImageView
                 android:id="@+id/ivCtgPic"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/album_cover_height"
+                android:layout_width="@dimen/hundred_fourty"
+                android:layout_height="@dimen/hundred_fourty"
                 android:background="@color/transparent"
-                android:clickable="true"
+                android:padding="@dimen/thirty"
                 android:scaleType="fitCenter"
                 android:src="@drawable/atu" />
 
@@ -35,10 +33,10 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/ivCtgPic"
                 android:gravity="center"
-                android:padding="@dimen/album_title_padding"
+                android:padding="@dimen/five"
                 android:text="Bangla Title"
-                android:textColor="@color/colorAccent"
-                android:textSize="@dimen/album_title" />
+                android:textColor="@color/white"
+                android:textSize="@dimen/twelve" />
 
             <TextView
                 android:id="@+id/tvCtgTitleEnglish"
@@ -46,10 +44,10 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/tvCtgTitleBangla"
                 android:gravity="center"
-                android:padding="@dimen/album_title_padding"
+                android:padding="@dimen/five"
                 android:text="English Title"
-                android:textColor="@color/colorAccent"
-                android:textSize="@dimen/album_title" />
+                android:textColor="@color/white"
+                android:textSize="@dimen/twelve" />
 
 
         </RelativeLayout>

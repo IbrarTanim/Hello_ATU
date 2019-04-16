@@ -54,7 +54,7 @@ public class BaseActivity extends Activity {
     // Device back pressed
     @Override
     public void onBackPressed() {
-
+        finish();
     }
 
     @Override

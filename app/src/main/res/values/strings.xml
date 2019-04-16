@@ -1,3 +1,27 @@
 <resources>
-    <string name="app_name">HELLO ATU</string>
+    <string name="app_name">Hello ATU</string>
+
+    <string name="terrorism_en">Terrorism/Extremism</string>
+    <string name="injection_en">Narcotics</string>
+    <string name="bomb_en">Bomb/Explosive/Arms</string>
+    <string name="cyber_crime_en">Transnational Crime/ Cyber Crime</string>
+    <string name="wanted_en">Wanted</string>
+    <string name="information_en">Information Cell</string>
+
+    <string name="terrorism_bn">জঙিগবাদ/ উগ্রবাদ</string>
+    <string name="injection_bn">মাদক</string>
+    <string name="bomb_bn">বোমা/ বিস্ফোরণ </string>
+    <string name="cyber_crime_bn">আন্ত:দেশীও অপরাধ/ সাইবার ক্রাইম</string>
+    <string name="wanted_bn">ওয়ান্টেড</string>
+    <string name="information_bn">তথ্য কনিকা</string>
+
+    <string name="user_menu">ব্যবহার নির্দেশিকা\n (User Menu) </string>
+    <string name="unit_details">ইউনিট পরিচিতি\n (Unite Details) </string>
+    <string name="news_feed">সংবাদ\n (News Feed) </string>
+
+    <string name="copy_right">সর্বসত্ব সংরক্ষিত</string>
+    <string name="crime_info">অপরাধের তথ্য</string>
+    <string name="type_here">এইখানে টাইপ করুন...</string>
+
+
 </resources>
