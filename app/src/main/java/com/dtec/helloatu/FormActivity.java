@@ -26,6 +26,9 @@ public class FormActivity extends Activity implements AdapterView.OnItemSelected
     ArrayAdapter<String> districtAdapter;
 
     List<String> dstDhaka;
+    List<String> thanaDhaka;
+
+
     List<String> dstChittagong;
     List<String> dstSylhet;
 
@@ -97,6 +100,15 @@ public class FormActivity extends Activity implements AdapterView.OnItemSelected
         dstDhaka.add(getString(R.string.dst_rajbari));
         dstDhaka.add(getString(R.string.dst_tangail));
 
+        thanaDhaka = new ArrayList<String>();
+        thanaDhaka.add(getString(R.string.thana_savar));
+        thanaDhaka.add(getString(R.string.thana_dhamrai));
+        thanaDhaka.add(getString(R.string.thana_dohar));
+        thanaDhaka.add(getString(R.string.thana_keranigonj));
+        thanaDhaka.add(getString(R.string.thana_nobabgonj));
+
+
+
         dstChittagong = new ArrayList<String>();
         dstChittagong.add(getString(R.string.div_chittagong));
         dstChittagong.add(getString(R.string.dst_coxbazar));
@@ -123,7 +135,6 @@ public class FormActivity extends Activity implements AdapterView.OnItemSelected
 
 
         List<String> district = new ArrayList<String>();
-
         district.add("কুমিল্লা");
         district.add("কক্সবাজার");
         district.add("ফেনী");
@@ -141,7 +152,8 @@ public class FormActivity extends Activity implements AdapterView.OnItemSelected
         thana.add("কেশবপুর");
         thana.add("লোহাগড়া");
         thana.add("মহেশপুর");
-        ArrayAdapter<String> thanaAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, thana);
+
+        ArrayAdapter<String> thanaAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, thanaDhaka);
         thanaAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spThana.setAdapter(thanaAdapter);
 
@@ -173,9 +185,6 @@ public class FormActivity extends Activity implements AdapterView.OnItemSelected
                     districtAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     spDistrict.setAdapter(districtAdapter);
                 }
-
-
-
 
                 break;
 

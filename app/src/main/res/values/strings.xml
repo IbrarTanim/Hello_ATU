@@ -76,5 +76,13 @@
     <string name="dst_mowlobibazar">মৌলভীবাজার</string>
 
 
+    <string name="thana_savar">সাভার</string>
+    <string name="thana_dhamrai">ধামরাই</string>
+    <string name="thana_dohar">দোহার </string>
+    <string name="thana_keranigonj">কেরানীগঞ্জ </string>
+    <string name="thana_nobabgonj">নবাবগঞ্জ </string>
+
+
+
 
 </resources>
