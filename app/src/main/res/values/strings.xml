@@ -37,5 +37,44 @@
     <string name="audio">অডিও</string>
     <string name="document">ডকুমেন্ট</string>
 
+    <string name="div_dhaka">ঢাকা</string>
+    <string name="div_chittagong">চট্টগ্রাম</string>
+    <string name="div_rajshai">রাজশাহী</string>
+    <string name="div_khulna">খুলনা</string>
+    <string name="div_barishal">বরিশাল</string>
+    <string name="div_sylhet">সিলেট</string>
+    <string name="div_rongpur">রংপুর</string>
+    <string name="div_mymensing">ময়মনসিংহ</string>
+
+    <string name="dst_gazipur">গাজীপুর</string>
+    <string name="dst_faridpur">ফরিদপুর</string>
+    <string name="dst_shariatpur">শরিয়তপুর</string>
+    <string name="dst_madaripur">মাদারিপুর</string>
+    <string name="dst_gopalgonj">গোপালগঞ্জ</string>
+    <string name="dst_kishorgonj">কিশোরগঞ্জ</string>
+    <string name="dst_manikgonj">মানিকগঞ্জ</string>
+    <string name="dst_munsigonj">মুন্সিগঞ্জ</string>
+    <string name="dst_narayangonj">নারায়নগঞ্জ</string>
+    <string name="dst_norsingdi">নরসিংদী</string>
+    <string name="dst_rajbari">রাজবাড়ী</string>
+    <string name="dst_tangail">টাঙ্গাইল</string>
+
+    <string name="dst_coxbazar">কক্সবাজার</string>
+    <string name="dst_khagrachori">খাগড়াছড়ি</string>
+    <string name="dst_rangamati">রাঙ্গামাটি</string>
+    <string name="dst_bandorban">বান্দরবান</string>
+    <string name="dst_feni">ফেনী</string>
+    <string name="dst_noakhali">নোয়াখালী</string>
+    <string name="dst_lakshmipur">লক্ষ্মীপুর</string>
+    <string name="dst_chandpur">চাঁদপুর</string>
+    <string name="dst_comilla">কুমিল্লা</string>
+    <string name="dst_bbaria">ব্রাহ্মণবাড়িয়া</string>
+
+
+    <string name="dst_sunamgonj">সুনামগঞ্জ</string>
+    <string name="dst_hobigonj">হবিগঞ্জ</string>
+    <string name="dst_mowlobibazar">মৌলভীবাজার</string>
+
+
 
 </resources>
