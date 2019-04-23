@@ -1,5 +1,6 @@
 package com.dtec.helloatu;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -60,6 +61,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MyView
             switch (getAdapterPosition()) {
                 case 4:
                     intent = new Intent(context, WantedActivity.class);
+
                     break;
 
                 case 5:
@@ -71,6 +73,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MyView
                     break;
             }
             context.startActivity(intent);
+            ((Activity)context).finish();
 
         }
     }
