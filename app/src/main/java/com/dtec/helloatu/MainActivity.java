@@ -92,9 +92,9 @@ public class MainActivity extends Activity {
         int[] categoryColor = new int[]{
 
                 ContextCompat.getColor(this, R.color.app_color),
-                ContextCompat.getColor(this, R.color.colorAccent),
-                ContextCompat.getColor(this, R.color.colorPrimary),
-                ContextCompat.getColor(this, R.color.app_color),
+                ContextCompat.getColor(this, R.color.cyber_crime_color),
+                ContextCompat.getColor(this, R.color.bomb_crime_color),
+                ContextCompat.getColor(this, R.color.organaizational_crime_color),
                 ContextCompat.getColor(this, R.color.colorAccent),
                 ContextCompat.getColor(this, R.color.colorPrimaryDark),
         };
@@ -102,13 +102,13 @@ public class MainActivity extends Activity {
         Category category = new Category(categoryPic[0], categoryColor[0], getString(R.string.terrorism_bn), getString(R.string.terrorism_en));
         categoryList.add(category);
 
-        category = new Category(categoryPic[1], categoryColor[1], getString(R.string.injection_bn), getString(R.string.injection_en));
+        category = new Category(categoryPic[1], categoryColor[1], getString(R.string.cyber_crime_bn), getString(R.string.cyber_crime_en));
         categoryList.add(category);
 
         category = new Category(categoryPic[2], categoryColor[2], getString(R.string.bomb_bn), getString(R.string.bomb_en));
         categoryList.add(category);
 
-        category = new Category(categoryPic[3], categoryColor[3], getString(R.string.cyber_crime_bn), getString(R.string.cyber_crime_en));
+        category = new Category(categoryPic[3], categoryColor[3], getString(R.string.organaizational_crime_bn), getString(R.string.organaizational_crime_en));
         categoryList.add(category);
 
         category = new Category(categoryPic[4], categoryColor[4], getString(R.string.wanted_bn), getString(R.string.wanted_en));

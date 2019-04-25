@@ -1,17 +1,20 @@
 <resources>
     <string name="app_name">Hello ATU</string>
 
+    <string name="inform_terrorism">অপরাধীদের তথ্য দিন</string>
+    <string name="splash_text">Anti Terrorism Unit\n Dhaka Metropolitan Police </string>
+
+    <string name="cyber_crime_en">Cyber Crime</string>
     <string name="terrorism_en">Terrorism/Extremism</string>
-    <string name="injection_en">Narcotics</string>
     <string name="bomb_en">Bomb/Explosive/Arms</string>
-    <string name="cyber_crime_en">Transnational Crime/ Cyber Crime</string>
+    <string name="organaizational_crime_en">Organaizational crime</string>
     <string name="wanted_en">Wanted</string>
     <string name="information_en">Information Cell</string>
 
     <string name="terrorism_bn">জঙ্গিবাদ/ উগ্রবাদ</string>
-    <string name="injection_bn">মাদক</string>
+    <string name="cyber_crime_bn"> সাইবার অপরাধ</string>
     <string name="bomb_bn">বোমা/ বিস্ফোরণ </string>
-    <string name="cyber_crime_bn">আন্ত:দেশীও অপরাধ/ সাইবার ক্রাইম</string>
+    <string name="organaizational_crime_bn">সংগঠিত অপরাধ</string>
     <string name="wanted_bn">ওয়ান্টেড</string>
     <string name="information_bn">তথ্য কনিকা</string>
 
