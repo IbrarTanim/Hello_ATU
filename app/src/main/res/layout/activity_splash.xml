@@ -14,11 +14,11 @@
         android:src="@drawable/atu" />
 
     <TextView
+        android:id="@+id/tvSplash"
         android:layout_width="match_parent"
         android:layout_height="@dimen/sixty"
         android:layout_margin="@dimen/five"
         android:gravity="center"
-        android:text="@string/splash_text"
         android:textColor="@color/white"
         android:textSize="@dimen/twenty"
         android:textStyle="bold" />

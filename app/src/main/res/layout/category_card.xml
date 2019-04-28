@@ -34,7 +34,6 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/ivCtgPic"
                 android:gravity="center"
-                android:padding="@dimen/five"
                 android:text="Bangla Title"
                 android:textColor="@color/white"
                 android:textSize="@dimen/twelve" />
@@ -45,7 +44,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/tvCtgTitleBangla"
                 android:gravity="center"
-                android:padding="@dimen/five"
+                android:layout_marginBottom="@dimen/five"
                 android:text="English Title"
                 android:textColor="@color/white"
                 android:textSize="@dimen/twelve" />

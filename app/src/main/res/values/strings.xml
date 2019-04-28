@@ -2,7 +2,9 @@
     <string name="app_name">Hello ATU</string>
 
     <string name="inform_terrorism">অপরাধীদের তথ্য দিন</string>
-    <string name="splash_text">Anti Terrorism Unit\n Dhaka Metropolitan Police </string>
+
+    <string name="splash_text"><![CDATA[<html><body><big>Anti Terrorism Unit </big><br/><small>Dhaka Metropolitan Police</small></body><html>]]></string>
+
 
     <string name="cyber_crime_en">Cyber Crime</string>
     <string name="terrorism_en">Terrorism/Extremism</string>
@@ -84,8 +86,12 @@
     <string name="thana_dohar">দোহার </string>
     <string name="thana_keranigonj">কেরানীগঞ্জ </string>
     <string name="thana_nobabgonj">নবাবগঞ্জ </string>
+    <string name="terrorism_info"><![CDATA[<html><body><big>অপরাধের তথ্য দিন </big><br/><font size=5>Report Crime </font><br/><small>(তথ্য দাতার পরিচয় গোপন রাখা হবে)</small></body><html>]]></string>
 
 
+   <!-- <string name="abc"><![CDATA[<html><body><font size=15>অপরাধীদের তথ্য দিন<br/></font></body></html>
+    <html><body<font size=10>Report Crime<br/></font></body></html>
+     <html><body<font size=5>(তথ্য দাতার পরিচয় গোপন রাখা হবে)</font></body></html>]]></string>-->
 
 
 </resources>

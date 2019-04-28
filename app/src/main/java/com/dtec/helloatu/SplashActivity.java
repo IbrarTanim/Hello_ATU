@@ -4,10 +4,13 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.text.Html;
+import android.widget.TextView;
 
 public class SplashActivity extends Activity {
 
     SplashActivity activity;
+    TextView tvSplash;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -15,6 +18,9 @@ public class SplashActivity extends Activity {
         setContentView(R.layout.activity_splash);
 
         activity = this;
+        tvSplash = findViewById(R.id.tvSplash);
+        tvSplash.setText(Html.fromHtml(getString(R.string.splash_text)));
+
         runSplash();
 
     }

@@ -9,6 +9,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Html;
 import android.util.TypedValue;
 import android.view.View;
 import android.widget.TextView;
@@ -22,7 +23,7 @@ public class MainActivity extends Activity {
     RecyclerView recyclerView;
     private CategoryAdapter adapter;
     private List<Category> categoryList;
-    TextView tvMarque;
+    TextView tvMarque, tvTerrorismInfo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,7 +33,9 @@ public class MainActivity extends Activity {
 
 
         tvMarque = (TextView) findViewById(R.id.tvMarque);
+        tvTerrorismInfo = (TextView) findViewById(R.id.tvTerrorismInfo);
         tvMarque.setSelected(true);
+        tvTerrorismInfo.setText(Html.fromHtml(getString(R.string.terrorism_info)));
 
 
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
