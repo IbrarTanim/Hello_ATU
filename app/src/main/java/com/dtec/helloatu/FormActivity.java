@@ -20,15 +20,20 @@ public class FormActivity extends Activity implements AdapterView.OnItemSelected
     public Spinner spDivision;
     public Spinner spDistrict;
     public Spinner spThana;
+    public Spinner spOccurrence;
     ImageButton ibtnBack;
     public int passedPosition;
     Button btnSubmit, btnCancel;
+
+    ArrayAdapter<String> occurrenceAdapter;
+    ArrayAdapter<String> divisionAdapter;
     ArrayAdapter<String> districtAdapter;
 
-    List<String> dstDhaka;
+    List<String> division;
+    List<String> occurrence;
     List<String> thanaDhaka;
 
-
+    List<String> dstDhaka;
     List<String> dstChittagong;
     List<String> dstSylhet;
 
@@ -42,6 +47,7 @@ public class FormActivity extends Activity implements AdapterView.OnItemSelected
         spDivision = (Spinner) findViewById(R.id.spDivision);
         spDistrict = (Spinner) findViewById(R.id.spDistrict);
         spThana = (Spinner) findViewById(R.id.spThana);
+        spOccurrence = (Spinner) findViewById(R.id.spOccurrence);
         ibtnBack = (ImageButton) findViewById(R.id.ibtnBack);
 
         btnSubmit = (Button) findViewById(R.id.btnSubmit);
@@ -53,6 +59,7 @@ public class FormActivity extends Activity implements AdapterView.OnItemSelected
         spDivision.setOnItemSelectedListener(this);
         spDistrict.setOnItemSelectedListener(this);
         spThana.setOnItemSelectedListener(this);
+        spOccurrence.setOnItemSelectedListener(this);
 
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
@@ -72,7 +79,8 @@ public class FormActivity extends Activity implements AdapterView.OnItemSelected
         });
 
 
-        List<String> division = new ArrayList<String>();
+        division = new ArrayList<String>();
+        division.add(getString(R.string.division_selection));
         division.add(getString(R.string.div_dhaka));
         division.add(getString(R.string.div_chittagong));
         division.add(getString(R.string.div_rajshai));
@@ -81,11 +89,26 @@ public class FormActivity extends Activity implements AdapterView.OnItemSelected
         division.add(getString(R.string.div_sylhet));
         division.add(getString(R.string.div_rongpur));
         division.add(getString(R.string.div_mymensing));
-        ArrayAdapter<String> divisionAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, division);
+
+        divisionAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, division);
         divisionAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spDivision.setAdapter(divisionAdapter);
 
+
+
+        occurrence = new ArrayList<String>();
+        occurrence.add(getString(R.string.mohanogor_district_bdout));
+        occurrence.add(getString(R.string.mohanogor));
+        occurrence.add(getString(R.string.district));
+        occurrence.add(getString(R.string.bdout));
+
+        occurrenceAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, occurrence);
+        occurrenceAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spOccurrence.setAdapter(occurrenceAdapter);
+
+
         dstDhaka = new ArrayList<String>();
+        dstDhaka.add(getString(R.string.district_selection));
         dstDhaka.add(getString(R.string.div_dhaka));
         dstDhaka.add(getString(R.string.dst_gazipur));
         dstDhaka.add(getString(R.string.dst_faridpur));
@@ -101,12 +124,12 @@ public class FormActivity extends Activity implements AdapterView.OnItemSelected
         dstDhaka.add(getString(R.string.dst_tangail));
 
         thanaDhaka = new ArrayList<String>();
+        thanaDhaka.add(getString(R.string.country_selection));
         thanaDhaka.add(getString(R.string.thana_savar));
         thanaDhaka.add(getString(R.string.thana_dhamrai));
         thanaDhaka.add(getString(R.string.thana_dohar));
         thanaDhaka.add(getString(R.string.thana_keranigonj));
         thanaDhaka.add(getString(R.string.thana_nobabgonj));
-
 
 
         dstChittagong = new ArrayList<String>();
@@ -130,19 +153,12 @@ public class FormActivity extends Activity implements AdapterView.OnItemSelected
         dstSylhet.add(getString(R.string.dst_mowlobibazar));
 
 
-
-
-
-
         List<String> district = new ArrayList<String>();
         district.add("কুমিল্লা");
         district.add("কক্সবাজার");
         district.add("ফেনী");
         district.add("নোয়াখালী ");
         district.add("লক্ষ্মীপুর");
-
-
-
 
 
         List<String> thana = new ArrayList<String>();
@@ -152,6 +168,7 @@ public class FormActivity extends Activity implements AdapterView.OnItemSelected
         thana.add("কেশবপুর");
         thana.add("লোহাগড়া");
         thana.add("মহেশপুর");
+
 
         ArrayAdapter<String> thanaAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, thanaDhaka);
         thanaAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -165,6 +182,42 @@ public class FormActivity extends Activity implements AdapterView.OnItemSelected
 
 
         switch (parent.getId()) {
+
+            case R.id.spOccurrence:
+                String itemOccurrence = parent.getItemAtPosition(position).toString();
+
+                if (itemOccurrence == getString(R.string.mohanogor)) {
+                    divisionAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, division);
+                    divisionAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    spDivision.setAdapter(divisionAdapter);
+
+                    spDivision.setVisibility(View.VISIBLE);
+                    spDistrict.setVisibility(View.GONE);
+                    spThana.setVisibility(View.GONE);
+
+
+                } else if (itemOccurrence == getString(R.string.district)) {
+                    divisionAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, dstDhaka);
+                    divisionAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    spDivision.setAdapter(divisionAdapter);
+                    spDivision.setVisibility(View.VISIBLE);
+                    spDistrict.setVisibility(View.GONE);
+                    spThana.setVisibility(View.GONE);
+
+                }
+                else if (itemOccurrence == getString(R.string.bdout)) {
+                    divisionAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, thanaDhaka);
+                    divisionAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    spDivision.setAdapter(divisionAdapter);
+                    spDivision.setVisibility(View.VISIBLE);
+                    spDistrict.setVisibility(View.GONE);
+                    spThana.setVisibility(View.GONE);
+                }
+
+
+                break;
+
+
             case R.id.spDivision:
                 String itemDivision = parent.getItemAtPosition(position).toString();
                 //Toast.makeText(parent.getContext(), "Selected: " + itemDivision, Toast.LENGTH_LONG).show();
@@ -173,17 +226,26 @@ public class FormActivity extends Activity implements AdapterView.OnItemSelected
                     districtAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, dstDhaka);
                     districtAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     spDistrict.setAdapter(districtAdapter);
+                    spDistrict.setVisibility(View.VISIBLE);
+                    spDivision.setVisibility(View.VISIBLE);
+                    spThana.setVisibility(View.GONE);
+
 
                 } else if (itemDivision == getString(R.string.div_chittagong)) {
                     districtAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, dstChittagong);
                     districtAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     spDistrict.setAdapter(districtAdapter);
-                }
+                    spDistrict.setVisibility(View.VISIBLE);
+                    spDivision.setVisibility(View.VISIBLE);
+                    spThana.setVisibility(View.GONE);
 
-                else if (itemDivision == getString(R.string.div_sylhet)) {
+                } else if (itemDivision == getString(R.string.div_sylhet)) {
                     districtAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, dstSylhet);
                     districtAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     spDistrict.setAdapter(districtAdapter);
+                    spDistrict.setVisibility(View.VISIBLE);
+                    spDivision.setVisibility(View.VISIBLE);
+                    spThana.setVisibility(View.GONE);
                 }
 
                 break;

@@ -3,8 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/app_color">
+    android:layout_height="match_parent">
 
 
     <LinearLayout
@@ -17,10 +16,10 @@
             android:id="@+id/ibtnBack"
             android:layout_width="@dimen/thirty"
             android:layout_height="@dimen/thirty"
-            android:background="@color/transparent"
             android:layout_weight="1"
+            android:background="@color/transparent"
             android:scaleType="fitCenter"
-            android:src="@drawable/ic_back" />
+            android:src="@drawable/ic_back_form" />
 
         <TextView
             android:layout_width="match_parent"
@@ -29,21 +28,24 @@
             android:gravity="bottom"
             android:text="@string/crime_info"
             android:textAlignment="gravity"
-            android:textColor="@color/white"
+            android:textColor="@color/black"
             android:textStyle="bold" />
 
         <EditText
             android:layout_width="match_parent"
-            android:layout_height="@dimen/fourty"
+            android:layout_height="@dimen/eighty"
             android:layout_margin="5dp"
             android:layout_weight="1"
             android:background="@drawable/cell_border"
-            android:cursorVisible="false"
+            android:cursorVisible="true"
             android:gravity="center"
             android:hint="@string/type_here"
             android:inputType="textMultiLine"
+            android:overScrollMode="always"
             android:padding="5dp"
             android:scaleType="fitCenter"
+            android:scrollbarStyle="insideInset"
+            android:scrollbars="vertical"
             android:textColor="@color/black"
             android:textSize="20dp" />
 
@@ -51,52 +53,89 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/fourty"
             android:layout_weight="1"
-            android:text="@string/division"
             android:gravity="bottom"
+            android:text="@string/occurrence_place"
             android:textAlignment="gravity"
-            android:textColor="@color/white"
+            android:textColor="@color/black"
             android:textStyle="bold" />
+
+        <Spinner
+            android:id="@+id/spOccurrence"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/fifty"
+            android:layout_weight="2"
+            android:background="@drawable/selector_dropdown" />
+
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/twenty"/>
+
+
+        <!--
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/fourty"
+                    android:layout_weight="1"
+                    android:gravity="bottom"
+                    android:text="@string/division"
+                    android:textAlignment="gravity"
+                    android:textColor="@color/black"
+                    android:textStyle="bold" />
+        -->
 
         <Spinner
             android:id="@+id/spDivision"
             android:layout_width="match_parent"
             android:layout_height="@dimen/fifty"
             android:layout_weight="2"
-            android:background="@drawable/cell_border" />
+            android:visibility="gone"
+            android:background="@drawable/selector_dropdown" />
 
-        <TextView
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/twenty"/>
+
+        <!--<TextView
             android:layout_width="match_parent"
             android:layout_height="@dimen/fourty"
             android:layout_weight="1"
             android:gravity="bottom"
             android:text="@string/districs"
             android:textAlignment="gravity"
-            android:textColor="@color/white"
-            android:textStyle="bold" />
+            android:textColor="@color/black"
+            android:textStyle="bold" />-->
 
         <Spinner
             android:id="@+id/spDistrict"
             android:layout_width="match_parent"
             android:layout_height="@dimen/fifty"
+            android:visibility="gone"
             android:layout_weight="2"
-            android:background="@drawable/cell_border" />
+            android:background="@drawable/selector_dropdown" />
 
-        <TextView
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/twenty"/>
+
+        <!--<TextView
             android:layout_width="match_parent"
             android:layout_height="@dimen/fourty"
             android:layout_weight="1"
             android:gravity="bottom"
             android:text="@string/thana"
             android:textAlignment="gravity"
-            android:textColor="@color/white"
-            android:textStyle="bold" />
+            android:textColor="@color/black"
+            android:textStyle="bold" />-->
 
         <Spinner
             android:id="@+id/spThana"
             android:layout_width="match_parent"
             android:layout_height="@dimen/fifty"
+            android:visibility="gone"
             android:layout_weight="2"
-            android:background="@drawable/cell_border" />
+            android:background="@drawable/selector_dropdown" />
 
 
         <TextView
@@ -106,8 +145,24 @@
             android:gravity="bottom"
             android:text="@string/inform_info"
             android:textAlignment="gravity"
-            android:textColor="@color/white"
+            android:textColor="@color/black"
             android:textStyle="bold" />
+
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/fourty"
+            android:layout_margin="5dp"
+            android:layout_weight="1"
+            android:background="@drawable/cell_border"
+            android:cursorVisible="false"
+            android:gravity="center"
+            android:hint="@string/inform_name"
+            android:inputType="textMultiLine"
+            android:padding="5dp"
+            android:scaleType="fitCenter"
+            android:textColor="@color/black"
+            android:textSize="20dp" />
 
 
         <EditText
@@ -140,6 +195,39 @@
             android:textColor="@color/black"
             android:textSize="20dp" />
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/twenty"/>
+
+        <Spinner
+            android:id="@+id/spDivisionInformer"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/fifty"
+            android:layout_weight="2"
+            android:background="@drawable/selector_dropdown" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/twenty"/>
+
+        <Spinner
+            android:id="@+id/spDistrictInformer"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/fifty"
+            android:layout_weight="2"
+            android:background="@drawable/selector_dropdown" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/twenty"/>
+
+        <Spinner
+            android:id="@+id/spThanaInformer"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/fifty"
+            android:layout_weight="2"
+            android:background="@drawable/selector_dropdown" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/twenty"/>
 
         <TextView
             android:layout_width="match_parent"
@@ -147,7 +235,7 @@
             android:layout_weight="1"
             android:text="@string/aditional_info"
             android:textAlignment="gravity"
-            android:textColor="@color/white"
+            android:textColor="@color/black"
             android:textStyle="bold" />
 
 
@@ -322,7 +410,7 @@
             android:layout_height="@dimen/fifty"
             android:layout_weight="1"
             android:text="@string/submit"
-            android:textColor="@color/white"
+            android:textColor="@color/black"
             android:textStyle="bold" />
 
         <Button
@@ -331,7 +419,7 @@
             android:layout_height="@dimen/fifty"
             android:layout_weight="1"
             android:text="@string/cancel"
-            android:textColor="@color/white"
+            android:textColor="@color/black"
             android:textStyle="bold" />
 
 

@@ -10,7 +10,7 @@
                     <padding android:bottom="4dp" android:left="4dp" android:right="4dp" android:top="4dp" />
 
                     <gradient android:angle="270" android:endColor="#00d6dadf" android:startColor="#00c4c7a9" />
-                    <stroke android:width="2px" android:color="#0004fa" />
+                    <stroke android:width="2px" android:color="@color/app_color" />
                     <corners android:radius="2dp" />
                 </shape>
             </item>
