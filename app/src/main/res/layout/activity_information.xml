@@ -1,101 +1,292 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/app_color">
-
-    <ImageButton
-        android:id="@+id/ibtnBackInformation"
-        android:layout_width="@dimen/thirty"
-        android:layout_height="@dimen/thirty"
-        android:background="@color/transparent"
-        android:scaleType="fitCenter"
-        android:src="@drawable/ic_back" />
-
+    android:layout_height="match_parent">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/eighty"
-        android:layout_marginTop="@dimen/fifty"
-        android:orientation="horizontal"
-        android:weightSum="8">
+        android:layout_height="match_parent"
+        android:layout_margin="@dimen/ten"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/thirty"
+            android:layout_weight="2">
+
+            <ImageButton
+                android:id="@+id/ibtnBackInformation"
+                android:layout_width="@dimen/thirty"
+                android:layout_height="@dimen/thirty"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginLeft="@dimen/five"
+                android:layout_marginBottom="@dimen/five"
+                android:background="@color/transparent"
+                android:scaleType="fitCenter"
+                android:src="@drawable/ic_back_form" />
+
+        </RelativeLayout>
+
 
         <View
-            android:layout_width="@dimen/zero"
-            android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/ten"
             android:layout_weight=".5" />
 
 
-        <TextView
-            android:layout_width="@dimen/zero"
-            android:layout_height="match_parent"
-            android:layout_weight="2"
-            android:background="@drawable/cell_border"
-            android:gravity="center"
-            android:text="@string/user_menu"
-            android:textColor="@color/black"
-            android:textSize="@dimen/twelve" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/eighty"
+                android:background="@color/app_color">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginLeft="@dimen/five"
+                    android:gravity="center"
+                    android:text="@string/user_menu"
+                    android:textAlignment="center"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/fifteen" />
+
+                <com.dtec.helloatu.CircularImageView
+                    android:id="@+id/civUserManual"
+                    android:layout_width="@dimen/fifty"
+                    android:layout_height="@dimen/fifty"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerInParent="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginRight="@dimen/ten"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/ic_down_arrow" />
+
+            </RelativeLayout>
+
+
+            <TextView
+                android:id="@+id/tvUserManual"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/zero"
+                android:layout_marginLeft="@dimen/five"
+                android:layout_weight="8"
+                android:gravity="left"
+                android:visibility="gone"
+                android:text="@string/user_manual_text"
+                android:textAlignment="gravity"
+                android:textColor="@color/black"
+                android:textSize="@dimen/fifteen" />
+
+
+        </LinearLayout>
+
 
         <View
-            android:layout_width="@dimen/zero"
-            android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/ten"
             android:layout_weight=".5" />
 
-        <TextView
-            android:layout_width="@dimen/zero"
-            android:layout_height="match_parent"
-            android:layout_weight="2"
-            android:background="@drawable/cell_border"
-            android:gravity="center"
-            android:text="@string/unit_details"
-            android:textColor="@color/black"
-            android:textSize="@dimen/twelve" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/eighty"
+                android:background="@color/app_color">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginLeft="@dimen/five"
+                    android:gravity="center"
+                    android:text="@string/unit_details"
+                    android:textAlignment="center"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/fifteen" />
+
+                <com.dtec.helloatu.CircularImageView
+                    android:id="@+id/civUnitDetails"
+                    android:layout_width="@dimen/fifty"
+                    android:layout_height="@dimen/fifty"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerInParent="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginRight="@dimen/ten"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/ic_down_arrow" />
+
+
+            </RelativeLayout>
+
+
+            <TextView
+                android:id="@+id/tvUnitDetails"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/zero"
+                android:layout_marginLeft="@dimen/five"
+                android:layout_weight="8"
+                android:gravity="left"
+                android:visibility="gone"
+                android:text="@string/user_manual_text"
+                android:textAlignment="gravity"
+                android:textColor="@color/black"
+                android:textSize="@dimen/fifteen" />
+
+
+        </LinearLayout>
 
         <View
-            android:layout_width="@dimen/zero"
-            android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/ten"
             android:layout_weight=".5" />
 
-        <TextView
-            android:layout_width="@dimen/zero"
-            android:layout_height="match_parent"
-            android:layout_weight="2"
-            android:background="@drawable/cell_border"
-            android:gravity="center"
-            android:text="@string/news_feed"
-            android:textColor="@color/black"
-            android:textSize="@dimen/twelve" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/eighty"
+                android:background="@color/app_color">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginLeft="@dimen/five"
+                    android:gravity="center"
+                    android:text="@string/news_feed"
+                    android:textAlignment="center"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/fifteen" />
+
+                <com.dtec.helloatu.CircularImageView
+                    android:id="@+id/civNewsFeed"
+                    android:layout_width="@dimen/fifty"
+                    android:layout_height="@dimen/fifty"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerInParent="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginRight="@dimen/ten"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/ic_down_arrow" />
+
+
+            </RelativeLayout>
+
+
+            <TextView
+                android:id="@+id/tvNewsFeed"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/zero"
+                android:layout_marginLeft="@dimen/five"
+                android:layout_weight="8"
+                android:gravity="left"
+                android:visibility="gone"
+                android:text="@string/user_manual_text"
+                android:textAlignment="gravity"
+                android:textColor="@color/black"
+                android:textSize="@dimen/fifteen" />
+
+
+        </LinearLayout>
+
 
         <View
-            android:layout_width="@dimen/zero"
-            android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/ten"
             android:layout_weight=".5" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/eighty"
+            android:layout_weight="3"
+            android:background="@color/app_color">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentLeft="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginLeft="@dimen/five"
+                android:gravity="center"
+                android:text="@string/anonymous_chat"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:textSize="@dimen/fifteen" />
+
+            <com.dtec.helloatu.CircularImageView
+                android:id="@+id/civAnonymousChat"
+                android:layout_width="@dimen/fifty"
+                android:layout_height="@dimen/fifty"
+                android:layout_alignParentRight="true"
+                android:layout_centerInParent="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginRight="@dimen/ten"
+                android:scaleType="fitCenter"
+                android:src="@drawable/ic_down_arrow" />
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/two_hundred"
+            android:layout_weight="11">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/fifty"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:gravity="center"
+                android:text="@string/copy_right"
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:textSize="@dimen/thirty" />
+
+
+            <ImageView
+                android:id="@+id/logo"
+                android:layout_width="@dimen/hundred"
+                android:layout_height="@dimen/hundred"
+                android:layout_centerInParent="true"
+                android:background="@color/transparent"
+                android:padding="@dimen/three"
+                android:scaleType="fitCenter"
+                android:src="@drawable/atu" />
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/fifty"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:gravity="center"
+                android:text="@string/app_name_bn"
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:textSize="@dimen/fifteen" />
+
+
+        </RelativeLayout>
+
 
     </LinearLayout>
 
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="@dimen/hundred_thirty"
-        android:gravity="center"
-        android:text="@string/copy_right"
-        android:textAlignment="center"
-        android:textColor="@color/white"
-        android:textSize="@dimen/thirty" />
-
-
-    <ImageView
-        android:id="@+id/logo"
-        android:layout_width="@dimen/hundred"
-        android:layout_height="@dimen/hundred"
-        android:layout_centerInParent="true"
-        android:background="@color/transparent"
-        android:scaleType="fitCenter"
-        android:src="@drawable/atu" />
-
-
-</RelativeLayout>
+</ScrollView>
