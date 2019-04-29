@@ -16,11 +16,21 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity" />
-        <activity android:name=".BaseActivity" />
-        <activity android:name=".FormActivity" />
-        <activity android:name=".InformationActivity" />
-        <activity android:name=".WantedActivity"></activity>
+        <activity
+            android:name=".MainActivity"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".BaseActivity"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".FormActivity"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".InformationActivity"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".WantedActivity"
+            android:windowSoftInputMode="stateHidden" />
     </application>
 
 </manifest>
