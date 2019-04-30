@@ -110,23 +110,22 @@
     <string name="occurrence_place">ঘটনাস্থল  (Place of Occurrence)</string>
     <string name="app_name_bn">এন্টিটেরোরিজম ইউনিট \n ঢাকা মেট্রোপলিটন পুলিশ</string>
 
+    <string name="unit_detail_text">
+      \nProposal on 26 July, 2016 as Police Anti Terrorism Unit, Proposed Manpower 600 (after the incident of Holy Artisan).
+        \n\nApproval from MOPA on 16 March, 2017 with manpower of 592 and Ministry of Finance on 17 May, 2017 Police Anti-Terrorism Unit with manpower of 581.
+        \n\nFinally Ministry of Home Affairs passed the orders on 19 Sep, 2017 as Anti-Terrorism Unit with manpower of 581.
+        \n\nATU will be responsible for all over the Country.
+        \n\nAir space and Sea also.
+        \n\nImplement all administrative and financial activities of the unit. •Smooth running of all logistics and communication activities. •Monitoring of legal and Media activities. •Establishment of internal oversight and discipline. •Supervise estate and building matter of the unit. •Ensure security of different units of ATU.
+        \n\nConduct regular operation on terrorism and extremism. Take initiative to established SWAT, Bomb disposal and Canine Unit. Conduct regular training for STG groups, SWAT and Bomb disposal team. Make all-out efforts to recover illegal arms.
+    </string>
 
-    <string name="user_manual_text">বাংলাদেশ পুলিশের ইন্সপেক্টর জেনারেল ড. মোহাম্মদ জাবেদ পাটোয়ারী, বিপিএম (বার) বলেছেন, আমাদের বড় বড় শহর বিশেষ করে রাজধানী ঢাকায় জায়গা খুব অপ্রতুল। তাই জায়গার সর্বোত্তম ব্যবহার করতে হবে। এক্ষেত্রে মাল্টিলেভেল ডিজিটাল কার পার্কিং একটি অনন্য উদ্যোগ। এর ফলে অল্প জায়গায় বেশী পরিমাণ গাড়ি পার্ক করা সম্ভব।
 
-
+    <string name="user_manual_text">\nবাংলাদেশ পুলিশের ইন্সপেক্টর জেনারেল ড. মোহাম্মদ জাবেদ পাটোয়ারী, বিপিএম (বার) বলেছেন, আমাদের বড় বড় শহর বিশেষ করে রাজধানী ঢাকায় জায়গা খুব অপ্রতুল। তাই জায়গার সর্বোত্তম ব্যবহার করতে হবে। এক্ষেত্রে মাল্টিলেভেল ডিজিটাল কার পার্কিং একটি অনন্য উদ্যোগ। এর ফলে অল্প জায়গায় বেশী পরিমাণ গাড়ি পার্ক করা সম্ভব।
 \n\nআইজিপি আজ মঙ্গলবার রাজধানীর আব্দুল গণি রোডে ডিএমপির কমান্ড এন্ড কন্ট্রোল সেন্টারের পাশে ৮ তলা ডিজিটাল কার পার্কিং উদ্বোধনকালে এ কথা বলেন।
-
-
 \n\nপুলিশ প্রধান বলেন, ডিজিটাল কার পার্কিং একটি সময়োপযোগী ব্যবস্থা। বিশ্বের অনেক দেশে এ ধরনের কার পার্কিং রয়েছে। বাংলাদেশ পুলিশের সক্ষমতা বাড়ার সাথে সাথে গাড়ির সংখ্যাও বাড়ছে। এসব গাড়ি রাখার জন্য ডিজিটাল পার্কিং স্থাপন করা প্রয়োজন। তিনি বলেন, পরীক্ষামূলকভাবে এ পার্কিং স্থাপন করা হলো। পর্যায়ক্রমে বড় বড় শহরে এ ধরনের পার্কিং স্থাপন করা হবে।
-
-
 \n\nতিনি বলেন, ডিজিটাল কার পার্কিং পরিচালনায় অপারেটরদের যথাযথ প্রশিক্ষণ দিতে হবে। যাতে কোন দুর্ঘটনা না ঘটে।
-
-
 \n\nঅনুষ্ঠানে ডিএমপি কমিশনার মোঃ আছাদুজ্জামান মিয়া, অতিরিক্ত আইজিপি ড. মো: মইনুর রহমান চৌধুরী, অতিরিক্ত আইজিপি মোহাম্মদ শফিকুল ইসলামসহ ঊর্ধ্বতন পুলিশ কর্মকর্তাগণ এবং নির্মাণকারী প্রতিষ্ঠানের প্রতিনিধিরা উপস্থিত ছিলেন।
-
-
 \n\nউল্লেখ্য, মেসার্স আজিজ এন্ড কোম্পানি লিমিটেড এ ডিজিটাল কার পার্কিং নির্মাণ করেছে। এখানে ৩৪টি গাড়ি পার্ক করা যাবে। অথচ স্বাভাবিকভাবে একই পরিমাণ জায়গায় গাড়ি পার্ক করা যেত মাত্র ৬টি।</string>
-
 
 </resources>
