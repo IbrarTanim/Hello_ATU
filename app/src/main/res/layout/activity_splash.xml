@@ -6,6 +6,16 @@
     android:gravity="center"
     android:orientation="vertical">
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/sixty"
+        android:layout_margin="@dimen/five"
+        android:gravity="center"
+        android:text="@string/app_name"
+        android:textColor="@color/white"
+        android:textSize="@dimen/thirty_five"
+        android:textStyle="bold" />
+
     <ImageButton
         android:layout_width="@dimen/hundred_fifty"
         android:layout_height="@dimen/hundred_fifty"

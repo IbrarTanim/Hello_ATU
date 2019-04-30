@@ -50,11 +50,6 @@
     <string name="bdout">বাংলাদেশের বাইরে</string>
 
 
-
-
-
-
-
     <string name="division_selection"> মহানগরের নাম নির্বাচন করুন </string>
     <string name="div_dhaka">ঢাকা</string>
     <string name="div_chittagong">চট্টগ্রাম</string>
@@ -97,17 +92,23 @@
     <string name="dst_mowlobibazar">মৌলভীবাজার</string>
 
 
-    <string name="thana_savar">সাভার</string>
-    <string name="thana_dhamrai">ধামরাই</string>
-    <string name="thana_dohar">দোহার </string>
-    <string name="thana_keranigonj">কেরানীগঞ্জ </string>
-    <string name="thana_nobabgonj">নবাবগঞ্জ </string>
+    <string name="india">ইন্ডিয়া</string>
+    <string name="america">আমেরিকা</string>
+    <string name="canada">কানাডা </string>
+    <string name="austrelia">অস্ট্রেলিয়া </string>
+    <string name="japan">জাপান </string>
+    <string name="russia">রাশিয়া </string>
+    <string name="china">চীন </string>
+    <string name="indoneshia">ইন্দোনেশিয়া </string>
+    <string name="srilanka">শ্রীলঙ্কা </string>
+    <string name="pakisthan">পাকিস্তান </string>
+    <string name="katar">কাতার </string>
+
     <string name="terrorism_info"><![CDATA[<html><body><big>অপরাধের তথ্য দিন </big><br/><font size=5>Report Crime </font><br/><small>(তথ্য দাতার পরিচয় গোপন রাখা হবে)</small></body><html>]]></string>
 
 
     <string name="occurrence_place">ঘটনাস্থল  (Place of Occurrence)</string>
     <string name="app_name_bn">এন্টিটেরোরিজম ইউনিট \n ঢাকা মেট্রোপলিটন পুলিশ</string>
-
 
 
     <string name="user_manual_text">বাংলাদেশ পুলিশের ইন্সপেক্টর জেনারেল ড. মোহাম্মদ জাবেদ পাটোয়ারী, বিপিএম (বার) বলেছেন, আমাদের বড় বড় শহর বিশেষ করে রাজধানী ঢাকায় জায়গা খুব অপ্রতুল। তাই জায়গার সর্বোত্তম ব্যবহার করতে হবে। এক্ষেত্রে মাল্টিলেভেল ডিজিটাল কার পার্কিং একটি অনন্য উদ্যোগ। এর ফলে অল্প জায়গায় বেশী পরিমাণ গাড়ি পার্ক করা সম্ভব।

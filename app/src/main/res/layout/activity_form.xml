@@ -200,11 +200,23 @@
             android:layout_height="@dimen/twenty" />
 
         <Spinner
-            android:id="@+id/spDivisionInformer"
+            android:id="@+id/spOccurrenceInformer"
             android:layout_width="match_parent"
             android:layout_height="@dimen/fifty"
             android:layout_weight="2"
             android:background="@drawable/selector_dropdown" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/twenty" />
+
+        <Spinner
+            android:id="@+id/spDivisionInformer"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/fifty"
+            android:layout_weight="2"
+            android:background="@drawable/selector_dropdown"
+            android:visibility="gone" />
 
         <View
             android:layout_width="match_parent"
@@ -215,18 +227,8 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/fifty"
             android:layout_weight="2"
-            android:background="@drawable/selector_dropdown" />
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/twenty" />
-
-        <Spinner
-            android:id="@+id/spThanaInformer"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/fifty"
-            android:layout_weight="2"
-            android:background="@drawable/selector_dropdown" />
+            android:background="@drawable/selector_dropdown"
+            android:visibility="gone" />
 
         <View
             android:layout_width="match_parent"
@@ -263,7 +265,7 @@
                 android:layout_width="@dimen/zero"
                 android:layout_height="@dimen/hundred"
                 android:layout_weight="3"
-                android:background="@drawable/cell_border"
+                android:background="@drawable/document_border"
                 android:orientation="vertical"
                 android:weightSum="3">
 
@@ -274,112 +276,7 @@
                     android:background="@color/transparent"
                     android:padding="@dimen/ten"
                     android:scaleType="fitCenter"
-                    android:src="@drawable/ic_camera" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/zero"
-                    android:layout_weight="1"
-                    android:gravity="top|center"
-                    android:text="@string/picture"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/twelve"
-                    android:textStyle="bold" />
-
-
-            </LinearLayout>
-
-            <View
-                android:layout_width="@dimen/zero"
-                android:layout_height="match_parent"
-                android:layout_weight=".5" />
-
-            <LinearLayout
-                android:layout_width="@dimen/zero"
-                android:layout_height="@dimen/hundred"
-                android:layout_weight="3"
-                android:background="@drawable/cell_border"
-                android:orientation="vertical"
-                android:weightSum="3">
-
-                <ImageButton
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/zero"
-                    android:layout_weight="2"
-                    android:background="@color/transparent"
-                    android:padding="@dimen/ten"
-                    android:scaleType="fitCenter"
-                    android:src="@drawable/ic_video" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/zero"
-                    android:layout_weight="1"
-                    android:gravity="top|center"
-                    android:text="@string/video"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/twelve"
-                    android:textStyle="bold" />
-
-
-            </LinearLayout>
-
-            <View
-                android:layout_width="@dimen/zero"
-                android:layout_height="match_parent"
-                android:layout_weight=".5" />
-
-            <LinearLayout
-                android:layout_width="@dimen/zero"
-                android:layout_height="@dimen/hundred"
-                android:layout_weight="3"
-                android:background="@drawable/cell_border"
-                android:orientation="vertical"
-                android:weightSum="3">
-
-                <ImageButton
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/zero"
-                    android:layout_weight="2"
-                    android:background="@color/transparent"
-                    android:padding="@dimen/ten"
-                    android:scaleType="fitCenter"
-                    android:src="@drawable/ic_microphone" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/zero"
-                    android:layout_weight="1"
-                    android:gravity="top|center"
-                    android:text="@string/audio"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/twelve"
-                    android:textStyle="bold" />
-
-
-            </LinearLayout>
-
-            <View
-                android:layout_width="@dimen/zero"
-                android:layout_height="match_parent"
-                android:layout_weight=".5" />
-
-            <LinearLayout
-                android:layout_width="@dimen/zero"
-                android:layout_height="@dimen/hundred"
-                android:layout_weight="3"
-                android:background="@drawable/cell_border"
-                android:orientation="vertical"
-                android:weightSum="3">
-
-                <ImageButton
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/zero"
-                    android:layout_weight="2"
-                    android:background="@color/transparent"
-                    android:padding="@dimen/ten"
-                    android:scaleType="fitCenter"
-                    android:src="@drawable/ic_document" />
+                    android:src="@drawable/ic_document_white" />
 
                 <TextView
                     android:layout_width="match_parent"
@@ -387,7 +284,112 @@
                     android:layout_weight="1"
                     android:gravity="top|center"
                     android:text="@string/document"
-                    android:textColor="@color/black"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/twelve"
+                    android:textStyle="bold" />
+
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="@dimen/zero"
+                android:layout_height="match_parent"
+                android:layout_weight=".5" />
+
+            <LinearLayout
+                android:layout_width="@dimen/zero"
+                android:layout_height="@dimen/hundred"
+                android:layout_weight="3"
+                android:background="@drawable/camera_border"
+                android:orientation="vertical"
+                android:weightSum="3">
+
+                <ImageButton
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/zero"
+                    android:layout_weight="2"
+                    android:background="@color/transparent"
+                    android:padding="@dimen/ten"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/ic_camera_white" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/zero"
+                    android:layout_weight="1"
+                    android:gravity="top|center"
+                    android:text="@string/picture"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/twelve"
+                    android:textStyle="bold" />
+
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="@dimen/zero"
+                android:layout_height="match_parent"
+                android:layout_weight=".5" />
+
+            <LinearLayout
+                android:layout_width="@dimen/zero"
+                android:layout_height="@dimen/hundred"
+                android:layout_weight="3"
+                android:background="@drawable/video_border"
+                android:orientation="vertical"
+                android:weightSum="3">
+
+                <ImageButton
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/zero"
+                    android:layout_weight="2"
+                    android:background="@color/transparent"
+                    android:padding="@dimen/ten"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/ic_video_white" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/zero"
+                    android:layout_weight="1"
+                    android:gravity="top|center"
+                    android:text="@string/video"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/twelve"
+                    android:textStyle="bold" />
+
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="@dimen/zero"
+                android:layout_height="match_parent"
+                android:layout_weight=".5" />
+
+            <LinearLayout
+                android:layout_width="@dimen/zero"
+                android:layout_height="@dimen/hundred"
+                android:layout_weight="3"
+                android:background="@drawable/audio_border"
+                android:orientation="vertical"
+                android:weightSum="3">
+
+                <ImageButton
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/zero"
+                    android:layout_weight="2"
+                    android:background="@color/transparent"
+                    android:padding="@dimen/ten"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/ic_microphone_white" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/zero"
+                    android:layout_weight="1"
+                    android:gravity="top|center"
+                    android:text="@string/audio"
+                    android:textColor="@color/white"
                     android:textSize="@dimen/twelve"
                     android:textStyle="bold" />
 
@@ -419,20 +421,18 @@
                 android:layout_weight=".5" />
 
 
-
-
             <Button
                 android:id="@+id/btnSubmit"
                 android:layout_width="@dimen/zero"
                 android:layout_height="@dimen/fifty"
                 android:layout_weight="2"
+                android:background="@drawable/cell_border"
+                android:drawableLeft="@drawable/ic_tick"
                 android:padding="5dp"
                 android:text="@string/submit"
                 android:textColor="@color/black"
-                android:textStyle="bold"
-                android:background="@drawable/cell_border"
-                android:drawableLeft="@drawable/ic_tick"
-                android:textSize="@dimen/fifteen"/>
+                android:textSize="@dimen/fifteen"
+                android:textStyle="bold" />
 
 
             <View
@@ -446,14 +446,13 @@
                 android:layout_width="@dimen/zero"
                 android:layout_height="@dimen/fifty"
                 android:layout_weight="2"
+                android:background="@drawable/cell_border"
+                android:drawableLeft="@drawable/ic_cancel"
                 android:padding="5dp"
                 android:text="@string/cancel"
                 android:textColor="@color/black"
-                android:textStyle="bold"
-                android:background="@drawable/cell_border"
-                android:drawableLeft="@drawable/ic_cancel"
-                android:textSize="@dimen/fifteen"/>
-
+                android:textSize="@dimen/fifteen"
+                android:textStyle="bold" />
 
 
             <View

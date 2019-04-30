@@ -18,8 +18,12 @@ public class FormActivity extends Activity implements AdapterView.OnItemSelected
 
     FormActivity activity;
     public Spinner spDivision;
+    public Spinner spDivisionInformer;
+
     public Spinner spDistrict;
+    public Spinner spDistrictInformer;
     public Spinner spThana;
+    public Spinner spOccurrenceInformer;
     public Spinner spOccurrence;
     ImageButton ibtnBack;
     public int passedPosition;
@@ -45,8 +49,11 @@ public class FormActivity extends Activity implements AdapterView.OnItemSelected
         activity = this;
 
         spDivision = (Spinner) findViewById(R.id.spDivision);
+        spDivisionInformer = (Spinner) findViewById(R.id.spDivisionInformer);
+        spDistrictInformer = (Spinner) findViewById(R.id.spDistrictInformer);
         spDistrict = (Spinner) findViewById(R.id.spDistrict);
         spThana = (Spinner) findViewById(R.id.spThana);
+        spOccurrenceInformer = (Spinner) findViewById(R.id.spOccurrenceInformer);
         spOccurrence = (Spinner) findViewById(R.id.spOccurrence);
         ibtnBack = (ImageButton) findViewById(R.id.ibtnBack);
 
@@ -57,8 +64,11 @@ public class FormActivity extends Activity implements AdapterView.OnItemSelected
         btnCancel.setOnClickListener(this);
 
         spDivision.setOnItemSelectedListener(this);
+        spDivisionInformer.setOnItemSelectedListener(this);
         spDistrict.setOnItemSelectedListener(this);
+        spDistrictInformer.setOnItemSelectedListener(this);
         spThana.setOnItemSelectedListener(this);
+        spOccurrenceInformer.setOnItemSelectedListener(this);
         spOccurrence.setOnItemSelectedListener(this);
 
         Bundle bundle = getIntent().getExtras();
@@ -105,6 +115,7 @@ public class FormActivity extends Activity implements AdapterView.OnItemSelected
         occurrenceAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, occurrence);
         occurrenceAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spOccurrence.setAdapter(occurrenceAdapter);
+        spOccurrenceInformer.setAdapter(occurrenceAdapter);
 
 
         dstDhaka = new ArrayList<String>();
@@ -125,11 +136,17 @@ public class FormActivity extends Activity implements AdapterView.OnItemSelected
 
         thanaDhaka = new ArrayList<String>();
         thanaDhaka.add(getString(R.string.country_selection));
-        thanaDhaka.add(getString(R.string.thana_savar));
-        thanaDhaka.add(getString(R.string.thana_dhamrai));
-        thanaDhaka.add(getString(R.string.thana_dohar));
-        thanaDhaka.add(getString(R.string.thana_keranigonj));
-        thanaDhaka.add(getString(R.string.thana_nobabgonj));
+        thanaDhaka.add(getString(R.string.india));
+        thanaDhaka.add(getString(R.string.america));
+        thanaDhaka.add(getString(R.string.canada));
+        thanaDhaka.add(getString(R.string.austrelia));
+        thanaDhaka.add(getString(R.string.japan));
+        thanaDhaka.add(getString(R.string.russia));
+        thanaDhaka.add(getString(R.string.china));
+        thanaDhaka.add(getString(R.string.indoneshia));
+        thanaDhaka.add(getString(R.string.srilanka));
+        thanaDhaka.add(getString(R.string.pakisthan));
+        thanaDhaka.add(getString(R.string.katar));
 
 
         dstChittagong = new ArrayList<String>();
@@ -260,6 +277,79 @@ public class FormActivity extends Activity implements AdapterView.OnItemSelected
                 String itemThana = parent.getItemAtPosition(position).toString();
                 //Toast.makeText(parent.getContext(), "Selected: " + itemThana, Toast.LENGTH_LONG).show();
                 break;
+
+
+
+                 case R.id.spOccurrenceInformer:
+                     String itemOccurrenceInformer = parent.getItemAtPosition(position).toString();
+
+                     if (itemOccurrenceInformer == getString(R.string.mohanogor)) {
+                         divisionAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, division);
+                         divisionAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                         spDivisionInformer.setAdapter(divisionAdapter);
+
+                         spDivisionInformer.setVisibility(View.VISIBLE);
+                         spDistrictInformer.setVisibility(View.GONE);
+                        // spThanaInformer.setVisibility(View.GONE);
+
+
+                     } else if (itemOccurrenceInformer == getString(R.string.district)) {
+                         divisionAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, dstDhaka);
+                         divisionAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                         spDivisionInformer.setAdapter(divisionAdapter);
+                         spDivisionInformer.setVisibility(View.VISIBLE);
+                         spDistrictInformer.setVisibility(View.GONE);
+                         //spThana.setVisibility(View.GONE);
+
+                     }
+                     else if (itemOccurrenceInformer == getString(R.string.bdout)) {
+                         divisionAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, thanaDhaka);
+                         divisionAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                         spDivisionInformer.setAdapter(divisionAdapter);
+                         spDivisionInformer.setVisibility(View.VISIBLE);
+                         spDistrictInformer.setVisibility(View.GONE);
+                         //spThana.setVisibility(View.GONE);
+                     }
+
+
+                     break;
+
+            case R.id.spDivisionInformer:
+                String itemDivisionInformer = parent.getItemAtPosition(position).toString();
+                //Toast.makeText(parent.getContext(), "Selected: " + itemDivision, Toast.LENGTH_LONG).show();
+
+                if (itemDivisionInformer == getString(R.string.div_dhaka)) {
+                    districtAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, dstDhaka);
+                    districtAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    spDistrictInformer.setAdapter(districtAdapter);
+                    spDistrictInformer.setVisibility(View.VISIBLE);
+                    spDivisionInformer.setVisibility(View.VISIBLE);
+                    //spThana.setVisibility(View.GONE);
+
+
+                } else if (itemDivisionInformer == getString(R.string.div_chittagong)) {
+                    districtAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, dstChittagong);
+                    districtAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    spDistrictInformer.setAdapter(districtAdapter);
+                    spDistrictInformer.setVisibility(View.VISIBLE);
+                    spDivisionInformer.setVisibility(View.VISIBLE);
+                    //spThana.setVisibility(View.GONE);
+
+                } else if (itemDivisionInformer == getString(R.string.div_sylhet)) {
+                    districtAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, dstSylhet);
+                    districtAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    spDistrictInformer.setAdapter(districtAdapter);
+                    spDistrictInformer.setVisibility(View.VISIBLE);
+                    spDivisionInformer.setVisibility(View.VISIBLE);
+                    //spThana.setVisibility(View.GONE);
+                }
+
+                break;
+
+
+
+
+
         }
 
 
