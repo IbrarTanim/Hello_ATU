@@ -1,4 +1,4 @@
-package com.dtec.helloatu;
+package com.dtec.helloatu.activities;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -13,6 +13,11 @@ import android.text.Html;
 import android.util.TypedValue;
 import android.view.View;
 import android.widget.TextView;
+
+import com.dtec.helloatu.R;
+import com.dtec.helloatu.adapter.CategoryAdapter;
+import com.dtec.helloatu.listener.CustomItemClickListener;
+import com.dtec.helloatu.pojo.Category;
 
 import java.util.ArrayList;
 import java.util.List;

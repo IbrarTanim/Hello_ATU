@@ -1,4 +1,4 @@
-package com.dtec.helloatu;
+package com.dtec.helloatu.pojo;
 
 public class Category {
 

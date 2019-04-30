@@ -59,7 +59,7 @@
                     android:textColor="@color/white"
                     android:textSize="@dimen/fifteen" />
 
-                <com.dtec.helloatu.CircularImageView
+                <com.dtec.helloatu.customUI.CircularImageView
                     android:id="@+id/civUserManual"
                     android:layout_width="@dimen/fifty"
                     android:layout_height="@dimen/fifty"
@@ -117,7 +117,7 @@
                     android:textColor="@color/white"
                     android:textSize="@dimen/fifteen" />
 
-                <com.dtec.helloatu.CircularImageView
+                <com.dtec.helloatu.customUI.CircularImageView
                     android:id="@+id/civUnitDetails"
                     android:layout_width="@dimen/fifty"
                     android:layout_height="@dimen/fifty"
@@ -175,7 +175,7 @@
                     android:textColor="@color/white"
                     android:textSize="@dimen/fifteen" />
 
-                <com.dtec.helloatu.CircularImageView
+                <com.dtec.helloatu.customUI.CircularImageView
                     android:id="@+id/civNewsFeed"
                     android:layout_width="@dimen/fifty"
                     android:layout_height="@dimen/fifty"
@@ -230,7 +230,7 @@
                 android:textColor="@color/white"
                 android:textSize="@dimen/fifteen" />
 
-            <com.dtec.helloatu.CircularImageView
+            <com.dtec.helloatu.customUI.CircularImageView
                 android:id="@+id/civAnonymousChat"
                 android:layout_width="@dimen/fifty"
                 android:layout_height="@dimen/fifty"

@@ -1,4 +1,4 @@
-package com.dtec.helloatu;
+package com.dtec.helloatu.activities;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -10,6 +10,8 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.Toast;
+
+import com.dtec.helloatu.R;
 
 import java.util.ArrayList;
 import java.util.List;

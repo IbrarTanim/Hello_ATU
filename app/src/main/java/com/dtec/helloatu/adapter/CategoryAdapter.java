@@ -1,4 +1,4 @@
-package com.dtec.helloatu;
+package com.dtec.helloatu.adapter;
 
 import android.app.Activity;
 import android.content.Context;
@@ -17,6 +17,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.dtec.helloatu.R;
+import com.dtec.helloatu.activities.FormActivity;
+import com.dtec.helloatu.activities.InformationActivity;
+import com.dtec.helloatu.activities.WantedActivity;
+import com.dtec.helloatu.listener.CustomItemClickListener;
+import com.dtec.helloatu.pojo.Category;
 
 import java.util.List;
 

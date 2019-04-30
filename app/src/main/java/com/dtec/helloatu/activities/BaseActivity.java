@@ -1,4 +1,4 @@
-package com.dtec.helloatu;
+package com.dtec.helloatu.activities;
 
 import android.app.Activity;
 import android.os.Build;

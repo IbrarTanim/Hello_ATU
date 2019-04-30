@@ -1,4 +1,4 @@
-package com.dtec.helloatu;
+package com.dtec.helloatu.activities;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.text.Html;
 import android.widget.TextView;
+
+import com.dtec.helloatu.R;
 
 public class SplashActivity extends Activity {
 

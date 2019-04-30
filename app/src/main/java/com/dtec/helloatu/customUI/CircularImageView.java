@@ -1,4 +1,4 @@
-package com.dtec.helloatu;
+package com.dtec.helloatu.customUI;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -17,6 +17,8 @@ import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.widget.ImageView;
+
+import com.dtec.helloatu.R;
 
 /**
  * Created by ibrar on 12/21/2016.
