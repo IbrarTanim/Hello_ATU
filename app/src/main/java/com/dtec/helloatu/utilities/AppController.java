@@ -6,12 +6,17 @@ import android.text.TextUtils;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
+import com.dtec.helloatu.R;
+
+import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 
 /**
  * Created by RAFI on 10/2/2016.
  */
 
 public class AppController extends Application {
+
+
 
     public static final String TAG = AppController.class.getSimpleName();
 
@@ -23,6 +28,19 @@ public class AppController extends Application {
     public void onCreate() {
         super.onCreate();
         mInstance = this;
+
+        /*if (LeakCanary.isInAnalyzerProcess(this)) {
+            // This process is dedicated to LeakCanary for heap analysis.
+            // You should not init your app in this process.
+            return;
+        }
+        LeakCanary.install(this);*/
+        // Normal app init code...
+        CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
+                .setDefaultFontPath("font/rancho3.ttf")
+                .setFontAttrId(R.attr.fontPath)
+                .build()
+        );
     }
 
     public static synchronized AppController getInstance() {
@@ -52,4 +70,6 @@ public class AppController extends Application {
             mRequestQueue.cancelAll(tag);
         }
     }
+
+
 }

@@ -2,17 +2,23 @@ package com.dtec.helloatu.activities;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.dtec.helloatu.R;
+import com.dtec.helloatu.utilities.FilePath;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,6 +36,16 @@ public class FormActivity extends Activity implements AdapterView.OnItemSelected
     ImageButton ibtnBack;
     public int passedPosition;
     Button btnSubmit, btnCancel;
+    TextView tvDocument;
+    ImageView ivCamera;
+    String selectedFilePath;
+
+    private static final int PICK_FILE_REQUEST = 0x1;
+    private static final int PICK_CAMERA_REQUEST = 0x2;
+    private static final int PICK_VIDEO_REQUEST = 0x3;
+    private static final int PICK_AUDIO_REQUEST = 0x4;
+
+    ImageButton ibDocument, ibCamera, ibVideo, ibAudio;
 
     ArrayAdapter<String> occurrenceAdapter;
     ArrayAdapter<String> divisionAdapter;
@@ -59,11 +75,24 @@ public class FormActivity extends Activity implements AdapterView.OnItemSelected
         spOccurrence = (Spinner) findViewById(R.id.spOccurrence);
         ibtnBack = (ImageButton) findViewById(R.id.ibtnBack);
 
+        tvDocument = findViewById(R.id.tvDocument);
+        ivCamera = findViewById(R.id.ivCamera);
+
+        ibDocument = findViewById(R.id.ibDocument);
+        ibCamera = findViewById(R.id.ibCamera);
+        ibVideo = findViewById(R.id.ibVideo);
+        ibAudio = findViewById(R.id.ibAudio);
+
+
         btnSubmit = (Button) findViewById(R.id.btnSubmit);
         btnCancel = (Button) findViewById(R.id.btnCancel);
 
         btnSubmit.setOnClickListener(this);
         btnCancel.setOnClickListener(this);
+        ibDocument.setOnClickListener(this);
+        ibCamera.setOnClickListener(this);
+        ibVideo.setOnClickListener(this);
+        ibAudio.setOnClickListener(this);
 
         spDivision.setOnItemSelectedListener(this);
         spDivisionInformer.setOnItemSelectedListener(this);
@@ -105,7 +134,6 @@ public class FormActivity extends Activity implements AdapterView.OnItemSelected
         divisionAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, division);
         divisionAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spDivision.setAdapter(divisionAdapter);
-
 
 
         occurrence = new ArrayList<String>();
@@ -223,8 +251,7 @@ public class FormActivity extends Activity implements AdapterView.OnItemSelected
                     spDistrict.setVisibility(View.GONE);
                     spThana.setVisibility(View.GONE);
 
-                }
-                else if (itemOccurrence == getString(R.string.bdout)) {
+                } else if (itemOccurrence == getString(R.string.bdout)) {
                     divisionAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, thanaDhaka);
                     divisionAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     spDivision.setAdapter(divisionAdapter);
@@ -281,40 +308,38 @@ public class FormActivity extends Activity implements AdapterView.OnItemSelected
                 break;
 
 
+            case R.id.spOccurrenceInformer:
+                String itemOccurrenceInformer = parent.getItemAtPosition(position).toString();
 
-                 case R.id.spOccurrenceInformer:
-                     String itemOccurrenceInformer = parent.getItemAtPosition(position).toString();
+                if (itemOccurrenceInformer == getString(R.string.mohanogor)) {
+                    divisionAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, division);
+                    divisionAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    spDivisionInformer.setAdapter(divisionAdapter);
 
-                     if (itemOccurrenceInformer == getString(R.string.mohanogor)) {
-                         divisionAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, division);
-                         divisionAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                         spDivisionInformer.setAdapter(divisionAdapter);
-
-                         spDivisionInformer.setVisibility(View.VISIBLE);
-                         spDistrictInformer.setVisibility(View.GONE);
-                        // spThanaInformer.setVisibility(View.GONE);
-
-
-                     } else if (itemOccurrenceInformer == getString(R.string.district)) {
-                         divisionAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, dstDhaka);
-                         divisionAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                         spDivisionInformer.setAdapter(divisionAdapter);
-                         spDivisionInformer.setVisibility(View.VISIBLE);
-                         spDistrictInformer.setVisibility(View.GONE);
-                         //spThana.setVisibility(View.GONE);
-
-                     }
-                     else if (itemOccurrenceInformer == getString(R.string.bdout)) {
-                         divisionAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, thanaDhaka);
-                         divisionAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                         spDivisionInformer.setAdapter(divisionAdapter);
-                         spDivisionInformer.setVisibility(View.VISIBLE);
-                         spDistrictInformer.setVisibility(View.GONE);
-                         //spThana.setVisibility(View.GONE);
-                     }
+                    spDivisionInformer.setVisibility(View.VISIBLE);
+                    spDistrictInformer.setVisibility(View.GONE);
+                    // spThanaInformer.setVisibility(View.GONE);
 
 
-                     break;
+                } else if (itemOccurrenceInformer == getString(R.string.district)) {
+                    divisionAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, dstDhaka);
+                    divisionAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    spDivisionInformer.setAdapter(divisionAdapter);
+                    spDivisionInformer.setVisibility(View.VISIBLE);
+                    spDistrictInformer.setVisibility(View.GONE);
+                    //spThana.setVisibility(View.GONE);
+
+                } else if (itemOccurrenceInformer == getString(R.string.bdout)) {
+                    divisionAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, thanaDhaka);
+                    divisionAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    spDivisionInformer.setAdapter(divisionAdapter);
+                    spDivisionInformer.setVisibility(View.VISIBLE);
+                    spDistrictInformer.setVisibility(View.GONE);
+                    //spThana.setVisibility(View.GONE);
+                }
+
+
+                break;
 
             case R.id.spDivisionInformer:
                 String itemDivisionInformer = parent.getItemAtPosition(position).toString();
@@ -349,9 +374,6 @@ public class FormActivity extends Activity implements AdapterView.OnItemSelected
                 break;
 
 
-
-
-
         }
 
 
@@ -370,9 +392,44 @@ public class FormActivity extends Activity implements AdapterView.OnItemSelected
 
     }
 
+    Intent intent;
+
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
+
+
+            case R.id.ibDocument:
+
+                intent = new Intent();
+                intent.setType("*/*");
+                intent.setAction(Intent.ACTION_GET_CONTENT);
+                startActivityForResult(Intent.createChooser(intent, "Choose File to Upload.."), PICK_FILE_REQUEST);
+                break;
+
+            case R.id.ibCamera:
+
+                intent = new Intent();
+                intent.setType("*/*");
+                intent.setAction(Intent.ACTION_GET_CONTENT);
+                startActivityForResult(Intent.createChooser(intent, "Choose picture to Upload.."), PICK_CAMERA_REQUEST);
+                break;
+
+            case R.id.ibVideo:
+                intent = new Intent();
+                intent.setType("*/*");
+                intent.setAction(Intent.ACTION_GET_CONTENT);
+                startActivityForResult(Intent.createChooser(intent, "Choose File to Upload.."), PICK_VIDEO_REQUEST);
+                break;
+
+            case R.id.ibAudio:
+                intent = new Intent();
+                intent.setType("*/*");
+                intent.setAction(Intent.ACTION_GET_CONTENT);
+                startActivityForResult(Intent.createChooser(intent, "Choose File to Upload.."), PICK_AUDIO_REQUEST);
+                break;
+
+
             case R.id.btnSubmit:
                 Toast.makeText(activity, "Under Construction", Toast.LENGTH_SHORT).show();
                 break;
@@ -380,6 +437,81 @@ public class FormActivity extends Activity implements AdapterView.OnItemSelected
                 Toast.makeText(activity, "Under Construction", Toast.LENGTH_SHORT).show();
                 break;
 
+
         }
     }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == Activity.RESULT_OK) {
+
+
+            Uri selectedFileUri = data.getData();
+            selectedFilePath = FilePath.getActualPath(this, selectedFileUri);
+            Uri uriFromPath = Uri.fromFile(new File(selectedFilePath));
+
+
+            // path for file
+            if (requestCode == PICK_FILE_REQUEST) {
+                if (data == null) {
+                    return;
+                }
+                if (selectedFilePath != null && !selectedFilePath.equals("")) {
+                    tvDocument.setText("Document URL:" + selectedFilePath);
+
+                } else {
+                    Toast.makeText(this, "Cannot upload file to server", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+
+            // path for camera
+            if (requestCode == PICK_CAMERA_REQUEST) {
+                if (data == null) {
+                    return;
+                }
+                if (selectedFilePath != null && !selectedFilePath.equals("")) {
+                    //tvDocument.setText(selectedFilePath);
+                    ivCamera.setImageURI(uriFromPath);
+
+                } else {
+                    Toast.makeText(this, "Cannot upload file to server", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+
+            // path for Video
+            if (requestCode == PICK_VIDEO_REQUEST) {
+                if (data == null) {
+                    return;
+                }
+                if (selectedFilePath != null && !selectedFilePath.equals("")) {
+                    tvDocument.setText("Video URL: " + selectedFilePath);
+
+                } else {
+                    Toast.makeText(this, "Cannot upload file to server", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+
+            // path for Audio
+            if (requestCode == PICK_AUDIO_REQUEST) {
+                if (data == null) {
+                    return;
+                }
+                if (selectedFilePath != null && !selectedFilePath.equals("")) {
+                    tvDocument.setText("Audio URL: " + selectedFilePath);
+
+                } else {
+                    Toast.makeText(this, "Cannot upload file to server", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+
+        }
+    }
+
+
 }
