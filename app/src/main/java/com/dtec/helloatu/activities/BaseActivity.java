@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.View;
 
+import com.dtec.helloatu.utilities.ExceptionHandler;
+
 public class BaseActivity extends Activity {
 
     BaseActivity activity;
@@ -17,6 +19,7 @@ public class BaseActivity extends Activity {
         fullScreencall();
         UiChangeListener();
 
+        Thread.setDefaultUncaughtExceptionHandler(new ExceptionHandler(this));
     }
 
 
