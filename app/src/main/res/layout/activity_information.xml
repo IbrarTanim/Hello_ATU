@@ -61,8 +61,8 @@
 
                 <com.dtec.helloatu.customUI.CircularImageView
                     android:id="@+id/civUserManual"
-                    android:layout_width="@dimen/fifty"
-                    android:layout_height="@dimen/fifty"
+                    android:layout_width="@dimen/fourty_five"
+                    android:layout_height="@dimen/fourty_five"
                     android:layout_alignParentRight="true"
                     android:layout_centerInParent="true"
                     android:layout_centerHorizontal="true"
@@ -118,8 +118,8 @@
 
                 <com.dtec.helloatu.customUI.CircularImageView
                     android:id="@+id/civUnitDetails"
-                    android:layout_width="@dimen/fifty"
-                    android:layout_height="@dimen/fifty"
+                    android:layout_width="@dimen/fourty_five"
+                    android:layout_height="@dimen/fourty_five"
                     android:layout_alignParentRight="true"
                     android:layout_centerInParent="true"
                     android:layout_centerHorizontal="true"
@@ -176,8 +176,8 @@
 
                 <com.dtec.helloatu.customUI.CircularImageView
                     android:id="@+id/civNewsFeed"
-                    android:layout_width="@dimen/fifty"
-                    android:layout_height="@dimen/fifty"
+                    android:layout_width="@dimen/fourty_five"
+                    android:layout_height="@dimen/fourty_five"
                     android:layout_alignParentRight="true"
                     android:layout_centerInParent="true"
                     android:layout_centerHorizontal="true"
@@ -231,8 +231,8 @@
 
             <com.dtec.helloatu.customUI.CircularImageView
                 android:id="@+id/civAnonymousChat"
-                android:layout_width="@dimen/fifty"
-                android:layout_height="@dimen/fifty"
+                android:layout_width="@dimen/fourty_five"
+                android:layout_height="@dimen/fourty_five"
                 android:layout_alignParentRight="true"
                 android:layout_centerInParent="true"
                 android:layout_centerHorizontal="true"
