@@ -1,9 +1,13 @@
 package com.dtec.helloatu.activities;
 
 import android.app.Activity;
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -16,9 +20,20 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.dtec.helloatu.R;
+import com.dtec.helloatu.dialogue.DialogNavBarHide;
+import com.dtec.helloatu.dialogue.ImageSelectionDialog;
+import com.dtec.helloatu.utilities.CustomToast;
 import com.dtec.helloatu.utilities.FilePath;
+import com.dtec.helloatu.utilities.FileProcessing;
+import com.dtec.helloatu.utilities.ImageProcessing;
+import com.dtec.helloatu.utilities.InternalStorageContentProvider;
+import com.dtec.helloatu.utilities.StaticAccess;
+import com.nbsp.materialfilepicker.ui.FilePickerActivity;
+import com.nostra13.universalimageloader.utils.L;
+import com.theartofdev.edmodo.cropper.CropImageView;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,11 +54,28 @@ public class FormActivity extends Activity implements AdapterView.OnItemSelected
     TextView tvDocument;
     ImageView ivCamera;
     String selectedFilePath;
+    public ImageSelectionDialog imageSelectionDialog;
+    String filePath, imgPath = "";
+
+    int itemPicFlag = 0;
+
+    private String appImagePath = null;
+    ImageProcessing imgProc;
+    public static final String TEMP_PHOTO_FILE_NAME = "temp_photo.jpg";
+    public File mFileTemp;
+    FileProcessing fileProcessing;
 
     private static final int PICK_FILE_REQUEST = 0x1;
-    private static final int PICK_CAMERA_REQUEST = 0x2;
     private static final int PICK_VIDEO_REQUEST = 0x3;
     private static final int PICK_AUDIO_REQUEST = 0x4;
+
+    public static final int REQUEST_CODE_TAKE_PICTURE = 0x8;
+    private static final int SELECT_PICTURE = 0x1;
+    private static final int MATERIAL_FILE_PICKER = 0x3;
+
+
+    int intent_source = 0;
+
 
     ImageButton ibDocument, ibCamera, ibVideo, ibAudio;
 
@@ -76,12 +108,15 @@ public class FormActivity extends Activity implements AdapterView.OnItemSelected
         ibtnBack = (ImageButton) findViewById(R.id.ibtnBack);
 
         tvDocument = findViewById(R.id.tvDocument);
-        ivCamera = findViewById(R.id.ivCamera);
+        ivCamera = (ImageView) findViewById(R.id.ivCamera);
 
         ibDocument = findViewById(R.id.ibDocument);
         ibCamera = findViewById(R.id.ibCamera);
         ibVideo = findViewById(R.id.ibVideo);
         ibAudio = findViewById(R.id.ibAudio);
+
+        imgProc = new ImageProcessing(activity);
+        appImagePath = imgProc.getImageDir();
 
 
         btnSubmit = (Button) findViewById(R.id.btnSubmit);
@@ -405,14 +440,20 @@ public class FormActivity extends Activity implements AdapterView.OnItemSelected
                 intent.setType("*/*");
                 intent.setAction(Intent.ACTION_GET_CONTENT);
                 startActivityForResult(Intent.createChooser(intent, "Choose File to Upload.."), PICK_FILE_REQUEST);
+
                 break;
 
             case R.id.ibCamera:
 
-                intent = new Intent();
-                intent.setType("*/*");
-                intent.setAction(Intent.ACTION_GET_CONTENT);
-                startActivityForResult(Intent.createChooser(intent, "Choose picture to Upload.."), PICK_CAMERA_REQUEST);
+                imageSelectionDialog = new ImageSelectionDialog(activity, activity, itemPicFlag);
+                DialogNavBarHide.navBarHide(activity, imageSelectionDialog);
+
+
+                //intent = new Intent();
+                //intent.setType("*/*");
+                //intent.setAction(Intent.ACTION_GET_CONTENT);
+                //startActivityForResult(Intent.createChooser(intent, "Choose picture to Upload.."), PICK_CAMERA_REQUEST);
+
                 break;
 
             case R.id.ibVideo:
@@ -442,7 +483,12 @@ public class FormActivity extends Activity implements AdapterView.OnItemSelected
     }
 
 
-    @Override
+
+
+
+
+
+ /*   @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == Activity.RESULT_OK) {
@@ -451,7 +497,6 @@ public class FormActivity extends Activity implements AdapterView.OnItemSelected
             Uri selectedFileUri = data.getData();
             selectedFilePath = FilePath.getActualPath(this, selectedFileUri);
             Uri uriFromPath = Uri.fromFile(new File(selectedFilePath));
-
 
             // path for file
             if (requestCode == PICK_FILE_REQUEST) {
@@ -468,7 +513,7 @@ public class FormActivity extends Activity implements AdapterView.OnItemSelected
 
 
             // path for camera
-            if (requestCode == PICK_CAMERA_REQUEST) {
+            *//*if (requestCode == PICK_CAMERA_REQUEST) {
                 if (data == null) {
                     return;
                 }
@@ -479,7 +524,7 @@ public class FormActivity extends Activity implements AdapterView.OnItemSelected
                 } else {
                     Toast.makeText(this, "Cannot upload file to server", Toast.LENGTH_SHORT).show();
                 }
-            }
+            }*//*
 
 
             // path for Video
@@ -510,7 +555,147 @@ public class FormActivity extends Activity implements AdapterView.OnItemSelected
             }
 
 
+
         }
+    }*/
+
+
+
+
+
+
+
+
+
+
+
+    // Opening Image Cropper (Transparent)
+    public void openCropper(Uri uri) {
+
+        com.theartofdev.edmodo.cropper.CropImage.activity(uri)
+                .setGuidelines(CropImageView.Guidelines.ON)
+                .setOutputCompressFormat(Bitmap.CompressFormat.PNG)
+                .start(activity);
+    }
+
+    // load image from camera by Rokan
+    public void loadImageCamera() {
+        // flag for using item or task
+        File sdCardDirectory = new File(Environment.getExternalStorageDirectory() + appImagePath);
+        if (!sdCardDirectory.exists()) {
+            sdCardDirectory.mkdirs();
+        }
+        String state1 = Environment.getExternalStorageState();
+        if (Environment.MEDIA_MOUNTED.equals(state1)) {
+            mFileTemp = new File(Environment.getExternalStorageDirectory() + appImagePath, TEMP_PHOTO_FILE_NAME);
+        } else {
+            mFileTemp = new File(getFilesDir() + appImagePath, TEMP_PHOTO_FILE_NAME);
+        }
+        //musicControl = true;
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        try {
+            Uri mImageCaptureUri = null;
+            String state2 = Environment.getExternalStorageState();
+            if (Environment.MEDIA_MOUNTED.equals(state2)) {
+                mImageCaptureUri = Uri.fromFile(mFileTemp);
+            } else {
+                mImageCaptureUri = InternalStorageContentProvider.CONTENT_URI;
+            }
+            intent.putExtra(android.provider.MediaStore.EXTRA_OUTPUT, mImageCaptureUri);
+            intent.putExtra("return-data", true);
+            startActivityForResult(intent, REQUEST_CODE_TAKE_PICTURE);
+
+        } catch (ActivityNotFoundException e) {
+        }
+
+        intent_source = 2;
+    }
+
+
+    // load image from Gallery by Rokan
+    public void loadImageGallery() {
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(Intent.createChooser(intent, "Select Picture"), SELECT_PICTURE);
+
+
+        intent_source = 1;
+    }
+
+
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        //musicControl = false;
+        fileProcessing = new FileProcessing(activity);
+        Bitmap widgetImage = null;
+
+
+        if (resultCode == RESULT_OK) {
+
+            // Load Image from Gallery
+            if (requestCode == SELECT_PICTURE && intent_source == 1) {
+                openCropper(data.getData());
+            }
+
+            // load image from Camera
+            if (requestCode == REQUEST_CODE_TAKE_PICTURE && intent_source == 2) {
+                openCropper(Uri.fromFile(new File(mFileTemp.getAbsolutePath())));
+
+            }
+
+
+            // Load image after Cropping (Transparent)
+            if (requestCode == com.theartofdev.edmodo.cropper.CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
+                com.theartofdev.edmodo.cropper.CropImage.ActivityResult result = com.theartofdev.edmodo.cropper.CropImage.getActivityResult(data);
+                Uri resultUri = result.getUri();
+                Bitmap bitmap = null;
+                try {
+                    bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), resultUri);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+
+                setImagePro(bitmap);
+
+
+            } else if (resultCode == com.theartofdev.edmodo.cropper.CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
+                Toast.makeText(activity, "Crop Error", Toast.LENGTH_SHORT).show();
+            }
+
+
+            // Getting file with Material File picker
+            if (requestCode == MATERIAL_FILE_PICKER) {
+                filePath = data.getStringExtra(FilePickerActivity.RESULT_FILE_PATH);
+                int intFileSize = fileProcessing.fileSize(filePath);
+                //tvDocument.setText(intFileSize);
+
+                if (intFileSize <= StaticAccess.TAG_SOUND_FILE_SIZE) {
+
+                } else {
+                    CustomToast.t(activity, getResources().getString(R.string.notSupported));
+                }
+
+            }
+
+        }
+
+        setImagePro(widgetImage);
+        intent_source = 0;
+
+    }
+
+
+    public void setImagePro(Bitmap bitmap) {
+        //scale bitmap
+        if (bitmap != null) {
+            Bitmap b = (bitmap);
+            ivCamera.setVisibility(View.VISIBLE);
+            imgPath = imgProc.imageSave(b);
+            imgProc.setImageWith_loader(ivCamera, imgPath);
+            b.recycle();
+        }
+
     }
 
 

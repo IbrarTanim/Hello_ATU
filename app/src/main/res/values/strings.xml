@@ -85,7 +85,7 @@
     <string name="dst_chandpur">চাঁদপুর</string>
     <string name="dst_comilla">কুমিল্লা</string>
     <string name="dst_bbaria">ব্রাহ্মণবাড়িয়া</string>
-
+    <string name="notSupported">file not supported</string>
 
     <string name="dst_sunamgonj">সুনামগঞ্জ</string>
     <string name="dst_hobigonj">হবিগঞ্জ</string>

@@ -1,6 +1,6 @@
 <shape xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <solid android:color="#1670A7" />
+    <solid android:color="@color/cyber_crime_color" />
     <corners
 
         android:bottomLeftRadius="15dip"

@@ -411,16 +411,21 @@
 
         <ImageView
             android:id="@+id/ivCamera"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="fill_parent"
+            android:layout_height="@dimen/two_hundred"
             android:layout_gravity="center"
-            android:scaleType="fitCenter" />
+            android:padding="@dimen/five"
+            android:background="@drawable/cell_border"
+            android:scaleType="fitXY"
+            android:src="@drawable/camera"
+            android:visibility="gone" />
 
         <TextView
             android:id="@+id/tvDocument"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/thirty"
             android:gravity="center"
+            android:layout_gravity="center"
             android:textColor="@color/black"
             android:textSize="@dimen/fifteen"
             android:visibility="visible" />
