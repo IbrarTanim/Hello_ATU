@@ -19,11 +19,12 @@
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="com.android.vending.BILLING" />
 
-    <supports-screens android:smallScreens="false"
-        android:normalScreens="false"
+    <supports-screens
         android:largeScreens="true"
-        android:xlargeScreens="true"
-        android:requiresSmallestWidthDp="600" />
+        android:normalScreens="false"
+        android:requiresSmallestWidthDp="600"
+        android:smallScreens="false"
+        android:xlargeScreens="true" />
 
 
     <application
@@ -52,16 +53,18 @@
             android:windowSoftInputMode="stateHidden" />
 
         <activity
-            android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
-            android:theme="@style/Base.Theme.AppCompat"
-            android:windowSoftInputMode="stateHidden" />
-
-        <activity
             android:name=".activities.InformationActivity"
             android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".activities.WantedActivity"
             android:windowSoftInputMode="stateHidden" />
+
+        <activity
+            android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
+            android:theme="@style/Base.Theme.AppCompat"
+            android:windowSoftInputMode="stateHidden" />
+
+
     </application>
 
 </manifest>

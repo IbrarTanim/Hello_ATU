@@ -3,11 +3,13 @@ package com.dtec.helloatu.activities;
 import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.provider.OpenableColumns;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -37,7 +39,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FormActivity extends Activity implements AdapterView.OnItemSelectedListener, View.OnClickListener {
+public class FormActivity extends BaseActivity implements AdapterView.OnItemSelectedListener, View.OnClickListener {
 
     FormActivity activity;
     public Spinner spDivision;
@@ -51,7 +53,7 @@ public class FormActivity extends Activity implements AdapterView.OnItemSelected
     ImageButton ibtnBack;
     public int passedPosition;
     Button btnSubmit, btnCancel;
-    TextView tvDocument;
+    TextView tvDocument, tvVideo, tvAudio;
     ImageView ivCamera;
     String selectedFilePath;
     public ImageSelectionDialog imageSelectionDialog;
@@ -65,8 +67,9 @@ public class FormActivity extends Activity implements AdapterView.OnItemSelected
     public File mFileTemp;
     FileProcessing fileProcessing;
 
-    private static final int PICK_FILE_REQUEST = 0x1;
-    private static final int PICK_VIDEO_REQUEST = 0x3;
+    private static final int PICK_CAMERA_REQUEST = 0x6;
+    private static final int PICK_FILE_REQUEST = 0x5;
+    private static final int PICK_VIDEO_REQUEST = 0x9;
     private static final int PICK_AUDIO_REQUEST = 0x4;
 
     public static final int REQUEST_CODE_TAKE_PICTURE = 0x8;
@@ -108,6 +111,8 @@ public class FormActivity extends Activity implements AdapterView.OnItemSelected
         ibtnBack = (ImageButton) findViewById(R.id.ibtnBack);
 
         tvDocument = findViewById(R.id.tvDocument);
+        tvVideo = findViewById(R.id.tvVideo);
+        tvAudio = findViewById(R.id.tvAudio);
         ivCamera = (ImageView) findViewById(R.id.ivCamera);
 
         ibDocument = findViewById(R.id.ibDocument);
@@ -435,39 +440,21 @@ public class FormActivity extends Activity implements AdapterView.OnItemSelected
 
 
             case R.id.ibDocument:
-
-                intent = new Intent();
-                intent.setType("*/*");
-                intent.setAction(Intent.ACTION_GET_CONTENT);
-                startActivityForResult(Intent.createChooser(intent, "Choose File to Upload.."), PICK_FILE_REQUEST);
-
+                enterStorage(getString(R.string.type_docs), PICK_FILE_REQUEST);
                 break;
-
             case R.id.ibCamera:
 
                 imageSelectionDialog = new ImageSelectionDialog(activity, activity, itemPicFlag);
                 DialogNavBarHide.navBarHide(activity, imageSelectionDialog);
 
-
-                //intent = new Intent();
-                //intent.setType("*/*");
-                //intent.setAction(Intent.ACTION_GET_CONTENT);
-                //startActivityForResult(Intent.createChooser(intent, "Choose picture to Upload.."), PICK_CAMERA_REQUEST);
-
                 break;
 
             case R.id.ibVideo:
-                intent = new Intent();
-                intent.setType("*/*");
-                intent.setAction(Intent.ACTION_GET_CONTENT);
-                startActivityForResult(Intent.createChooser(intent, "Choose File to Upload.."), PICK_VIDEO_REQUEST);
+                enterStorage(getString(R.string.type_video), PICK_VIDEO_REQUEST);
                 break;
 
             case R.id.ibAudio:
-                intent = new Intent();
-                intent.setType("*/*");
-                intent.setAction(Intent.ACTION_GET_CONTENT);
-                startActivityForResult(Intent.createChooser(intent, "Choose File to Upload.."), PICK_AUDIO_REQUEST);
+                enterStorage(getString(R.string.type_audio), PICK_AUDIO_REQUEST);
                 break;
 
 
@@ -481,92 +468,6 @@ public class FormActivity extends Activity implements AdapterView.OnItemSelected
 
         }
     }
-
-
-
-
-
-
-
- /*   @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == Activity.RESULT_OK) {
-
-
-            Uri selectedFileUri = data.getData();
-            selectedFilePath = FilePath.getActualPath(this, selectedFileUri);
-            Uri uriFromPath = Uri.fromFile(new File(selectedFilePath));
-
-            // path for file
-            if (requestCode == PICK_FILE_REQUEST) {
-                if (data == null) {
-                    return;
-                }
-                if (selectedFilePath != null && !selectedFilePath.equals("")) {
-                    tvDocument.setText("Document URL:" + selectedFilePath);
-
-                } else {
-                    Toast.makeText(this, "Cannot upload file to server", Toast.LENGTH_SHORT).show();
-                }
-            }
-
-
-            // path for camera
-            *//*if (requestCode == PICK_CAMERA_REQUEST) {
-                if (data == null) {
-                    return;
-                }
-                if (selectedFilePath != null && !selectedFilePath.equals("")) {
-                    //tvDocument.setText(selectedFilePath);
-                    ivCamera.setImageURI(uriFromPath);
-
-                } else {
-                    Toast.makeText(this, "Cannot upload file to server", Toast.LENGTH_SHORT).show();
-                }
-            }*//*
-
-
-            // path for Video
-            if (requestCode == PICK_VIDEO_REQUEST) {
-                if (data == null) {
-                    return;
-                }
-                if (selectedFilePath != null && !selectedFilePath.equals("")) {
-                    tvDocument.setText("Video URL: " + selectedFilePath);
-
-                } else {
-                    Toast.makeText(this, "Cannot upload file to server", Toast.LENGTH_SHORT).show();
-                }
-            }
-
-
-            // path for Audio
-            if (requestCode == PICK_AUDIO_REQUEST) {
-                if (data == null) {
-                    return;
-                }
-                if (selectedFilePath != null && !selectedFilePath.equals("")) {
-                    tvDocument.setText("Audio URL: " + selectedFilePath);
-
-                } else {
-                    Toast.makeText(this, "Cannot upload file to server", Toast.LENGTH_SHORT).show();
-                }
-            }
-
-
-
-        }
-    }*/
-
-
-
-
-
-
-
-
-
 
 
     // Opening Image Cropper (Transparent)
@@ -619,17 +520,67 @@ public class FormActivity extends Activity implements AdapterView.OnItemSelected
         intent.setAction(Intent.ACTION_GET_CONTENT);
         startActivityForResult(Intent.createChooser(intent, "Select Picture"), SELECT_PICTURE);
 
-
         intent_source = 1;
     }
 
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        //musicControl = false;
+
+        imageSelection(requestCode, resultCode, data);
+
+        switch (requestCode) {
+
+            case PICK_FILE_REQUEST:
+                resultActivity(resultCode, data, tvDocument);
+
+                break;
+            case PICK_VIDEO_REQUEST:
+                resultActivity(resultCode, data, tvVideo);
+                break;
+            case PICK_AUDIO_REQUEST:
+                resultActivity(resultCode, data, tvAudio);
+                break;
+
+        }
+        super.onActivityResult(requestCode, resultCode, data);
+
+    }
+
+    public void resultActivity(int resultCode, Intent data, TextView textView) {
+
+        if (resultCode == RESULT_OK) {
+            // Get the Uri of the selected file
+            Uri uri = data.getData();
+            String uriString = uri.toString();
+            File myFile = new File(uriString);
+            String path = myFile.getAbsolutePath();
+            //tvDocument.setText(path);
+            String displayName = null;
+
+            if (uriString.startsWith("content://")) {
+                Cursor cursor = null;
+                try {
+                    cursor = activity.getContentResolver().query(uri, null, null, null, null);
+                    if (cursor != null && cursor.moveToFirst()) {
+                        displayName = cursor.getString(cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME));
+                        textView.setText(displayName);
+                        textView.setVisibility(View.VISIBLE);
+                    }
+                } finally {
+                    cursor.close();
+                }
+            } else if (uriString.startsWith("file://")) {
+                displayName = myFile.getName();
+            }
+        }
+
+
+    }
+
+
+    public void imageSelection(int requestCode, int resultCode, Intent data) {
         fileProcessing = new FileProcessing(activity);
         Bitmap widgetImage = null;
-
-
         if (resultCode == RESULT_OK) {
 
             // Load Image from Gallery
@@ -642,7 +593,6 @@ public class FormActivity extends Activity implements AdapterView.OnItemSelected
                 openCropper(Uri.fromFile(new File(mFileTemp.getAbsolutePath())));
 
             }
-
 
             // Load image after Cropping (Transparent)
             if (requestCode == com.theartofdev.edmodo.cropper.CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
@@ -668,8 +618,6 @@ public class FormActivity extends Activity implements AdapterView.OnItemSelected
             if (requestCode == MATERIAL_FILE_PICKER) {
                 filePath = data.getStringExtra(FilePickerActivity.RESULT_FILE_PATH);
                 int intFileSize = fileProcessing.fileSize(filePath);
-                //tvDocument.setText(intFileSize);
-
                 if (intFileSize <= StaticAccess.TAG_SOUND_FILE_SIZE) {
 
                 } else {
@@ -697,6 +645,11 @@ public class FormActivity extends Activity implements AdapterView.OnItemSelected
         }
 
     }
-
+    public void enterStorage(String type, int FLAG) {
+        Intent intent = new Intent();
+        intent.setType(type);
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(Intent.createChooser(intent, "Choose File to Upload"), FLAG);
+    }
 
 }

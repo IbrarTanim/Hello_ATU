@@ -91,6 +91,9 @@
     <string name="dst_hobigonj">হবিগঞ্জ</string>
     <string name="dst_mowlobibazar">মৌলভীবাজার</string>
 
+    <string name="type_audio">audio/*</string>
+    <string name="type_video">video/*</string>
+    <string name="type_docs">application/pdf</string>
 
     <string name="india">ইন্ডিয়া</string>
     <string name="america">আমেরিকা</string>

@@ -8,7 +8,7 @@ import android.widget.ImageButton;
 
 import com.dtec.helloatu.R;
 
-public class WantedActivity extends Activity {
+public class WantedActivity extends BaseActivity {
 
     WantedActivity activity;
     ImageButton ibtnBackWanted;

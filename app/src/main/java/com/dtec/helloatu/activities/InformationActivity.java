@@ -10,7 +10,7 @@ import android.widget.TextView;
 import com.dtec.helloatu.R;
 import com.dtec.helloatu.customUI.CircularImageView;
 
-public class InformationActivity extends Activity implements View.OnClickListener {
+public class InformationActivity extends BaseActivity implements View.OnClickListener {
 
 
     InformationActivity activity;

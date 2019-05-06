@@ -22,7 +22,7 @@ import com.dtec.helloatu.pojo.Category;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends Activity {
+public class MainActivity extends BaseActivity {
 
     MainActivity activity;
     RecyclerView recyclerView;

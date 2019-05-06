@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 import com.dtec.helloatu.R;
 
-public class SplashActivity extends Activity {
+public class SplashActivity extends BaseActivity {
 
     SplashActivity activity;
     TextView tvSplash;
