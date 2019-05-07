@@ -29,6 +29,7 @@ import com.dtec.helloatu.utilities.FilePath;
 import com.dtec.helloatu.utilities.FileProcessing;
 import com.dtec.helloatu.utilities.ImageProcessing;
 import com.dtec.helloatu.utilities.InternalStorageContentProvider;
+import com.dtec.helloatu.utilities.MarshMallowPermission;
 import com.dtec.helloatu.utilities.StaticAccess;
 import com.nbsp.materialfilepicker.ui.FilePickerActivity;
 import com.nostra13.universalimageloader.utils.L;
@@ -44,6 +45,7 @@ public class FormActivity extends BaseActivity implements AdapterView.OnItemSele
     FormActivity activity;
     public Spinner spDivision;
     public Spinner spDivisionInformer;
+    public MarshMallowPermission marshMallowPermission;
 
     public Spinner spDistrict;
     public Spinner spDistrictInformer;
@@ -100,6 +102,7 @@ public class FormActivity extends BaseActivity implements AdapterView.OnItemSele
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_form);
         activity = this;
+        marshMallowPermission = new MarshMallowPermission(activity);
 
         spDivision = (Spinner) findViewById(R.id.spDivision);
         spDivisionInformer = (Spinner) findViewById(R.id.spDivisionInformer);
@@ -645,6 +648,7 @@ public class FormActivity extends BaseActivity implements AdapterView.OnItemSele
         }
 
     }
+
     public void enterStorage(String type, int FLAG) {
         Intent intent = new Intent();
         intent.setType(type);

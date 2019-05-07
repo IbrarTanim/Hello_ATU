@@ -20,7 +20,7 @@ public class FileProcessing {
     /**
      * Class tag. Used for debug.
      */
-    //String TAG = DatabaseManager.class.getCanonicalName();
+
     Context ctx;
     private String appOutputSoundPath = null;
     private String appOutputSoundFullPath = null;

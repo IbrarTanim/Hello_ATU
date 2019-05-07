@@ -22,7 +22,7 @@ public class Generator {
      */
     private static void addTables(Schema schema) {
         /* entities */
-        Entity user = addUser(schema);
+        Entity crime = addCrime(schema);
     }
 
     /**
@@ -30,14 +30,20 @@ public class Generator {
      *
      * @return DBUser entity
      */
-    private static Entity addUser(Schema schema) {
-        Entity user = schema.addEntity("User");
-        user.addIdProperty().primaryKey().autoincrement();
-        user.addStringProperty("name").notNull();
-        user.addStringProperty("password").notNull();
-        user.addStringProperty("pic").notNull();
-        user.addBooleanProperty("active").notNull();
-        return user;
+    private static Entity addCrime(Schema schema) {
+        Entity crime = schema.addEntity("Crime");
+        crime.addIdProperty().primaryKey().autoincrement();
+        crime.addStringProperty("crimeInfo").notNull();
+        crime.addStringProperty("occurrancePlace").notNull();
+        crime.addStringProperty("informerName").notNull();
+        crime.addStringProperty("informerPhone").notNull();
+        crime.addStringProperty("informerAddress").notNull();
+        crime.addStringProperty("informerPlace").notNull();
+        crime.addStringProperty("infoDocument").notNull();
+        crime.addStringProperty("infoPicture").notNull();
+        crime.addStringProperty("infoVideo").notNull();
+        crime.addStringProperty("infoAudio").notNull();
+        return crime;
     }
 
 
