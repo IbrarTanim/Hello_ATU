@@ -32,6 +32,7 @@
             android:textStyle="bold" />
 
         <EditText
+            android:id="@+id/etCrimeInfo"
             android:layout_width="match_parent"
             android:layout_height="@dimen/eighty"
             android:layout_margin="5dp"
@@ -43,7 +44,6 @@
             android:inputType="textMultiLine"
             android:overScrollMode="always"
             android:padding="5dp"
-            android:scaleType="fitCenter"
             android:scrollbarStyle="insideInset"
             android:scrollbars="vertical"
             android:textColor="@color/black"
@@ -150,12 +150,13 @@
 
 
         <EditText
+            android:id="@+id/etInformerName"
             android:layout_width="match_parent"
             android:layout_height="@dimen/fourty"
             android:layout_margin="5dp"
             android:layout_weight="1"
             android:background="@drawable/cell_border"
-            android:cursorVisible="false"
+            android:cursorVisible="true"
             android:gravity="center"
             android:hint="@string/inform_name"
             android:inputType="textMultiLine"
@@ -166,12 +167,13 @@
 
 
         <EditText
+            android:id="@+id/etInformerPhone"
             android:layout_width="match_parent"
             android:layout_height="@dimen/fourty"
             android:layout_margin="5dp"
             android:layout_weight="1"
             android:background="@drawable/cell_border"
-            android:cursorVisible="false"
+            android:cursorVisible="true"
             android:gravity="center"
             android:hint="@string/phone_number"
             android:inputType="number"
@@ -181,12 +183,13 @@
             android:textSize="20dp" />
 
         <EditText
+            android:id="@+id/etInformerAddress"
             android:layout_width="match_parent"
             android:layout_height="@dimen/fourty"
             android:layout_margin="5dp"
             android:layout_weight="1"
             android:background="@drawable/cell_border"
-            android:cursorVisible="false"
+            android:cursorVisible="true"
             android:gravity="center"
             android:hint="@string/address"
             android:inputType="textMultiLine"

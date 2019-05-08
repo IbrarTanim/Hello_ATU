@@ -1,5 +1,6 @@
 package com.dtec.helloatu.activities;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -13,12 +14,12 @@ import com.dtec.helloatu.R;
 import com.dtec.helloatu.dialogue.DialogNavBarHide;
 
 
-public class TransparentToastActivity extends BaseActivity {
+public class TransparentToastActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_transparent_toast);
+        setContentView(R.layout.dialog_toast);
 
 
         getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));

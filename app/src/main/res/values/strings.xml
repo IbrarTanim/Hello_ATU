@@ -1,7 +1,7 @@
 <resources>
-    <string name="app_name">Hello ATU</string>
+    <string name="app_name">Inform ATU</string>
 
-    <string name="inform_terrorism">অপরাধীদের তথ্য দিন</string>
+    <string name="inform_terrorism">অপরাধের তথ্য দিন</string>
 
     <string name="splash_text"><![CDATA[<html><body><big>Anti Terrorism Unit </big><br/><small>Dhaka Metropolitan Police</small></body><html>]]></string>
 

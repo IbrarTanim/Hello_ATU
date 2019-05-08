@@ -5,6 +5,7 @@ import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -15,6 +16,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Spinner;
@@ -22,8 +24,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.dtec.helloatu.R;
+import com.dtec.helloatu.dao.Crime;
 import com.dtec.helloatu.dialogue.DialogNavBarHide;
 import com.dtec.helloatu.dialogue.ImageSelectionDialog;
+import com.dtec.helloatu.manager.DatabaseManager;
 import com.dtec.helloatu.utilities.CustomToast;
 import com.dtec.helloatu.utilities.FilePath;
 import com.dtec.helloatu.utilities.FileProcessing;
@@ -40,13 +44,13 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FormActivity extends BaseActivity implements AdapterView.OnItemSelectedListener, View.OnClickListener {
+public class FormActivity extends Activity implements AdapterView.OnItemSelectedListener, View.OnClickListener {
 
     FormActivity activity;
     public Spinner spDivision;
     public Spinner spDivisionInformer;
     public MarshMallowPermission marshMallowPermission;
-
+    ImageProcessing imageProcessing;
     public Spinner spDistrict;
     public Spinner spDistrictInformer;
     public Spinner spThana;
@@ -56,12 +60,15 @@ public class FormActivity extends BaseActivity implements AdapterView.OnItemSele
     public int passedPosition;
     Button btnSubmit, btnCancel;
     TextView tvDocument, tvVideo, tvAudio;
+    EditText etCrimeInfo, etInformerName, etInformerPhone, etInformerAddress;
+
     ImageView ivCamera;
     String selectedFilePath;
     public ImageSelectionDialog imageSelectionDialog;
     String filePath, imgPath = "";
-
+    String displayName;
     int itemPicFlag = 0;
+    Crime crime;
 
     private String appImagePath = null;
     ImageProcessing imgProc;
@@ -70,6 +77,7 @@ public class FormActivity extends BaseActivity implements AdapterView.OnItemSele
     FileProcessing fileProcessing;
 
     private static final int PICK_CAMERA_REQUEST = 0x6;
+    int currentRequest = -1;
     private static final int PICK_FILE_REQUEST = 0x5;
     private static final int PICK_VIDEO_REQUEST = 0x9;
     private static final int PICK_AUDIO_REQUEST = 0x4;
@@ -80,6 +88,7 @@ public class FormActivity extends BaseActivity implements AdapterView.OnItemSele
 
 
     int intent_source = 0;
+    DatabaseManager databaseManager;
 
 
     ImageButton ibDocument, ibCamera, ibVideo, ibAudio;
@@ -103,6 +112,9 @@ public class FormActivity extends BaseActivity implements AdapterView.OnItemSele
         setContentView(R.layout.activity_form);
         activity = this;
         marshMallowPermission = new MarshMallowPermission(activity);
+        databaseManager = new DatabaseManager(activity);
+        imageProcessing = new ImageProcessing(activity);
+        crime = new Crime();
 
         spDivision = (Spinner) findViewById(R.id.spDivision);
         spDivisionInformer = (Spinner) findViewById(R.id.spDivisionInformer);
@@ -116,8 +128,13 @@ public class FormActivity extends BaseActivity implements AdapterView.OnItemSele
         tvDocument = findViewById(R.id.tvDocument);
         tvVideo = findViewById(R.id.tvVideo);
         tvAudio = findViewById(R.id.tvAudio);
-        ivCamera = (ImageView) findViewById(R.id.ivCamera);
 
+        etCrimeInfo = findViewById(R.id.etCrimeInfo);
+        etInformerName = findViewById(R.id.etInformerName);
+        etInformerPhone = findViewById(R.id.etInformerPhone);
+        etInformerAddress = findViewById(R.id.etInformerAddress);
+
+        ivCamera = (ImageView) findViewById(R.id.ivCamera);
         ibDocument = findViewById(R.id.ibDocument);
         ibCamera = findViewById(R.id.ibCamera);
         ibVideo = findViewById(R.id.ibVideo);
@@ -154,10 +171,7 @@ public class FormActivity extends BaseActivity implements AdapterView.OnItemSele
         ibtnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(FormActivity.this, MainActivity.class);
-                intent.putExtra("passedPosition", passedPosition);
-                startActivity(intent);
-                finish();
+                backToPrevious();
 
             }
         });
@@ -462,12 +476,29 @@ public class FormActivity extends BaseActivity implements AdapterView.OnItemSele
 
 
             case R.id.btnSubmit:
-                Toast.makeText(activity, "Under Construction", Toast.LENGTH_SHORT).show();
+
+                if (etCrimeInfo.getText().length() > 0) {
+                    crime.setCrimeInfo(etCrimeInfo.getText().toString());
+                    crime.setOccurrancePlace("CrimPlace");
+                    crime.setInformerName(etInformerName.getText().toString());
+                    crime.setInformerPhone(etInformerPhone.getText().toString());
+                    crime.setInformerAddress(etInformerAddress.getText().toString());
+                    crime.setInformerPlace("InformerPlace");
+                    crime.setInfoDocument(displayName);
+                    crime.setInfoPicture(checkGettingImage(imgPath));
+                    crime.setInfoVideo(displayName);
+                    crime.setInfoAudio(displayName);
+                    imageProcessing.setImageWith_loader(ivCamera, imgPath);
+                    databaseManager.insertCrime(crime);
+                    backToPrevious();
+                } else {
+                    Toast.makeText(activity, getResources().getString(R.string.inform_terrorism),Toast.LENGTH_SHORT).show();
+                }
+
                 break;
             case R.id.btnCancel:
-                Toast.makeText(activity, "Under Construction", Toast.LENGTH_SHORT).show();
+                backToPrevious();
                 break;
-
 
         }
     }
@@ -535,7 +566,6 @@ public class FormActivity extends BaseActivity implements AdapterView.OnItemSele
 
             case PICK_FILE_REQUEST:
                 resultActivity(resultCode, data, tvDocument);
-
                 break;
             case PICK_VIDEO_REQUEST:
                 resultActivity(resultCode, data, tvVideo);
@@ -558,7 +588,7 @@ public class FormActivity extends BaseActivity implements AdapterView.OnItemSele
             File myFile = new File(uriString);
             String path = myFile.getAbsolutePath();
             //tvDocument.setText(path);
-            String displayName = null;
+
 
             if (uriString.startsWith("content://")) {
                 Cursor cursor = null;
@@ -654,6 +684,25 @@ public class FormActivity extends BaseActivity implements AdapterView.OnItemSele
         intent.setType(type);
         intent.setAction(Intent.ACTION_GET_CONTENT);
         startActivityForResult(Intent.createChooser(intent, "Choose File to Upload"), FLAG);
+    }
+
+    String checkGettingImage(String imgPath) {
+        String imgFilePath;
+        if (imgPath.length() > 0) {
+            imgFilePath = imgPath;
+        } else {
+            Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.atu);
+//            imgProc.imageSave(bitmap);
+            imgFilePath = imageProcessing.imageSave(bitmap);
+        }
+        return imgFilePath;
+    }
+
+    public void backToPrevious() {
+        Intent intent = new Intent(FormActivity.this, MainActivity.class);
+        intent.putExtra("passedPosition", passedPosition);
+        startActivity(intent);
+        finish();
     }
 
 }
