@@ -25,15 +25,19 @@ public class CrimeDao extends AbstractDao<Crime, Long> {
     public static class Properties {
         public final static Property Id = new Property(0, Long.class, "id", true, "_id");
         public final static Property CrimeInfo = new Property(1, String.class, "crimeInfo", false, "CRIME_INFO");
-        public final static Property OccurrancePlace = new Property(2, String.class, "occurrancePlace", false, "OCCURRANCE_PLACE");
-        public final static Property InformerName = new Property(3, String.class, "informerName", false, "INFORMER_NAME");
-        public final static Property InformerPhone = new Property(4, String.class, "informerPhone", false, "INFORMER_PHONE");
-        public final static Property InformerAddress = new Property(5, String.class, "informerAddress", false, "INFORMER_ADDRESS");
-        public final static Property InformerPlace = new Property(6, String.class, "informerPlace", false, "INFORMER_PLACE");
-        public final static Property InfoDocument = new Property(7, String.class, "infoDocument", false, "INFO_DOCUMENT");
-        public final static Property InfoPicture = new Property(8, String.class, "infoPicture", false, "INFO_PICTURE");
-        public final static Property InfoVideo = new Property(9, String.class, "infoVideo", false, "INFO_VIDEO");
-        public final static Property InfoAudio = new Property(10, String.class, "infoAudio", false, "INFO_AUDIO");
+        public final static Property InformerName = new Property(2, String.class, "informerName", false, "INFORMER_NAME");
+        public final static Property InformerPhone = new Property(3, String.class, "informerPhone", false, "INFORMER_PHONE");
+        public final static Property InformerAddress = new Property(4, String.class, "informerAddress", false, "INFORMER_ADDRESS");
+        public final static Property InfoDocument = new Property(5, String.class, "infoDocument", false, "INFO_DOCUMENT");
+        public final static Property InfoPicture = new Property(6, String.class, "infoPicture", false, "INFO_PICTURE");
+        public final static Property InfoVideo = new Property(7, String.class, "infoVideo", false, "INFO_VIDEO");
+        public final static Property InfoAudio = new Property(8, String.class, "infoAudio", false, "INFO_AUDIO");
+        public final static Property Occurrence = new Property(9, int.class, "occurrence", false, "OCCURRENCE");
+        public final static Property OccurrenceInformer = new Property(10, int.class, "occurrenceInformer", false, "OCCURRENCE_INFORMER");
+        public final static Property Division = new Property(11, int.class, "division", false, "DIVISION");
+        public final static Property DivisionInformer = new Property(12, int.class, "divisionInformer", false, "DIVISION_INFORMER");
+        public final static Property District = new Property(13, int.class, "district", false, "DISTRICT");
+        public final static Property DistrictInformer = new Property(14, int.class, "districtInformer", false, "DISTRICT_INFORMER");
     };
 
 
@@ -51,15 +55,19 @@ public class CrimeDao extends AbstractDao<Crime, Long> {
         db.execSQL("CREATE TABLE " + constraint + "\"CRIME\" (" + //
                 "\"_id\" INTEGER PRIMARY KEY AUTOINCREMENT ," + // 0: id
                 "\"CRIME_INFO\" TEXT NOT NULL ," + // 1: crimeInfo
-                "\"OCCURRANCE_PLACE\" TEXT NOT NULL ," + // 2: occurrancePlace
-                "\"INFORMER_NAME\" TEXT NOT NULL ," + // 3: informerName
-                "\"INFORMER_PHONE\" TEXT NOT NULL ," + // 4: informerPhone
-                "\"INFORMER_ADDRESS\" TEXT NOT NULL ," + // 5: informerAddress
-                "\"INFORMER_PLACE\" TEXT NOT NULL ," + // 6: informerPlace
-                "\"INFO_DOCUMENT\" TEXT NOT NULL ," + // 7: infoDocument
-                "\"INFO_PICTURE\" TEXT NOT NULL ," + // 8: infoPicture
-                "\"INFO_VIDEO\" TEXT NOT NULL ," + // 9: infoVideo
-                "\"INFO_AUDIO\" TEXT NOT NULL );"); // 10: infoAudio
+                "\"INFORMER_NAME\" TEXT NOT NULL ," + // 2: informerName
+                "\"INFORMER_PHONE\" TEXT NOT NULL ," + // 3: informerPhone
+                "\"INFORMER_ADDRESS\" TEXT NOT NULL ," + // 4: informerAddress
+                "\"INFO_DOCUMENT\" TEXT NOT NULL ," + // 5: infoDocument
+                "\"INFO_PICTURE\" TEXT NOT NULL ," + // 6: infoPicture
+                "\"INFO_VIDEO\" TEXT NOT NULL ," + // 7: infoVideo
+                "\"INFO_AUDIO\" TEXT NOT NULL ," + // 8: infoAudio
+                "\"OCCURRENCE\" INTEGER NOT NULL ," + // 9: occurrence
+                "\"OCCURRENCE_INFORMER\" INTEGER NOT NULL ," + // 10: occurrenceInformer
+                "\"DIVISION\" INTEGER NOT NULL ," + // 11: division
+                "\"DIVISION_INFORMER\" INTEGER NOT NULL ," + // 12: divisionInformer
+                "\"DISTRICT\" INTEGER NOT NULL ," + // 13: district
+                "\"DISTRICT_INFORMER\" INTEGER NOT NULL );"); // 14: districtInformer
     }
 
     /** Drops the underlying database table. */
@@ -78,15 +86,19 @@ public class CrimeDao extends AbstractDao<Crime, Long> {
             stmt.bindLong(1, id);
         }
         stmt.bindString(2, entity.getCrimeInfo());
-        stmt.bindString(3, entity.getOccurrancePlace());
-        stmt.bindString(4, entity.getInformerName());
-        stmt.bindString(5, entity.getInformerPhone());
-        stmt.bindString(6, entity.getInformerAddress());
-        stmt.bindString(7, entity.getInformerPlace());
-        stmt.bindString(8, entity.getInfoDocument());
-        stmt.bindString(9, entity.getInfoPicture());
-        stmt.bindString(10, entity.getInfoVideo());
-        stmt.bindString(11, entity.getInfoAudio());
+        stmt.bindString(3, entity.getInformerName());
+        stmt.bindString(4, entity.getInformerPhone());
+        stmt.bindString(5, entity.getInformerAddress());
+        stmt.bindString(6, entity.getInfoDocument());
+        stmt.bindString(7, entity.getInfoPicture());
+        stmt.bindString(8, entity.getInfoVideo());
+        stmt.bindString(9, entity.getInfoAudio());
+        stmt.bindLong(10, entity.getOccurrence());
+        stmt.bindLong(11, entity.getOccurrenceInformer());
+        stmt.bindLong(12, entity.getDivision());
+        stmt.bindLong(13, entity.getDivisionInformer());
+        stmt.bindLong(14, entity.getDistrict());
+        stmt.bindLong(15, entity.getDistrictInformer());
     }
 
     /** @inheritdoc */
@@ -101,15 +113,19 @@ public class CrimeDao extends AbstractDao<Crime, Long> {
         Crime entity = new Crime( //
             cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0), // id
             cursor.getString(offset + 1), // crimeInfo
-            cursor.getString(offset + 2), // occurrancePlace
-            cursor.getString(offset + 3), // informerName
-            cursor.getString(offset + 4), // informerPhone
-            cursor.getString(offset + 5), // informerAddress
-            cursor.getString(offset + 6), // informerPlace
-            cursor.getString(offset + 7), // infoDocument
-            cursor.getString(offset + 8), // infoPicture
-            cursor.getString(offset + 9), // infoVideo
-            cursor.getString(offset + 10) // infoAudio
+            cursor.getString(offset + 2), // informerName
+            cursor.getString(offset + 3), // informerPhone
+            cursor.getString(offset + 4), // informerAddress
+            cursor.getString(offset + 5), // infoDocument
+            cursor.getString(offset + 6), // infoPicture
+            cursor.getString(offset + 7), // infoVideo
+            cursor.getString(offset + 8), // infoAudio
+            cursor.getInt(offset + 9), // occurrence
+            cursor.getInt(offset + 10), // occurrenceInformer
+            cursor.getInt(offset + 11), // division
+            cursor.getInt(offset + 12), // divisionInformer
+            cursor.getInt(offset + 13), // district
+            cursor.getInt(offset + 14) // districtInformer
         );
         return entity;
     }
@@ -119,15 +135,19 @@ public class CrimeDao extends AbstractDao<Crime, Long> {
     public void readEntity(Cursor cursor, Crime entity, int offset) {
         entity.setId(cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0));
         entity.setCrimeInfo(cursor.getString(offset + 1));
-        entity.setOccurrancePlace(cursor.getString(offset + 2));
-        entity.setInformerName(cursor.getString(offset + 3));
-        entity.setInformerPhone(cursor.getString(offset + 4));
-        entity.setInformerAddress(cursor.getString(offset + 5));
-        entity.setInformerPlace(cursor.getString(offset + 6));
-        entity.setInfoDocument(cursor.getString(offset + 7));
-        entity.setInfoPicture(cursor.getString(offset + 8));
-        entity.setInfoVideo(cursor.getString(offset + 9));
-        entity.setInfoAudio(cursor.getString(offset + 10));
+        entity.setInformerName(cursor.getString(offset + 2));
+        entity.setInformerPhone(cursor.getString(offset + 3));
+        entity.setInformerAddress(cursor.getString(offset + 4));
+        entity.setInfoDocument(cursor.getString(offset + 5));
+        entity.setInfoPicture(cursor.getString(offset + 6));
+        entity.setInfoVideo(cursor.getString(offset + 7));
+        entity.setInfoAudio(cursor.getString(offset + 8));
+        entity.setOccurrence(cursor.getInt(offset + 9));
+        entity.setOccurrenceInformer(cursor.getInt(offset + 10));
+        entity.setDivision(cursor.getInt(offset + 11));
+        entity.setDivisionInformer(cursor.getInt(offset + 12));
+        entity.setDistrict(cursor.getInt(offset + 13));
+        entity.setDistrictInformer(cursor.getInt(offset + 14));
      }
     
     /** @inheritdoc */

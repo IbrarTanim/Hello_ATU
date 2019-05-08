@@ -47,15 +47,20 @@ import java.util.List;
 public class FormActivity extends Activity implements AdapterView.OnItemSelectedListener, View.OnClickListener {
 
     FormActivity activity;
-    public Spinner spDivision;
-    public Spinner spDivisionInformer;
+
     public MarshMallowPermission marshMallowPermission;
     ImageProcessing imageProcessing;
+    public Spinner spThana;
+
+    public Spinner spOccurrence;
+    public Spinner spOccurrenceInformer;
+
+    public Spinner spDivision;
+    public Spinner spDivisionInformer;
+
     public Spinner spDistrict;
     public Spinner spDistrictInformer;
-    public Spinner spThana;
-    public Spinner spOccurrenceInformer;
-    public Spinner spOccurrence;
+
     ImageButton ibtnBack;
     public int passedPosition;
     Button btnSubmit, btnCancel;
@@ -482,15 +487,20 @@ public class FormActivity extends Activity implements AdapterView.OnItemSelected
 
                 if (etCrimeInfo.getText().length() > 0) {
                     crime.setCrimeInfo(etCrimeInfo.getText().toString());
-                    crime.setOccurrancePlace("CrimPlace");
+                    crime.setOccurrence(spOccurrence.getSelectedItemPosition());
                     crime.setInformerName(etInformerName.getText().toString());
                     crime.setInformerPhone(etInformerPhone.getText().toString());
                     crime.setInformerAddress(etInformerAddress.getText().toString());
-                    crime.setInformerPlace("InformerPlace");
                     crime.setInfoDocument(documentName);
                     crime.setInfoPicture(checkGettingImage(imgPath));
                     crime.setInfoVideo(videoName);
                     crime.setInfoAudio(audioName);
+                    crime.setOccurrence(spOccurrence.getSelectedItemPosition());
+                    crime.setOccurrenceInformer(spOccurrenceInformer.getSelectedItemPosition());
+                    crime.setDivision(spDivision.getSelectedItemPosition());
+                    crime.setDivisionInformer(spDivisionInformer.getSelectedItemPosition());
+                    crime.setDistrict(spDistrict.getSelectedItemPosition());
+                    crime.setDistrictInformer(spDistrictInformer.getSelectedItemPosition());
                     imageProcessing.setImageWith_loader(ivCamera, imgPath);
                     databaseManager.insertCrime(crime);
                     backToPrevious();

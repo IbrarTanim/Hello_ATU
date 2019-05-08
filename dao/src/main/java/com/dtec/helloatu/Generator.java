@@ -34,15 +34,19 @@ public class Generator {
         Entity crime = schema.addEntity("Crime");
         crime.addIdProperty().primaryKey().autoincrement();
         crime.addStringProperty("crimeInfo").notNull();
-        crime.addStringProperty("occurrancePlace").notNull();
         crime.addStringProperty("informerName").notNull();
         crime.addStringProperty("informerPhone").notNull();
         crime.addStringProperty("informerAddress").notNull();
-        crime.addStringProperty("informerPlace").notNull();
         crime.addStringProperty("infoDocument").notNull();
         crime.addStringProperty("infoPicture").notNull();
         crime.addStringProperty("infoVideo").notNull();
         crime.addStringProperty("infoAudio").notNull();
+        crime.addIntProperty("occurrence").notNull();
+        crime.addIntProperty("occurrenceInformer").notNull();
+        crime.addIntProperty("division").notNull();
+        crime.addIntProperty("divisionInformer").notNull();
+        crime.addIntProperty("district").notNull();
+        crime.addIntProperty("districtInformer").notNull();
         return crime;
     }
 
