@@ -105,6 +105,9 @@ public class FormActivity extends Activity implements AdapterView.OnItemSelected
     List<String> dstChittagong;
     List<String> dstSylhet;
 
+    String documentName;
+    String videoName;
+    String audioName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -484,15 +487,15 @@ public class FormActivity extends Activity implements AdapterView.OnItemSelected
                     crime.setInformerPhone(etInformerPhone.getText().toString());
                     crime.setInformerAddress(etInformerAddress.getText().toString());
                     crime.setInformerPlace("InformerPlace");
-                    crime.setInfoDocument(displayName);
+                    crime.setInfoDocument(documentName);
                     crime.setInfoPicture(checkGettingImage(imgPath));
-                    crime.setInfoVideo(displayName);
-                    crime.setInfoAudio(displayName);
+                    crime.setInfoVideo(videoName);
+                    crime.setInfoAudio(audioName);
                     imageProcessing.setImageWith_loader(ivCamera, imgPath);
                     databaseManager.insertCrime(crime);
                     backToPrevious();
                 } else {
-                    Toast.makeText(activity, getResources().getString(R.string.inform_terrorism),Toast.LENGTH_SHORT).show();
+                    Toast.makeText(activity, getResources().getString(R.string.inform_terrorism), Toast.LENGTH_SHORT).show();
                 }
 
                 break;
@@ -565,13 +568,13 @@ public class FormActivity extends Activity implements AdapterView.OnItemSelected
         switch (requestCode) {
 
             case PICK_FILE_REQUEST:
-                resultActivity(resultCode, data, tvDocument);
+                documentName = resultActivity(resultCode, data, tvDocument);
                 break;
             case PICK_VIDEO_REQUEST:
-                resultActivity(resultCode, data, tvVideo);
+                videoName = resultActivity(resultCode, data, tvVideo);
                 break;
             case PICK_AUDIO_REQUEST:
-                resultActivity(resultCode, data, tvAudio);
+                audioName = resultActivity(resultCode, data, tvAudio);
                 break;
 
         }
@@ -579,7 +582,7 @@ public class FormActivity extends Activity implements AdapterView.OnItemSelected
 
     }
 
-    public void resultActivity(int resultCode, Intent data, TextView textView) {
+    public String resultActivity(int resultCode, Intent data, TextView textView) {
 
         if (resultCode == RESULT_OK) {
             // Get the Uri of the selected file
@@ -607,7 +610,7 @@ public class FormActivity extends Activity implements AdapterView.OnItemSelected
             }
         }
 
-
+        return displayName;
     }
 
 

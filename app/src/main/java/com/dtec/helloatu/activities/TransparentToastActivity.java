@@ -21,7 +21,6 @@ public class TransparentToastActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.dialog_toast);
 
-
         getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         String message = getIntent().getExtras().getString("message");
 
