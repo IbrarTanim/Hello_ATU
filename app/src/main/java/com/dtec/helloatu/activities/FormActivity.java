@@ -62,7 +62,7 @@ public class FormActivity extends Activity implements AdapterView.OnItemSelected
     public Spinner spDistrictInformer;
 
     ImageButton ibtnBack;
-    public int passedPosition;
+    public int positionForm;
     Button btnSubmit, btnCancel;
     TextView tvDocument, tvVideo, tvAudio;
     EditText etCrimeInfo, etInformerName, etInformerPhone, etInformerAddress;
@@ -172,9 +172,8 @@ public class FormActivity extends Activity implements AdapterView.OnItemSelected
 
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
-            passedPosition = bundle.getInt("position");
+            positionForm = bundle.getInt("positionForm");
         }
-
 
         ibtnBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -183,8 +182,6 @@ public class FormActivity extends Activity implements AdapterView.OnItemSelected
 
             }
         });
-
-
         division = new ArrayList<String>();
         division.add(getString(R.string.division_selection));
         division.add(getString(R.string.div_dhaka));
@@ -504,6 +501,7 @@ public class FormActivity extends Activity implements AdapterView.OnItemSelected
                     imageProcessing.setImageWith_loader(ivCamera, imgPath);
                     databaseManager.insertCrime(crime);
                     backToPrevious();
+                    Toast.makeText(activity, "Form filled up Successfully", Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(activity, getResources().getString(R.string.inform_terrorism), Toast.LENGTH_SHORT).show();
                 }
@@ -713,7 +711,8 @@ public class FormActivity extends Activity implements AdapterView.OnItemSelected
 
     public void backToPrevious() {
         Intent intent = new Intent(FormActivity.this, MainActivity.class);
-        intent.putExtra("passedPosition", passedPosition);
+        intent.putExtra("positionForm", positionForm);
+        //intent.putExtra("currentCrime", crime.getId());
         startActivity(intent);
         finish();
     }

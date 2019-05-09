@@ -16,7 +16,9 @@ import android.widget.TextView;
 
 import com.dtec.helloatu.R;
 import com.dtec.helloatu.adapter.CategoryAdapter;
+import com.dtec.helloatu.dao.Crime;
 import com.dtec.helloatu.listener.CustomItemClickListener;
+import com.dtec.helloatu.manager.DatabaseManager;
 import com.dtec.helloatu.pojo.Category;
 
 import java.util.ArrayList;
@@ -29,19 +31,23 @@ public class MainActivity extends Activity {
     private CategoryAdapter adapter;
     private List<Category> categoryList;
     TextView tvMarque, tvTerrorismInfo;
+    //Long currentCrime;
+    //DatabaseManager databaseManager;
+    //Crime crimId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         activity = this;
-
+        //databaseManager = new DatabaseManager(activity);
+        //currentCrime = getIntent().getLongExtra("currentCrime", 0);
+        //crimId = databaseManager.getCrimeById(currentCrime);
 
         tvMarque = (TextView) findViewById(R.id.tvMarque);
         tvTerrorismInfo = (TextView) findViewById(R.id.tvTerrorismInfo);
         tvMarque.setSelected(true);
         tvTerrorismInfo.setText(Html.fromHtml(getString(R.string.terrorism_info)));
-
 
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
         categoryList = new ArrayList<>();

@@ -67,19 +67,24 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MyView
             switch (getAdapterPosition()) {
                 case 4:
                     intent = new Intent(context, WantedActivity.class);
+                    intent.putExtra("positionWanted", getAdapterPosition());
 
                     break;
 
                 case 5:
                     intent = new Intent(context, InformationActivity.class);
+                    intent.putExtra("positionInfo", getAdapterPosition());
+
                     break;
 
                 default:
                     intent = new Intent(context, FormActivity.class);
+                    intent.putExtra("positionForm", getAdapterPosition());
+
                     break;
             }
             context.startActivity(intent);
-            ((Activity)context).finish();
+            ((Activity) context).finish();
 
         }
     }

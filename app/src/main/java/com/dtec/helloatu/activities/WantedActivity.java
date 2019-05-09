@@ -6,19 +6,20 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.dtec.helloatu.R;
 import com.dtec.helloatu.dao.Crime;
 import com.dtec.helloatu.manager.DatabaseManager;
 
-public class WantedActivity extends BaseActivity {
+public class WantedActivity extends Activity {
 
     WantedActivity activity;
     ImageButton ibtnBackWanted;
     TextView tvValue;
-    DatabaseManager databaseManager;
-    Crime crime;
-
+    //DatabaseManager databaseManager;
+    //Crime crime;
+    int passedPosition;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,13 +27,12 @@ public class WantedActivity extends BaseActivity {
         setContentView(R.layout.activity_wanted);
 
         activity = this;
-        databaseManager = new DatabaseManager(activity);
+        //databaseManager = new DatabaseManager(activity);
         //crime = databaseManager.getCrimeById();
         tvValue = findViewById(R.id.tvValue);
-        String name = crime.getInformerName();
-        tvValue.setText(crime.getInformerName());
 
-        ibtnBackWanted = (ImageButton)findViewById(R.id.ibtnBackWanted);
+
+        ibtnBackWanted = (ImageButton) findViewById(R.id.ibtnBackWanted);
         ibtnBackWanted.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -40,6 +40,16 @@ public class WantedActivity extends BaseActivity {
                 finish();
             }
         });
+
+
+        Bundle bundle = getIntent().getExtras();
+        if (bundle != null) {
+            passedPosition = bundle.getInt("positionWanted");
+        }
+        Toast.makeText(activity, String.valueOf(passedPosition), Toast.LENGTH_SHORT).show();
+
+
+
     }
 
 
