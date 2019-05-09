@@ -54,30 +54,7 @@ public class MainActivity extends Activity {
         adapter = new CategoryAdapter(this, categoryList, new CustomItemClickListener() {
             @Override
             public void onItemClick(View v, int position) {
-                /*Intent intent = new Intent(MainActivity.this, FormActivity.class);
-                intent.putExtra("position", position);
-                startActivity(intent);
-                finish();*/
-
-
-
-               /* final Intent intent;
-                switch (position()){
-                    case 0:
-                        intent =  new Intent(context, FirstActivity.class);
-                        break;
-
-                    case 1:
-                        intent =  new Intent(context, SecondActivity.class);
-                        break;
-
-                    default:
-                        intent =  new Intent(context, DefaultActivity.class);
-                        break;
-                }
-                context.startActivity(intent);*/
-
-
+                
             }
         });
 

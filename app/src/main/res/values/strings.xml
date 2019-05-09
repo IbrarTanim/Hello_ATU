@@ -44,6 +44,9 @@
     <string name="audio">অডিও</string>
     <string name="document">ডকুমেন্ট</string>
 
+    <string name="new_info">নতুন তথ্য</string>
+    <string name="info_edit">তথ্য সংশোধন</string>
+
     <string name="mohanogor_district_bdout">মহানগর/জেলা/বাংলাদেশের বাইরে</string>
     <string name="mohanogor">মহানগর</string>
     <string name="district">জেলা</string>
@@ -132,5 +135,8 @@
 \n\nঅনুষ্ঠানে ডিএমপি কমিশনার মোঃ আছাদুজ্জামান মিয়া, অতিরিক্ত আইজিপি ড. মো: মইনুর রহমান চৌধুরী, অতিরিক্ত আইজিপি মোহাম্মদ শফিকুল ইসলামসহ ঊর্ধ্বতন পুলিশ কর্মকর্তাগণ এবং নির্মাণকারী প্রতিষ্ঠানের প্রতিনিধিরা উপস্থিত ছিলেন।
 \n\nউল্লেখ্য, মেসার্স আজিজ এন্ড কোম্পানি লিমিটেড এ ডিজিটাল কার পার্কিং নির্মাণ করেছে। এখানে ৩৪টি গাড়ি পার্ক করা যাবে। অথচ স্বাভাবিকভাবে একই পরিমাণ জায়গায় গাড়ি পার্ক করা যেত মাত্র ৬টি।</string>
     <string name="ok">OK</string>
+
+<!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

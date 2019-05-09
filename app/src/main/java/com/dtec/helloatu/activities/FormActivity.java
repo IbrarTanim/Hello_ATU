@@ -179,7 +179,6 @@ public class FormActivity extends Activity implements AdapterView.OnItemSelected
             @Override
             public void onClick(View view) {
                 backToPrevious();
-
             }
         });
         division = new ArrayList<String>();
