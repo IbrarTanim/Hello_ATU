@@ -119,6 +119,7 @@ public class FormActivity extends Activity implements AdapterView.OnItemSelected
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_form);
         activity = this;
+
         marshMallowPermission = new MarshMallowPermission(activity);
         databaseManager = new DatabaseManager(activity);
         imageProcessing = new ImageProcessing(activity);
@@ -283,7 +284,18 @@ public class FormActivity extends Activity implements AdapterView.OnItemSelected
         spThana.setAdapter(thanaAdapter);
 
 
+
+
+
+
+
+
+
+
+
     }
+
+
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {

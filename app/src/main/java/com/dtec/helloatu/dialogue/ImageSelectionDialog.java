@@ -70,7 +70,7 @@ public class ImageSelectionDialog extends Dialog implements View.OnClickListener
             case R.id.ibtnCamera:
 
 
-               /* if (!formActivity.marshMallowPermission.checkPermissionForCamera()) {
+                /*if (!formActivity.marshMallowPermission.checkPermissionForCamera()) {
                     formActivity.marshMallowPermission.requestPermissionForCamera();
                 } else {
                     if (!formActivity.marshMallowPermission.checkPermissionForExternalStorage()) {

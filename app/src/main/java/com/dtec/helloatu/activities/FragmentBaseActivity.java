@@ -1,17 +1,20 @@
 package com.dtec.helloatu.activities;
 
-import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Color;
-import android.support.design.widget.TabLayout;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
-import android.app.FragmentTransaction;
+import android.widget.Toast;
 
 import com.dtec.helloatu.R;
 import com.dtec.helloatu.fragment.AddInfoFragment;
@@ -20,11 +23,13 @@ import com.dtec.helloatu.fragment.EditInfoFragment;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FragmentBaseActivity extends Activity {
+public class FragmentBaseActivity extends FragmentActivity implements View.OnClickListener {
 
     FragmentBaseActivity activity;
     private TabLayout tabLayout;
     private ViewPager viewPager;
+    int passedPosition;
+    ImageView ivBack;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +42,17 @@ public class FragmentBaseActivity extends Activity {
         tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
         setupTabIcons();
+        ivBack = findViewById(R.id.ivBack);
+        ivBack.setOnClickListener(this);
+
+
+        Bundle bundle = getIntent().getExtras();
+        if (bundle != null) {
+            passedPosition = bundle.getInt("positionFragmentActivity");
+        }
+        Toast.makeText(activity, String.valueOf(passedPosition), Toast.LENGTH_SHORT).show();
+
+
     }
 
     /**
@@ -46,16 +62,20 @@ public class FragmentBaseActivity extends Activity {
 
         TextView tabOne = (TextView) LayoutInflater.from(this).inflate(R.layout.custom_tab, null);
         tabOne.setText(R.string.new_info);
-        tabOne.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+            tabOne.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+        }
         tabOne.setTextColor(Color.WHITE);
-        tabOne.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_add_info, 0, 0);
+        //tabOne.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_add_info, 0, 0);
         tabLayout.getTabAt(0).setCustomView(tabOne);
 
         TextView tabTwo = (TextView) LayoutInflater.from(this).inflate(R.layout.custom_tab, null);
         tabTwo.setText(R.string.info_edit);
-        tabTwo.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+            tabTwo.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+        }
         tabTwo.setTextColor(Color.WHITE);
-        tabTwo.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_info_edit, 0, 0);
+        //tabTwo.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_info_edit, 0, 0);
         tabLayout.getTabAt(1).setCustomView(tabTwo);
 
     }
@@ -67,13 +87,23 @@ public class FragmentBaseActivity extends Activity {
      * @param viewPager
      */
     private void setupViewPager(ViewPager viewPager) {
-        // ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-
-       /* ViewPagerAdapter adapter = new ViewPagerAdapter(getFragmentManager());
+        ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
         adapter.addFrag(new AddInfoFragment(), "নতুন তথ্য");
         adapter.addFrag(new EditInfoFragment(), "তথ্য সংশোধন");
-        viewPager.setAdapter(adapter);*/
+        viewPager.setAdapter(adapter);
     }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.ivBack:
+                Intent intent = new Intent(activity, MainActivity.class);
+                startActivity(intent);
+                finish();
+                break;
+        }
+    }
+
 
     class ViewPagerAdapter extends FragmentPagerAdapter {
         private final List<Fragment> mFragmentList = new ArrayList<>();
