@@ -18,7 +18,6 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.dtec.helloatu.R;
-import com.dtec.helloatu.activities.FormActivity;
 import com.dtec.helloatu.activities.FragmentBaseActivity;
 import com.dtec.helloatu.activities.InformationActivity;
 import com.dtec.helloatu.activities.WantedActivity;

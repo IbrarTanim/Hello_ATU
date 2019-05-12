@@ -1,3 +1,4 @@
+/*
 package com.dtec.helloatu.activities;
 
 import android.app.Activity;
@@ -720,6 +721,11 @@ public class FormActivity extends Activity implements AdapterView.OnItemSelected
         return imgFilePath;
     }
 
+
+
+
+
+
     public void backToPrevious() {
         Intent intent = new Intent(FormActivity.this, MainActivity.class);
         intent.putExtra("positionForm", positionForm);
@@ -729,3 +735,4 @@ public class FormActivity extends Activity implements AdapterView.OnItemSelected
     }
 
 }
+*/

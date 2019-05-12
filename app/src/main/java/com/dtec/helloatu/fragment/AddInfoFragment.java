@@ -26,7 +26,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.dtec.helloatu.R;
-import com.dtec.helloatu.activities.FormActivity;
 import com.dtec.helloatu.activities.FragmentBaseActivity;
 import com.dtec.helloatu.activities.MainActivity;
 import com.dtec.helloatu.dao.Crime;
@@ -77,7 +76,7 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
 
     ImageView ivCamera;
     String selectedFilePath;
-    private ImageSelectionDialog imageSelectionDialog;
+    public ImageSelectionDialog imageSelectionDialog;
     String filePath, imgPath = "";
     String displayName;
     int itemPicFlag = 0;
@@ -476,7 +475,7 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
 
     }*/
 
-    Intent intent;
+    //Intent intent;
 
     @Override
     public void onClick(View view) {
@@ -488,8 +487,8 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
                 break;
             case R.id.ibCamera:
 
-                //imageSelectionDialog = new ImageSelectionDialog(activity, activity, itemPicFlag);
-                //DialogNavBarHide.navBarHide(activity, imageSelectionDialog);
+                imageSelectionDialog = new ImageSelectionDialog(activity, activity, itemPicFlag);
+                DialogNavBarHide.navBarHide(activity, imageSelectionDialog);
 
                 break;
 

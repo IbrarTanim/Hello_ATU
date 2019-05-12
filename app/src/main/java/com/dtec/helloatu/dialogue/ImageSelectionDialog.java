@@ -8,7 +8,8 @@ import android.view.View;
 import android.widget.ImageButton;
 
 import com.dtec.helloatu.R;
-import com.dtec.helloatu.activities.FormActivity;
+import com.dtec.helloatu.activities.FragmentBaseActivity;
+import com.dtec.helloatu.fragment.AddInfoFragment;
 import com.dtec.helloatu.utilities.MarshMallowPermission;
 
 import static com.dtec.helloatu.utilities.PermissionCheck.hasPermissions;
@@ -16,7 +17,8 @@ import static com.dtec.helloatu.utilities.PermissionCheck.hasPermissions;
 
 public class ImageSelectionDialog extends Dialog implements View.OnClickListener {
 
-    FormActivity formActivity;
+    FragmentBaseActivity fragmentBaseActivity;
+    AddInfoFragment addInfoFragment;
     Context context;
     ImageButton ibtnCamera, ibtnGallery, ibtnInternet;
     // flag for using item or task
@@ -32,13 +34,14 @@ public class ImageSelectionDialog extends Dialog implements View.OnClickListener
     };
     //MarshMallowPermission marshMallowPermission;
 
-    public ImageSelectionDialog(Context context, FormActivity formActivity, int flag) {
+    public ImageSelectionDialog(Context context, FragmentBaseActivity fragmentBaseActivity, int flag) {
 
         // flag for using item or task
         super(context, R.style.CustomAlertDialog);
         this.context = context;
-        this.formActivity = formActivity;
+        this.fragmentBaseActivity = fragmentBaseActivity;
         this.flag = flag;
+        addInfoFragment = new AddInfoFragment();
     }
 
     @Override
@@ -82,18 +85,19 @@ public class ImageSelectionDialog extends Dialog implements View.OnClickListener
                 }*/
 
 
-                if (!hasPermissions(formActivity, PERMISSIONS)) {
-                    ActivityCompat.requestPermissions(formActivity, PERMISSIONS, PERMISSION_ALL);
-                    formActivity.loadImageCamera();
-                    formActivity.imageSelectionDialog.dismiss();
+                if (!hasPermissions(fragmentBaseActivity, PERMISSIONS)) {
+                    ActivityCompat.requestPermissions(fragmentBaseActivity, PERMISSIONS, PERMISSION_ALL);
+                    //fragmentBaseActivity.loadImageCamera();
+                    fragmentBaseActivity.addInfoFragment.loadImageCamera();
+                    fragmentBaseActivity.addInfoFragment.imageSelectionDialog.dismiss();
                 }
 
 
                 break;
 
             case R.id.ibtnGallery:
-                formActivity.loadImageGallery();
-                formActivity.imageSelectionDialog.dismiss();
+                fragmentBaseActivity.addInfoFragment.loadImageGallery();
+                fragmentBaseActivity.addInfoFragment.imageSelectionDialog.dismiss();
                 break;
 
             case R.id.ibtnInternet:
