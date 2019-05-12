@@ -69,7 +69,7 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
     public Spinner spDistrict;
     public Spinner spDistrictInformer;
 
-    ImageButton ibtnBack;
+   // ImageButton ibtnBack;
     public int positionForm;
     Button btnSubmit, btnCancel;
     TextView tvDocument, tvVideo, tvAudio;
@@ -150,7 +150,7 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
         spThana = (Spinner) view.findViewById(R.id.spThana);
         spOccurrenceInformer = (Spinner) view.findViewById(R.id.spOccurrenceInformer);
         spOccurrence = (Spinner) view.findViewById(R.id.spOccurrence);
-        ibtnBack = (ImageButton) view.findViewById(R.id.ibtnBack);
+       // ibtnBack = (ImageButton) view.findViewById(R.id.ibtnBack);
 
         tvDocument = view.findViewById(R.id.tvDocument);
         tvVideo = view.findViewById(R.id.tvVideo);
@@ -522,7 +522,7 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
                     crime.setDistrictInformer(spDistrictInformer.getSelectedItemPosition());
                     imageProcessing.setImageWith_loader(ivCamera, imgPath);
                     databaseManager.insertCrime(crime);
-                    //backToPrevious();
+                    backToPrevious();
                     Toast.makeText(activity, "Form filled up Successfully", Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(activity, getResources().getString(R.string.inform_terrorism), Toast.LENGTH_SHORT).show();
@@ -530,7 +530,7 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
 
                 break;
             case R.id.btnCancel:
-                //backToPrevious();
+                backToPrevious();
                 break;
 
         }
@@ -732,5 +732,12 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
     }
 
 
+
+    public void backToPrevious() {
+        Intent intent = new Intent(activity, MainActivity.class);
+        //intent.putExtra("positionForm", positionForm);
+        startActivity(intent);
+        activity.finish();
+    }
 
 }

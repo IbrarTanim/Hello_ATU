@@ -12,14 +12,14 @@
         android:layout_margin="@dimen/ten"
         android:orientation="vertical">
 
-        <ImageButton
+     <!--   <ImageButton
             android:id="@+id/ibtnBack"
             android:layout_width="@dimen/thirty"
             android:layout_height="@dimen/thirty"
             android:layout_weight="1"
             android:background="@color/transparent"
             android:scaleType="fitCenter"
-            android:src="@drawable/ic_back_form" />
+            android:src="@drawable/ic_back_form" />-->
 
         <TextView
             android:layout_width="match_parent"
