@@ -50,9 +50,10 @@
             android:name=".activities.FragmentBaseActivity"
             android:windowSoftInputMode="stateHidden" />
 
-        <activity
+        <!--<activity
             android:name=".activities.FormActivity"
-            android:windowSoftInputMode="stateHidden" />
+            android:windowSoftInputMode="stateHidden" />-->
+
         <activity
             android:name=".activities.InformationActivity"
             android:windowSoftInputMode="stateHidden" />

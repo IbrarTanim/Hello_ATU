@@ -88,16 +88,16 @@ public class ImageSelectionDialog extends Dialog implements View.OnClickListener
                 if (!hasPermissions(fragmentBaseActivity, PERMISSIONS)) {
                     ActivityCompat.requestPermissions(fragmentBaseActivity, PERMISSIONS, PERMISSION_ALL);
                     //fragmentBaseActivity.loadImageCamera();
-                    fragmentBaseActivity.addInfoFragment.loadImageCamera();
-                    fragmentBaseActivity.addInfoFragment.imageSelectionDialog.dismiss();
+                    fragmentBaseActivity.loadImageCamera();
+                    fragmentBaseActivity.imageSelectionDialog.dismiss();
                 }
 
 
                 break;
 
             case R.id.ibtnGallery:
-                fragmentBaseActivity.addInfoFragment.loadImageGallery();
-                fragmentBaseActivity.addInfoFragment.imageSelectionDialog.dismiss();
+                fragmentBaseActivity.loadImageGallery();
+                fragmentBaseActivity.imageSelectionDialog.dismiss();
                 break;
 
             case R.id.ibtnInternet:

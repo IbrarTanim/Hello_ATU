@@ -13,12 +13,6 @@
         android:orientation="vertical">
 
 
-        <FrameLayout
-            android:id="@+id/flContentView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:clickable="true"
-            android:orientation="vertical" />
 
      <!--   <ImageButton
             android:id="@+id/ibtnBack"

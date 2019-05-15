@@ -1,22 +1,21 @@
 package com.dtec.helloatu.activities;
 
+import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
-import android.database.Cursor;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
-import android.provider.OpenableColumns;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,14 +24,15 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.dtec.helloatu.R;
+import com.dtec.helloatu.dialogue.ImageSelectionDialog;
 import com.dtec.helloatu.fragment.AddInfoFragment;
 import com.dtec.helloatu.fragment.EditInfoFragment;
 import com.dtec.helloatu.utilities.CustomToast;
 import com.dtec.helloatu.utilities.FileProcessing;
-import com.dtec.helloatu.utilities.ImageProcessing;
 import com.dtec.helloatu.utilities.InternalStorageContentProvider;
 import com.dtec.helloatu.utilities.StaticAccess;
 import com.nbsp.materialfilepicker.ui.FilePickerActivity;
+import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 
 import java.io.File;
@@ -45,21 +45,29 @@ public class FragmentBaseActivity extends FragmentActivity implements View.OnCli
     FragmentBaseActivity activity;
     private TabLayout tabLayout;
     private ViewPager viewPager;
-    public AddInfoFragment addInfoFragment;
+    private AddInfoFragment addInfoFragment;
     int passedPosition;
     ImageView ivBack;
-   // public ImageSelectionDialog imageSelectionDialog;
-    public File mFileTemp;
-    private String appImagePath = null;
-    ImageProcessing imgProc;
-    public static final String TEMP_PHOTO_FILE_NAME = "temp_photo.jpg";
-    public static final int REQUEST_CODE_TAKE_PICTURE = 0x8;
-    private static final int SELECT_PICTURE = 0x1;
-    private static final int PICK_FILE_REQUEST = 0x5;
-    private static final int PICK_VIDEO_REQUEST = 0x9;
-    private static final int PICK_AUDIO_REQUEST = 0x4;
+    public ImageSelectionDialog imageSelectionDialog;
+    public String appImagePath = null;
 
-    int intent_source = 0;
+    public String documentName;
+    public String videoName;
+    public String audioName;
+
+    public static final String TEMP_PHOTO_FILE_NAME = "temp_photo.jpg";
+
+    FileProcessing fileProcessing;
+    public static final int SELECT_PICTURE = 0x1;
+    public static final int REQUEST_CODE_TAKE_PICTURE = 0x8;
+    public static final int MATERIAL_FILE_PICKER = 0x3;
+    public static final int PICK_FILE_REQUEST = 0x5;
+    public static final int PICK_VIDEO_REQUEST = 0x9;
+    public static final int PICK_AUDIO_REQUEST = 0x4;
+    public String filePath;
+
+    public File mFileTemp;
+    public int intent_source = 0;
 
 
     @Override
@@ -67,11 +75,7 @@ public class FragmentBaseActivity extends FragmentActivity implements View.OnCli
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fragment);
         activity = this;
-
-       // addInfoFragment = (AddInfoFragment)getFragmentManager().findFragmentById(R.id.flContentView);
-        addInfoFragment = (AddInfoFragment) getSupportFragmentManager().findFragmentById(R.id.flContentView);
-
-
+        //loadFragment();
         viewPager = (ViewPager) findViewById(R.id.viewpager);
         setupViewPager(viewPager);
         tabLayout = (TabLayout) findViewById(R.id.tabs);
@@ -80,15 +84,10 @@ public class FragmentBaseActivity extends FragmentActivity implements View.OnCli
         ivBack = findViewById(R.id.ivBack);
         ivBack.setOnClickListener(this);
 
-        imgProc = new ImageProcessing(activity);
-        appImagePath = imgProc.getImageDir();
-
-
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
             passedPosition = bundle.getInt("positionFragmentActivity");
         }
-        Toast.makeText(activity, String.valueOf(passedPosition), Toast.LENGTH_SHORT).show();
 
     }
 
@@ -96,27 +95,25 @@ public class FragmentBaseActivity extends FragmentActivity implements View.OnCli
      * Adding custom view to tab
      */
     private void setupTabIcons() {
-
         TextView tabOne = (TextView) LayoutInflater.from(this).inflate(R.layout.custom_tab, null);
         tabOne.setText(R.string.new_info);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
             tabOne.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+            tabOne.setTextSize(25);
         }
         tabOne.setTextColor(Color.WHITE);
-        //tabOne.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_add_info, 0, 0);
         tabLayout.getTabAt(0).setCustomView(tabOne);
 
         TextView tabTwo = (TextView) LayoutInflater.from(this).inflate(R.layout.custom_tab, null);
         tabTwo.setText(R.string.info_edit);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
             tabTwo.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+            tabTwo.setTextSize(25);
         }
         tabTwo.setTextColor(Color.WHITE);
-        //tabTwo.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_info_edit, 0, 0);
         tabLayout.getTabAt(1).setCustomView(tabTwo);
 
     }
-
 
     /**
      * Adding fragments to ViewPager
@@ -125,8 +122,8 @@ public class FragmentBaseActivity extends FragmentActivity implements View.OnCli
      */
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        adapter.addFrag(new AddInfoFragment(), "নতুন তথ্য");
-        adapter.addFrag(new EditInfoFragment(), "তথ্য সংশোধন");
+        adapter.addFrag(new AddInfoFragment(), getString(R.string.new_info));
+        adapter.addFrag(new EditInfoFragment(), getString(R.string.info_edit));
         viewPager.setAdapter(adapter);
     }
 
@@ -140,7 +137,6 @@ public class FragmentBaseActivity extends FragmentActivity implements View.OnCli
                 break;
         }
     }
-
 
     class ViewPagerAdapter extends FragmentPagerAdapter {
         private final List<Fragment> mFragmentList = new ArrayList<>();
@@ -179,117 +175,30 @@ public class FragmentBaseActivity extends FragmentActivity implements View.OnCli
     }
 
 
-
-
-    /*
-
-
-
-    // Opening Image Cropper (Transparent)
-    public void openCropper(Uri uri) {
-
-        com.theartofdev.edmodo.cropper.CropImage.activity(uri)
-                .setGuidelines(CropImageView.Guidelines.ON)
-                .setOutputCompressFormat(Bitmap.CompressFormat.PNG)
-                .start(activity);
-    }
-
-    // load image from camera by Rokan
-    public void loadImageCamera() {
-        // flag for using item or task
-        File sdCardDirectory = new File(Environment.getExternalStorageDirectory() + appImagePath);
-        if (!sdCardDirectory.exists()) {
-            sdCardDirectory.mkdirs();
-        }
-        String state1 = Environment.getExternalStorageState();
-        if (Environment.MEDIA_MOUNTED.equals(state1)) {
-            mFileTemp = new File(Environment.getExternalStorageDirectory() + appImagePath, TEMP_PHOTO_FILE_NAME);
-        } else {
-            mFileTemp = new File(getFilesDir() + appImagePath, TEMP_PHOTO_FILE_NAME);
-        }
-        //musicControl = true;
-        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        try {
-            Uri mImageCaptureUri = null;
-            String state2 = Environment.getExternalStorageState();
-            if (Environment.MEDIA_MOUNTED.equals(state2)) {
-                mImageCaptureUri = Uri.fromFile(mFileTemp);
-            } else {
-                mImageCaptureUri = InternalStorageContentProvider.CONTENT_URI;
-            }
-            intent.putExtra(android.provider.MediaStore.EXTRA_OUTPUT, mImageCaptureUri);
-            intent.putExtra("return-data", true);
-            startActivityForResult(intent, REQUEST_CODE_TAKE_PICTURE);
-
-        } catch (ActivityNotFoundException e) {
-        }
-
-        intent_source = 2;
-    }
-    // load image from Gallery by Rokan
-    public void loadImageGallery() {
-        Intent intent = new Intent();
-        intent.setType("image/*");
-        intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(Intent.createChooser(intent, "Select Picture"), SELECT_PICTURE);
-
-        intent_source = 1;
-    }
-
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
 
-        imageSelection(requestCode, resultCode, data);
+        addInfoFragment = (AddInfoFragment) getSupportFragmentManager().getFragments().get(0);
+       imageSelection(requestCode, resultCode, data);
 
         switch (requestCode) {
 
             case PICK_FILE_REQUEST:
-                documentName = resultActivity(resultCode, data, tvDocument);
+                documentName = addInfoFragment.resultActivity(resultCode, data, addInfoFragment.tvDocument);
                 break;
             case PICK_VIDEO_REQUEST:
-                videoName = resultActivity(resultCode, data, tvVideo);
+                videoName = addInfoFragment.resultActivity(resultCode, data, addInfoFragment.tvVideo);
                 break;
             case PICK_AUDIO_REQUEST:
-                audioName = resultActivity(resultCode, data, tvAudio);
+                audioName = addInfoFragment.resultActivity(resultCode, data, addInfoFragment.tvAudio);
                 break;
-
         }
         super.onActivityResult(requestCode, resultCode, data);
-
     }
-
-    public String resultActivity(int resultCode, Intent data, TextView textView) {
-
-        if (resultCode == RESULT_OK) {
-            // Get the Uri of the selected file
-            Uri uri = data.getData();
-            String uriString = uri.toString();
-            File myFile = new File(uriString);
-            String path = myFile.getAbsolutePath();
-            //tvDocument.setText(path);
-
-
-            if (uriString.startsWith("content://")) {
-                Cursor cursor = null;
-                try {
-                    cursor = activity.getContentResolver().query(uri, null, null, null, null);
-                    if (cursor != null && cursor.moveToFirst()) {
-                        displayName = cursor.getString(cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME));
-                        textView.setText(displayName);
-                        textView.setVisibility(View.VISIBLE);
-                    }
-                } finally {
-                    cursor.close();
-                }
-            } else if (uriString.startsWith("file://")) {
-                displayName = myFile.getName();
-            }
-        }
-
-        return displayName;
-    }
-
 
     public void imageSelection(int requestCode, int resultCode, Intent data) {
+
+        addInfoFragment = (AddInfoFragment) getSupportFragmentManager().getFragments().get(0);
+
         fileProcessing = new FileProcessing(activity);
         Bitmap widgetImage = null;
         if (resultCode == RESULT_OK) {
@@ -306,8 +215,8 @@ public class FragmentBaseActivity extends FragmentActivity implements View.OnCli
             }
 
             // Load image after Cropping (Transparent)
-            if (requestCode == com.theartofdev.edmodo.cropper.CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
-                com.theartofdev.edmodo.cropper.CropImage.ActivityResult result = com.theartofdev.edmodo.cropper.CropImage.getActivityResult(data);
+            if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
+                CropImage.ActivityResult result = CropImage.getActivityResult(data);
                 Uri resultUri = result.getUri();
                 Bitmap bitmap = null;
                 try {
@@ -316,11 +225,10 @@ public class FragmentBaseActivity extends FragmentActivity implements View.OnCli
                     e.printStackTrace();
                 }
 
+                addInfoFragment.setImagePro(bitmap);
 
-                setImagePro(bitmap);
 
-
-            } else if (resultCode == com.theartofdev.edmodo.cropper.CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
+            } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
                 Toast.makeText(activity, "Crop Error", Toast.LENGTH_SHORT).show();
             }
 
@@ -338,48 +246,70 @@ public class FragmentBaseActivity extends FragmentActivity implements View.OnCli
             }
 
         }
-
-        setImagePro(widgetImage);
+        addInfoFragment.setImagePro(widgetImage);
         intent_source = 0;
 
     }
 
+    // Opening Image Cropper (Transparent)
+    public void openCropper(Uri uri) {
 
-    public void setImagePro(Bitmap bitmap) {
-        //scale bitmap
-        if (bitmap != null) {
-            Bitmap b = (bitmap);
-            ivCamera.setVisibility(View.VISIBLE);
-            imgPath = imgProc.imageSave(b);
-            imgProc.setImageWith_loader(ivCamera, imgPath);
-            b.recycle();
-        }
-
+        com.theartofdev.edmodo.cropper.CropImage.activity(uri)
+                .setGuidelines(CropImageView.Guidelines.ON)
+                .setOutputCompressFormat(Bitmap.CompressFormat.PNG)
+                .start(activity);
     }
 
-    public void enterStorage(String type, int FLAG) {
+    // load image from Gallery by Rokan
+    public void loadImageGallery() {
         Intent intent = new Intent();
-        intent.setType(type);
+        intent.setType("image/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(Intent.createChooser(intent, "Choose File to Upload"), FLAG);
+        startActivityForResult(Intent.createChooser(intent, "Select Picture"), activity.SELECT_PICTURE);
+
+        intent_source = 1;
     }
 
-    String checkGettingImage(String imgPath) {
-        String imgFilePath;
-        if (imgPath.length() > 0) {
-            imgFilePath = imgPath;
-        } else {
-            Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.atu);
-//            imgProc.imageSave(bitmap);
-            imgFilePath = imageProcessing.imageSave(bitmap);
+    // load image from camera by Rokan
+    public void loadImageCamera() {
+        // flag for using item or task
+        File sdCardDirectory = new File(Environment.getExternalStorageDirectory() + appImagePath);
+        if (!sdCardDirectory.exists()) {
+            sdCardDirectory.mkdirs();
         }
-        return imgFilePath;
+        String state1 = Environment.getExternalStorageState();
+        if (Environment.MEDIA_MOUNTED.equals(state1)) {
+            activity.mFileTemp = new File(Environment.getExternalStorageDirectory() + appImagePath, TEMP_PHOTO_FILE_NAME);
+        } else {
+            activity.mFileTemp = new File(activity.getFilesDir() + appImagePath, TEMP_PHOTO_FILE_NAME);
+        }
+        //musicControl = true;
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        try {
+            Uri mImageCaptureUri = null;
+            String state2 = Environment.getExternalStorageState();
+            if (Environment.MEDIA_MOUNTED.equals(state2)) {
+                mImageCaptureUri = Uri.fromFile(activity.mFileTemp);
+            } else {
+                mImageCaptureUri = InternalStorageContentProvider.CONTENT_URI;
+            }
+            intent.putExtra(android.provider.MediaStore.EXTRA_OUTPUT, mImageCaptureUri);
+            intent.putExtra("return-data", true);
+            startActivityForResult(intent, activity.REQUEST_CODE_TAKE_PICTURE);
+
+        } catch (ActivityNotFoundException e) {
+        }
+
+        intent_source = 2;
     }
-
-
-
-
-*/
-
+    private void loadFragment() {
+        addInfoFragment = new AddInfoFragment();
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction transactionMonth = fragmentManager.beginTransaction();
+        transactionMonth.addToBackStack(null);
+        transactionMonth.replace(R.id.flContentView, addInfoFragment, "AddInfoFragment").commit();
+    }
 
 }
+
+

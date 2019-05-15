@@ -1,15 +1,12 @@
 package com.dtec.helloatu.fragment;
 
 
-import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
-import android.provider.MediaStore;
 import android.provider.OpenableColumns;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -32,74 +29,49 @@ import com.dtec.helloatu.dao.Crime;
 import com.dtec.helloatu.dialogue.DialogNavBarHide;
 import com.dtec.helloatu.dialogue.ImageSelectionDialog;
 import com.dtec.helloatu.manager.DatabaseManager;
-import com.dtec.helloatu.utilities.CustomToast;
-import com.dtec.helloatu.utilities.FileProcessing;
 import com.dtec.helloatu.utilities.ImageProcessing;
-import com.dtec.helloatu.utilities.InternalStorageContentProvider;
 import com.dtec.helloatu.utilities.MarshMallowPermission;
-import com.dtec.helloatu.utilities.StaticAccess;
-import com.nbsp.materialfilepicker.ui.FilePickerActivity;
-import com.theartofdev.edmodo.cropper.CropImageView;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import static android.app.Activity.RESULT_OK;
 
-/**
- * A simple {@link Fragment} subclass.
- */
+
 public class AddInfoFragment extends Fragment implements View.OnClickListener, AdapterView.OnItemSelectedListener {
 
     FragmentBaseActivity activity;
-
     public MarshMallowPermission marshMallowPermission;
     ImageProcessing imageProcessing;
     public Spinner spThana;
-
     public Spinner spOccurrence;
     public Spinner spOccurrenceInformer;
-
     public Spinner spDivision;
     public Spinner spDivisionInformer;
-
     public Spinner spDistrict;
     public Spinner spDistrictInformer;
-
-   // ImageButton ibtnBack;
+    // ImageButton ibtnBack;
     public int positionForm;
     Button btnSubmit, btnCancel;
-    TextView tvDocument, tvVideo, tvAudio;
+    public TextView tvDocument, tvVideo, tvAudio;
     EditText etCrimeInfo, etInformerName, etInformerPhone, etInformerAddress;
+    public ImageView ivCamera;
 
-    ImageView ivCamera;
-    String selectedFilePath;
-    public ImageSelectionDialog imageSelectionDialog;
-    String filePath, imgPath = "";
-    String displayName;
-    int itemPicFlag = 0;
+    // String selectedFilePath;
+    //String filePath, imgPath = "";
+    //String displayName;
+
+    String imgPath = "";
     Crime crime;
-
-    private String appImagePath = null;
     ImageProcessing imgProc;
-    public static final String TEMP_PHOTO_FILE_NAME = "temp_photo.jpg";
-    public File mFileTemp;
-    FileProcessing fileProcessing;
+    String displayName;
+    public int itemPicFlag = 0;
 
     private static final int PICK_CAMERA_REQUEST = 0x6;
     int currentRequest = -1;
-    private static final int PICK_FILE_REQUEST = 0x5;
-    private static final int PICK_VIDEO_REQUEST = 0x9;
-    private static final int PICK_AUDIO_REQUEST = 0x4;
-
-    public static final int REQUEST_CODE_TAKE_PICTURE = 0x8;
-    private static final int SELECT_PICTURE = 0x1;
-    private static final int MATERIAL_FILE_PICKER = 0x3;
 
 
-    int intent_source = 0;
     DatabaseManager databaseManager;
 
 
@@ -117,61 +89,47 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
     List<String> dstChittagong;
     List<String> dstSylhet;
 
-    String documentName;
-    String videoName;
-    String audioName;
 
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
 
-    public AddInfoFragment() {
-        // Required empty public constructor
     }
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_add_info, container, false);
+
         activity = (FragmentBaseActivity) getActivity();
-
-
-
-
-
-
         marshMallowPermission = new MarshMallowPermission(activity);
         databaseManager = new DatabaseManager(activity);
         imageProcessing = new ImageProcessing(activity);
+        imgProc = new ImageProcessing(activity);
         crime = new Crime();
+        activity.appImagePath = imgProc.getImageDir();
 
-        spDivision = (Spinner)view.findViewById(R.id.spDivision);
-        spDivisionInformer = (Spinner)view.findViewById(R.id.spDivisionInformer);
-        spDistrictInformer = (Spinner) view.findViewById(R.id.spDistrictInformer);
-        spDistrict = (Spinner) view.findViewById(R.id.spDistrict);
-        spThana = (Spinner) view.findViewById(R.id.spThana);
-        spOccurrenceInformer = (Spinner) view.findViewById(R.id.spOccurrenceInformer);
-        spOccurrence = (Spinner) view.findViewById(R.id.spOccurrence);
-       // ibtnBack = (ImageButton) view.findViewById(R.id.ibtnBack);
-
+        spDivision = view.findViewById(R.id.spDivision);
+        spDivisionInformer = view.findViewById(R.id.spDivisionInformer);
+        spDistrictInformer = view.findViewById(R.id.spDistrictInformer);
+        spDistrict = view.findViewById(R.id.spDistrict);
+        spThana = view.findViewById(R.id.spThana);
+        spOccurrenceInformer = view.findViewById(R.id.spOccurrenceInformer);
+        spOccurrence = view.findViewById(R.id.spOccurrence);
+        ivCamera = view.findViewById(R.id.ivCamera);
         tvDocument = view.findViewById(R.id.tvDocument);
         tvVideo = view.findViewById(R.id.tvVideo);
         tvAudio = view.findViewById(R.id.tvAudio);
-
         etCrimeInfo = view.findViewById(R.id.etCrimeInfo);
         etInformerName = view.findViewById(R.id.etInformerName);
         etInformerPhone = view.findViewById(R.id.etInformerPhone);
         etInformerAddress = view.findViewById(R.id.etInformerAddress);
-
-        ivCamera = (ImageView) view.findViewById(R.id.ivCamera);
         ibDocument = view.findViewById(R.id.ibDocument);
         ibCamera = view.findViewById(R.id.ibCamera);
         ibVideo = view.findViewById(R.id.ibVideo);
         ibAudio = view.findViewById(R.id.ibAudio);
-
-        imgProc = new ImageProcessing(activity);
-        appImagePath = imgProc.getImageDir();
-
-
-        btnSubmit = (Button) view.findViewById(R.id.btnSubmit);
-        btnCancel = (Button) view.findViewById(R.id.btnCancel);
+        btnSubmit = view.findViewById(R.id.btnSubmit);
+        btnCancel = view.findViewById(R.id.btnCancel);
 
         btnSubmit.setOnClickListener(this);
         btnCancel.setOnClickListener(this);
@@ -179,7 +137,6 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
         ibCamera.setOnClickListener(this);
         ibVideo.setOnClickListener(this);
         ibAudio.setOnClickListener(this);
-
         spDivision.setOnItemSelectedListener(this);
         spDivisionInformer.setOnItemSelectedListener(this);
         spDistrict.setOnItemSelectedListener(this);
@@ -187,7 +144,6 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
         spThana.setOnItemSelectedListener(this);
         spOccurrenceInformer.setOnItemSelectedListener(this);
         spOccurrence.setOnItemSelectedListener(this);
-
 
         division = new ArrayList<String>();
         division.add(getString(R.string.division_selection));
@@ -199,11 +155,9 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
         division.add(getString(R.string.div_sylhet));
         division.add(getString(R.string.div_rongpur));
         division.add(getString(R.string.div_mymensing));
-
         divisionAdapter = new ArrayAdapter<String>(activity, android.R.layout.simple_spinner_item, division);
         divisionAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spDivision.setAdapter(divisionAdapter);
-
 
         occurrence = new ArrayList<String>();
         occurrence.add(getString(R.string.mohanogor_district_bdout));
@@ -215,7 +169,6 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
         occurrenceAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spOccurrence.setAdapter(occurrenceAdapter);
         spOccurrenceInformer.setAdapter(occurrenceAdapter);
-
 
         dstDhaka = new ArrayList<String>();
         dstDhaka.add(getString(R.string.district_selection));
@@ -247,7 +200,6 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
         thanaDhaka.add(getString(R.string.pakisthan));
         thanaDhaka.add(getString(R.string.katar));
 
-
         dstChittagong = new ArrayList<String>();
         dstChittagong.add(getString(R.string.div_chittagong));
         dstChittagong.add(getString(R.string.dst_coxbazar));
@@ -261,13 +213,11 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
         dstChittagong.add(getString(R.string.dst_comilla));
         dstChittagong.add(getString(R.string.dst_bbaria));
 
-
         dstSylhet = new ArrayList<String>();
         dstSylhet.add(getString(R.string.div_sylhet));
         dstSylhet.add(getString(R.string.dst_sunamgonj));
         dstSylhet.add(getString(R.string.dst_hobigonj));
         dstSylhet.add(getString(R.string.dst_mowlobibazar));
-
 
         List<String> district = new ArrayList<String>();
         district.add("কুমিল্লা");
@@ -275,7 +225,6 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
         district.add("ফেনী");
         district.add("নোয়াখালী ");
         district.add("লক্ষ্মীপুর");
-
 
         List<String> thana = new ArrayList<String>();
         thana.add("কাপাসিয়া ");
@@ -285,47 +234,26 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
         thana.add("লোহাগড়া");
         thana.add("মহেশপুর");
 
-
         ArrayAdapter<String> thanaAdapter = new ArrayAdapter<String>(activity, android.R.layout.simple_spinner_item, thanaDhaka);
         thanaAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spThana.setAdapter(thanaAdapter);
-
-
-
-
-
-
-
-
-
-
 
         return view;
     }
 
 
-
-
-
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
-
         switch (parent.getId()) {
-
             case R.id.spOccurrence:
                 String itemOccurrence = parent.getItemAtPosition(position).toString();
-
                 if (itemOccurrence == getString(R.string.mohanogor)) {
                     divisionAdapter = new ArrayAdapter<String>(activity, android.R.layout.simple_spinner_item, division);
                     divisionAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     spDivision.setAdapter(divisionAdapter);
-
                     spDivision.setVisibility(View.VISIBLE);
                     spDistrict.setVisibility(View.GONE);
                     spThana.setVisibility(View.GONE);
-
-
                 } else if (itemOccurrence == getString(R.string.district)) {
                     divisionAdapter = new ArrayAdapter<String>(activity, android.R.layout.simple_spinner_item, dstDhaka);
                     divisionAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -333,7 +261,6 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
                     spDivision.setVisibility(View.VISIBLE);
                     spDistrict.setVisibility(View.GONE);
                     spThana.setVisibility(View.GONE);
-
                 } else if (itemOccurrence == getString(R.string.bdout)) {
                     divisionAdapter = new ArrayAdapter<String>(activity, android.R.layout.simple_spinner_item, thanaDhaka);
                     divisionAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -342,15 +269,9 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
                     spDistrict.setVisibility(View.GONE);
                     spThana.setVisibility(View.GONE);
                 }
-
-
                 break;
-
-
             case R.id.spDivision:
                 String itemDivision = parent.getItemAtPosition(position).toString();
-                //Toast.makeText(parent.getContext(), "Selected: " + itemDivision, Toast.LENGTH_LONG).show();
-
                 if (itemDivision == getString(R.string.div_dhaka)) {
                     districtAdapter = new ArrayAdapter<String>(activity, android.R.layout.simple_spinner_item, dstDhaka);
                     districtAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -358,8 +279,6 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
                     spDistrict.setVisibility(View.VISIBLE);
                     spDivision.setVisibility(View.VISIBLE);
                     spThana.setVisibility(View.GONE);
-
-
                 } else if (itemDivision == getString(R.string.div_chittagong)) {
                     districtAdapter = new ArrayAdapter<String>(activity, android.R.layout.simple_spinner_item, dstChittagong);
                     districtAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -367,7 +286,6 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
                     spDistrict.setVisibility(View.VISIBLE);
                     spDivision.setVisibility(View.VISIBLE);
                     spThana.setVisibility(View.GONE);
-
                 } else if (itemDivision == getString(R.string.div_sylhet)) {
                     districtAdapter = new ArrayAdapter<String>(activity, android.R.layout.simple_spinner_item, dstSylhet);
                     districtAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -376,34 +294,23 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
                     spDivision.setVisibility(View.VISIBLE);
                     spThana.setVisibility(View.GONE);
                 }
-
                 break;
-
-
             case R.id.spDistrict:
                 String itemDistrict = parent.getItemAtPosition(position).toString();
                 //Toast.makeText(parent.getContext(), "Selected: " + itemDistrict, Toast.LENGTH_LONG).show();
                 break;
-
             case R.id.spThana:
                 String itemThana = parent.getItemAtPosition(position).toString();
-                //Toast.makeText(parent.getContext(), "Selected: " + itemThana, Toast.LENGTH_LONG).show();
                 break;
-
-
             case R.id.spOccurrenceInformer:
                 String itemOccurrenceInformer = parent.getItemAtPosition(position).toString();
-
                 if (itemOccurrenceInformer == getString(R.string.mohanogor)) {
                     divisionAdapter = new ArrayAdapter<String>(activity, android.R.layout.simple_spinner_item, division);
                     divisionAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     spDivisionInformer.setAdapter(divisionAdapter);
-
                     spDivisionInformer.setVisibility(View.VISIBLE);
                     spDistrictInformer.setVisibility(View.GONE);
                     // spThanaInformer.setVisibility(View.GONE);
-
-
                 } else if (itemOccurrenceInformer == getString(R.string.district)) {
                     divisionAdapter = new ArrayAdapter<String>(activity, android.R.layout.simple_spinner_item, dstDhaka);
                     divisionAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -411,7 +318,6 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
                     spDivisionInformer.setVisibility(View.VISIBLE);
                     spDistrictInformer.setVisibility(View.GONE);
                     //spThana.setVisibility(View.GONE);
-
                 } else if (itemOccurrenceInformer == getString(R.string.bdout)) {
                     divisionAdapter = new ArrayAdapter<String>(activity, android.R.layout.simple_spinner_item, thanaDhaka);
                     divisionAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -420,14 +326,11 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
                     spDistrictInformer.setVisibility(View.GONE);
                     //spThana.setVisibility(View.GONE);
                 }
-
-
                 break;
 
             case R.id.spDivisionInformer:
                 String itemDivisionInformer = parent.getItemAtPosition(position).toString();
                 //Toast.makeText(parent.getContext(), "Selected: " + itemDivision, Toast.LENGTH_LONG).show();
-
                 if (itemDivisionInformer == getString(R.string.div_dhaka)) {
                     districtAdapter = new ArrayAdapter<String>(activity, android.R.layout.simple_spinner_item, dstDhaka);
                     districtAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -435,8 +338,6 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
                     spDistrictInformer.setVisibility(View.VISIBLE);
                     spDivisionInformer.setVisibility(View.VISIBLE);
                     //spThana.setVisibility(View.GONE);
-
-
                 } else if (itemDivisionInformer == getString(R.string.div_chittagong)) {
                     districtAdapter = new ArrayAdapter<String>(activity, android.R.layout.simple_spinner_item, dstChittagong);
                     districtAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -444,7 +345,6 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
                     spDistrictInformer.setVisibility(View.VISIBLE);
                     spDivisionInformer.setVisibility(View.VISIBLE);
                     //spThana.setVisibility(View.GONE);
-
                 } else if (itemDivisionInformer == getString(R.string.div_sylhet)) {
                     districtAdapter = new ArrayAdapter<String>(activity, android.R.layout.simple_spinner_item, dstSylhet);
                     districtAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -481,38 +381,32 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
     public void onClick(View view) {
         switch (view.getId()) {
 
-
             case R.id.ibDocument:
-                enterStorage(getString(R.string.type_docs), PICK_FILE_REQUEST);
+                enterStorage(getString(R.string.type_docs), activity.PICK_FILE_REQUEST);
                 break;
             case R.id.ibCamera:
-
-                imageSelectionDialog = new ImageSelectionDialog(activity, activity, itemPicFlag);
-                DialogNavBarHide.navBarHide(activity, imageSelectionDialog);
-
+                activity.imageSelectionDialog = new ImageSelectionDialog(activity, activity, itemPicFlag);
+                DialogNavBarHide.navBarHide(activity, activity.imageSelectionDialog);
                 break;
-
             case R.id.ibVideo:
-                enterStorage(getString(R.string.type_video), PICK_VIDEO_REQUEST);
+                enterStorage(getString(R.string.type_video), activity.PICK_VIDEO_REQUEST);
                 break;
 
             case R.id.ibAudio:
-                enterStorage(getString(R.string.type_audio), PICK_AUDIO_REQUEST);
+                enterStorage(getString(R.string.type_audio), activity.PICK_AUDIO_REQUEST);
                 break;
 
-
             case R.id.btnSubmit:
-
                 if (etCrimeInfo.getText().length() > 0) {
                     crime.setCrimeInfo(etCrimeInfo.getText().toString());
                     crime.setOccurrence(spOccurrence.getSelectedItemPosition());
                     crime.setInformerName(etInformerName.getText().toString());
                     crime.setInformerPhone(etInformerPhone.getText().toString());
                     crime.setInformerAddress(etInformerAddress.getText().toString());
-                    crime.setInfoDocument(documentName);
+                    crime.setInfoDocument(activity.documentName);
                     crime.setInfoPicture(checkGettingImage(imgPath));
-                    crime.setInfoVideo(videoName);
-                    crime.setInfoAudio(audioName);
+                    crime.setInfoVideo(activity.videoName);
+                    crime.setInfoAudio(activity.audioName);
                     crime.setOccurrence(spOccurrence.getSelectedItemPosition());
                     crime.setOccurrenceInformer(spOccurrenceInformer.getSelectedItemPosition());
                     crime.setDivision(spDivision.getSelectedItemPosition());
@@ -536,16 +430,16 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
     }
 
 
-    // Opening Image Cropper (Transparent)
+  /* // Opening Image Cropper (Transparent)
     public void openCropper(Uri uri) {
 
         com.theartofdev.edmodo.cropper.CropImage.activity(uri)
                 .setGuidelines(CropImageView.Guidelines.ON)
                 .setOutputCompressFormat(Bitmap.CompressFormat.PNG)
                 .start(activity);
-    }
+    }*/
 
-    // load image from camera by Rokan
+    /*// load image from camera by Rokan
     public void loadImageCamera() {
         // flag for using item or task
         File sdCardDirectory = new File(Environment.getExternalStorageDirectory() + appImagePath);
@@ -554,9 +448,9 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
         }
         String state1 = Environment.getExternalStorageState();
         if (Environment.MEDIA_MOUNTED.equals(state1)) {
-            mFileTemp = new File(Environment.getExternalStorageDirectory() + appImagePath, TEMP_PHOTO_FILE_NAME);
+            activity.mFileTemp = new File(Environment.getExternalStorageDirectory() + appImagePath, TEMP_PHOTO_FILE_NAME);
         } else {
-            mFileTemp = new File(activity.getFilesDir() + appImagePath, TEMP_PHOTO_FILE_NAME);
+            activity.mFileTemp = new File(activity.getFilesDir() + appImagePath, TEMP_PHOTO_FILE_NAME);
         }
         //musicControl = true;
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
@@ -564,38 +458,38 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
             Uri mImageCaptureUri = null;
             String state2 = Environment.getExternalStorageState();
             if (Environment.MEDIA_MOUNTED.equals(state2)) {
-                mImageCaptureUri = Uri.fromFile(mFileTemp);
+                mImageCaptureUri = Uri.fromFile(activity.mFileTemp);
             } else {
                 mImageCaptureUri = InternalStorageContentProvider.CONTENT_URI;
             }
             intent.putExtra(android.provider.MediaStore.EXTRA_OUTPUT, mImageCaptureUri);
             intent.putExtra("return-data", true);
-            startActivityForResult(intent, REQUEST_CODE_TAKE_PICTURE);
+            getActivity().startActivityForResult(intent, activity.REQUEST_CODE_TAKE_PICTURE);
 
         } catch (ActivityNotFoundException e) {
         }
 
-        intent_source = 2;
-    }
+        activity.intent_source = 2;
+    }*/
 
 
-    // load image from Gallery by Rokan
+   /* // load image from Gallery by Rokan
     public void loadImageGallery() {
         Intent intent = new Intent();
         intent.setType("image/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(Intent.createChooser(intent, "Select Picture"), SELECT_PICTURE);
+        getActivity().startActivityForResult(Intent.createChooser(intent, "Select Picture"), activity.SELECT_PICTURE);
 
         intent_source = 1;
-    }
+    }*/
 
 
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+    /*public void onActivityResult(int requestCode, int resultCode, Intent data) {
+
 
         imageSelection(requestCode, resultCode, data);
 
         switch (requestCode) {
-
             case PICK_FILE_REQUEST:
                 documentName = resultActivity(resultCode, data, tvDocument);
                 break;
@@ -605,11 +499,9 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
             case PICK_AUDIO_REQUEST:
                 audioName = resultActivity(resultCode, data, tvAudio);
                 break;
-
         }
         super.onActivityResult(requestCode, resultCode, data);
-
-    }
+    }*/
 
     public String resultActivity(int resultCode, Intent data, TextView textView) {
 
@@ -643,7 +535,7 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
     }
 
 
-    public void imageSelection(int requestCode, int resultCode, Intent data) {
+    /*public void imageSelection(int requestCode, int resultCode, Intent data) {
         fileProcessing = new FileProcessing(activity);
         Bitmap widgetImage = null;
         if (resultCode == RESULT_OK) {
@@ -665,7 +557,7 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
                 Uri resultUri = result.getUri();
                 Bitmap bitmap = null;
                 try {
-                    bitmap = MediaStore.Images.Media.getBitmap(activity.getContentResolver(), resultUri);
+                    bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), resultUri);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -696,7 +588,7 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
         setImagePro(widgetImage);
         intent_source = 0;
 
-    }
+    }*/
 
 
     public void setImagePro(Bitmap bitmap) {
@@ -715,7 +607,7 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
         Intent intent = new Intent();
         intent.setType(type);
         intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(Intent.createChooser(intent, "Choose File to Upload"), FLAG);
+        getActivity().startActivityForResult(Intent.createChooser(intent, "Choose File to Upload"), FLAG);
     }
 
     String checkGettingImage(String imgPath) {
@@ -729,7 +621,6 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
         }
         return imgFilePath;
     }
-
 
 
     public void backToPrevious() {
