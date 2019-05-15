@@ -25,9 +25,7 @@ public class InformationActivity extends Activity implements View.OnClickListene
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_information);
-
         activity = this;
-
 
         civUserManual = (CircularImageView) findViewById(R.id.civUserManual);
         civUnitDetails = (CircularImageView) findViewById(R.id.civUnitDetails);
@@ -52,7 +50,7 @@ public class InformationActivity extends Activity implements View.OnClickListene
 
     @Override
     public void onBackPressed() {
-
+        startActivity(new Intent(InformationActivity.this, MainActivity.class));
         finish();
     }
 

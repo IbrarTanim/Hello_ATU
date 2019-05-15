@@ -13,6 +13,14 @@
     <string name="wanted_en">Wanted</string>
     <string name="information_en">Information Cell</string>
 
+    <string name="a">জঙ্গিবাদ/ উগ্রবাদ সম্পর্কিত ফরমটি পূরণ করুন।</string>
+    <string name="b">সাইবার অপরাধ সম্পর্কিত ফরমটি পূরণ করুন।</string>
+    <string name="c"> বোমা/ বিস্ফোরণ সম্পর্কিত ফরমটি পূরণ করুন।</string>
+    <string name="d">সংগঠিত অপরাধ সম্পর্কিত ফরমটি পূরণ করুন।</string>
+
+
+
+
     <string name="terrorism_bn">জঙ্গিবাদ/ উগ্রবাদ</string>
     <string name="cyber_crime_bn"> সাইবার অপরাধ</string>
     <string name="bomb_bn">বোমা/ বিস্ফোরণ </string>
@@ -138,6 +146,7 @@
 
 <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="fd">aa</string>
 
 
 </resources>

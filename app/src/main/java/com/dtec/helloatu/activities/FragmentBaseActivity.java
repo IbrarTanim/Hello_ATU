@@ -30,6 +30,7 @@ import com.dtec.helloatu.fragment.EditInfoFragment;
 import com.dtec.helloatu.utilities.CustomToast;
 import com.dtec.helloatu.utilities.FileProcessing;
 import com.dtec.helloatu.utilities.InternalStorageContentProvider;
+import com.dtec.helloatu.utilities.MarshMallowPermission;
 import com.dtec.helloatu.utilities.StaticAccess;
 import com.nbsp.materialfilepicker.ui.FilePickerActivity;
 import com.theartofdev.edmodo.cropper.CropImage;
@@ -46,7 +47,7 @@ public class FragmentBaseActivity extends FragmentActivity implements View.OnCli
     private TabLayout tabLayout;
     private ViewPager viewPager;
     private AddInfoFragment addInfoFragment;
-    int passedPosition;
+    public int passedPosition;
     ImageView ivBack;
     public ImageSelectionDialog imageSelectionDialog;
     public String appImagePath = null;
@@ -56,7 +57,7 @@ public class FragmentBaseActivity extends FragmentActivity implements View.OnCli
     public String audioName;
 
     public static final String TEMP_PHOTO_FILE_NAME = "temp_photo.jpg";
-
+    public MarshMallowPermission marshMallowPermission;
     FileProcessing fileProcessing;
     public static final int SELECT_PICTURE = 0x1;
     public static final int REQUEST_CODE_TAKE_PICTURE = 0x8;
@@ -75,7 +76,8 @@ public class FragmentBaseActivity extends FragmentActivity implements View.OnCli
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fragment);
         activity = this;
-        //loadFragment();
+
+        marshMallowPermission = new MarshMallowPermission(activity);
         viewPager = (ViewPager) findViewById(R.id.viewpager);
         setupViewPager(viewPager);
         tabLayout = (TabLayout) findViewById(R.id.tabs);
@@ -86,8 +88,9 @@ public class FragmentBaseActivity extends FragmentActivity implements View.OnCli
 
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
-            passedPosition = bundle.getInt("positionFragmentActivity");
+            passedPosition = bundle.getInt("positionFragmentBaseActivity");
         }
+        //Toast.makeText(activity, String.valueOf(passedPosition), Toast.LENGTH_SHORT).show();
 
     }
 
@@ -170,6 +173,8 @@ public class FragmentBaseActivity extends FragmentActivity implements View.OnCli
     @Override
     public void onBackPressed() {
 
+        Intent intent = new Intent(activity, MainActivity.class);
+        startActivity(intent);
         finish();
 
     }
@@ -178,7 +183,7 @@ public class FragmentBaseActivity extends FragmentActivity implements View.OnCli
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
 
         addInfoFragment = (AddInfoFragment) getSupportFragmentManager().getFragments().get(0);
-       imageSelection(requestCode, resultCode, data);
+        imageSelection(requestCode, resultCode, data);
 
         switch (requestCode) {
 
@@ -302,6 +307,7 @@ public class FragmentBaseActivity extends FragmentActivity implements View.OnCli
 
         intent_source = 2;
     }
+
     private void loadFragment() {
         addInfoFragment = new AddInfoFragment();
         FragmentManager fragmentManager = getSupportFragmentManager();

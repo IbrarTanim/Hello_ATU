@@ -54,7 +54,7 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
     // ImageButton ibtnBack;
     public int positionForm;
     Button btnSubmit, btnCancel;
-    public TextView tvDocument, tvVideo, tvAudio;
+    public TextView tvDocument, tvVideo, tvAudio, tvCrimeTitle;
     EditText etCrimeInfo, etInformerName, etInformerPhone, etInformerAddress;
     public ImageView ivCamera;
 
@@ -70,11 +70,9 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
 
     private static final int PICK_CAMERA_REQUEST = 0x6;
     int currentRequest = -1;
-
+    int position = -1;
 
     DatabaseManager databaseManager;
-
-
     ImageButton ibDocument, ibCamera, ibVideo, ibAudio;
 
     ArrayAdapter<String> occurrenceAdapter;
@@ -117,6 +115,7 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
         spOccurrenceInformer = view.findViewById(R.id.spOccurrenceInformer);
         spOccurrence = view.findViewById(R.id.spOccurrence);
         ivCamera = view.findViewById(R.id.ivCamera);
+        tvCrimeTitle = view.findViewById(R.id.tvCrimeTitle);
         tvDocument = view.findViewById(R.id.tvDocument);
         tvVideo = view.findViewById(R.id.tvVideo);
         tvAudio = view.findViewById(R.id.tvAudio);
@@ -130,6 +129,7 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
         ibAudio = view.findViewById(R.id.ibAudio);
         btnSubmit = view.findViewById(R.id.btnSubmit);
         btnCancel = view.findViewById(R.id.btnCancel);
+
 
         btnSubmit.setOnClickListener(this);
         btnCancel.setOnClickListener(this);
@@ -238,6 +238,8 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
         thanaAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spThana.setAdapter(thanaAdapter);
 
+        position = activity.passedPosition;
+        crimeTitle();
         return view;
     }
 
@@ -620,6 +622,21 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
             imgFilePath = imageProcessing.imageSave(bitmap);
         }
         return imgFilePath;
+    }
+
+
+    private void crimeTitle() {
+        if (position == 0) {
+            tvCrimeTitle.setText(R.string.a);
+        } else if (position == 1) {
+            tvCrimeTitle.setText(R.string.b);
+        } else if (position == 2) {
+            tvCrimeTitle.setText(R.string.c);
+        } else if (position == 3) {
+            tvCrimeTitle.setText(R.string.d);
+        }
+
+
     }
 
 

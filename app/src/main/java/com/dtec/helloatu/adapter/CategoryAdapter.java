@@ -34,6 +34,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MyView
     private Context mContext;
     private List<Category> categoryList;
     CustomItemClickListener clickListener;
+    String titleBangla;
 
     public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
@@ -82,7 +83,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MyView
                     intent.putExtra("positionForm", getAdapterPosition());*/
 
                     intent = new Intent(context, FragmentBaseActivity.class);
-                    intent.putExtra("positionFragmentActivity", getAdapterPosition());
+                    intent.putExtra("positionFragmentBaseActivity", getAdapterPosition());
                     break;
             }
             context.startActivity(intent);
@@ -120,50 +121,8 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MyView
         holder.tvCtgTitleBangla.setText(category.getCtgTitleBangla());
         holder.tvCtgTitleEnglish.setText(category.getCtgTitleEnglish());
         holder.rlCtgBgColor.setBackgroundColor(category.getCtgBgColor());
-        //holder.rlCtgBgColor.setBackgroundColor(Color.parseColor(String.valueOf(category.getCtgBgColor())));
-
         Glide.with(mContext).load(category.getCtgPic()).into(holder.ivCtgPic);
-
-        //holder.rlCtgBgColor.setText(category.getCtgTitleEnglish());
-        //holder.title.setText(album.getName());
-        // loading album cover using Glide library
-        //Glide.with(mContext).load(album.getThumbnail()).into(holder.thumbnail);
-
-    }
-
-    /**
-     * Showing popup menu when tapping on 3 dots
-     */
-    private void showPopupMenu(View view) {
-        // inflate menu
-        /*PopupMenu popup = new PopupMenu(mContext, view);
-        MenuInflater inflater = popup.getMenuInflater();
-        inflater.inflate(R.menu.menu_album, popup.getMenu());
-        popup.setOnMenuItemClickListener(new MyMenuItemClickListener());
-        popup.show();*/
-    }
-
-    /**
-     * Click listener for popup menu items
-     */
-    class MyMenuItemClickListener implements PopupMenu.OnMenuItemClickListener {
-
-        public MyMenuItemClickListener() {
-        }
-
-        @Override
-        public boolean onMenuItemClick(MenuItem menuItem) {
-            switch (menuItem.getItemId()) {
-               /* case R.id.action_add_favourite:
-                    Toast.makeText(mContext, "Add to favourite", Toast.LENGTH_SHORT).show();
-                    return true;
-                *//*case R.id.action_play_next:
-                    Toast.makeText(mContext, "Play next", Toast.LENGTH_SHORT).show();
-                    return true;*//*
-                default:*/
-            }
-            return false;
-        }
+        titleBangla = category.getCtgTitleBangla();
     }
 
     @Override
