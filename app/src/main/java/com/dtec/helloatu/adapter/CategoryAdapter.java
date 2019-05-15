@@ -34,14 +34,12 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MyView
     private Context mContext;
     private List<Category> categoryList;
     CustomItemClickListener clickListener;
-    String titleBangla;
 
     public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         public RelativeLayout rlCtgBgColor;
         public ImageView ivCtgPic;
         public TextView tvCtgTitleBangla, tvCtgTitleEnglish;
-
         private final Context context;
 
         public MyViewHolder(View view) {
@@ -122,7 +120,6 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MyView
         holder.tvCtgTitleEnglish.setText(category.getCtgTitleEnglish());
         holder.rlCtgBgColor.setBackgroundColor(category.getCtgBgColor());
         Glide.with(mContext).load(category.getCtgPic()).into(holder.ivCtgPic);
-        titleBangla = category.getCtgTitleBangla();
     }
 
     @Override

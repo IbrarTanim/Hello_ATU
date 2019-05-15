@@ -1,5 +1,6 @@
 package com.dtec.helloatu.fragment;
 
+import com.dtec.helloatu.R;
 
 import android.content.Intent;
 import android.database.Cursor;
@@ -22,7 +23,6 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.dtec.helloatu.R;
 import com.dtec.helloatu.activities.FragmentBaseActivity;
 import com.dtec.helloatu.activities.MainActivity;
 import com.dtec.helloatu.dao.Crime;
@@ -37,7 +37,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static android.app.Activity.RESULT_OK;
-
+import static com.dtec.helloatu.utilities.StaticAccess.PICK_AUDIO_REQUEST;
+import static com.dtec.helloatu.utilities.StaticAccess.PICK_FILE_REQUEST;
+import static com.dtec.helloatu.utilities.StaticAccess.PICK_VIDEO_REQUEST;
 
 public class AddInfoFragment extends Fragment implements View.OnClickListener, AdapterView.OnItemSelectedListener {
 
@@ -51,25 +53,15 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
     public Spinner spDivisionInformer;
     public Spinner spDistrict;
     public Spinner spDistrictInformer;
-    // ImageButton ibtnBack;
-    public int positionForm;
     Button btnSubmit, btnCancel;
     public TextView tvDocument, tvVideo, tvAudio, tvCrimeTitle;
     EditText etCrimeInfo, etInformerName, etInformerPhone, etInformerAddress;
     public ImageView ivCamera;
-
-    // String selectedFilePath;
-    //String filePath, imgPath = "";
-    //String displayName;
-
     String imgPath = "";
     Crime crime;
     ImageProcessing imgProc;
     String displayName;
     public int itemPicFlag = 0;
-
-    private static final int PICK_CAMERA_REQUEST = 0x6;
-    int currentRequest = -1;
     int position = -1;
 
     DatabaseManager databaseManager;
@@ -87,13 +79,11 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
     List<String> dstChittagong;
     List<String> dstSylhet;
 
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -129,7 +119,6 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
         ibAudio = view.findViewById(R.id.ibAudio);
         btnSubmit = view.findViewById(R.id.btnSubmit);
         btnCancel = view.findViewById(R.id.btnCancel);
-
 
         btnSubmit.setOnClickListener(this);
         btnCancel.setOnClickListener(this);
@@ -243,7 +232,6 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
         return view;
     }
 
-
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         switch (parent.getId()) {
@@ -299,7 +287,6 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
                 break;
             case R.id.spDistrict:
                 String itemDistrict = parent.getItemAtPosition(position).toString();
-                //Toast.makeText(parent.getContext(), "Selected: " + itemDistrict, Toast.LENGTH_LONG).show();
                 break;
             case R.id.spThana:
                 String itemThana = parent.getItemAtPosition(position).toString();
@@ -332,7 +319,6 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
 
             case R.id.spDivisionInformer:
                 String itemDivisionInformer = parent.getItemAtPosition(position).toString();
-                //Toast.makeText(parent.getContext(), "Selected: " + itemDivision, Toast.LENGTH_LONG).show();
                 if (itemDivisionInformer == getString(R.string.div_dhaka)) {
                     districtAdapter = new ArrayAdapter<String>(activity, android.R.layout.simple_spinner_item, dstDhaka);
                     districtAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -357,11 +343,7 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
                 }
 
                 break;
-
-
         }
-
-
     }
 
     @Override
@@ -370,32 +352,23 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
     }
 
 
-  /*  @Override
-    public void onBackPressed() {
-
-        activity.finish();
-
-    }*/
-
-    //Intent intent;
-
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
 
             case R.id.ibDocument:
-                enterStorage(getString(R.string.type_docs), activity.PICK_FILE_REQUEST);
+                enterStorage(getString(R.string.type_docs), PICK_FILE_REQUEST);
                 break;
             case R.id.ibCamera:
                 activity.imageSelectionDialog = new ImageSelectionDialog(activity, activity, itemPicFlag);
                 DialogNavBarHide.navBarHide(activity, activity.imageSelectionDialog);
                 break;
             case R.id.ibVideo:
-                enterStorage(getString(R.string.type_video), activity.PICK_VIDEO_REQUEST);
+                enterStorage(getString(R.string.type_video), PICK_VIDEO_REQUEST);
                 break;
 
             case R.id.ibAudio:
-                enterStorage(getString(R.string.type_audio), activity.PICK_AUDIO_REQUEST);
+                enterStorage(getString(R.string.type_audio), PICK_AUDIO_REQUEST);
                 break;
 
             case R.id.btnSubmit:
@@ -422,91 +395,14 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
                 } else {
                     Toast.makeText(activity, getResources().getString(R.string.inform_terrorism), Toast.LENGTH_SHORT).show();
                 }
-
                 break;
             case R.id.btnCancel:
                 backToPrevious();
                 break;
-
         }
     }
 
-
-  /* // Opening Image Cropper (Transparent)
-    public void openCropper(Uri uri) {
-
-        com.theartofdev.edmodo.cropper.CropImage.activity(uri)
-                .setGuidelines(CropImageView.Guidelines.ON)
-                .setOutputCompressFormat(Bitmap.CompressFormat.PNG)
-                .start(activity);
-    }*/
-
-    /*// load image from camera by Rokan
-    public void loadImageCamera() {
-        // flag for using item or task
-        File sdCardDirectory = new File(Environment.getExternalStorageDirectory() + appImagePath);
-        if (!sdCardDirectory.exists()) {
-            sdCardDirectory.mkdirs();
-        }
-        String state1 = Environment.getExternalStorageState();
-        if (Environment.MEDIA_MOUNTED.equals(state1)) {
-            activity.mFileTemp = new File(Environment.getExternalStorageDirectory() + appImagePath, TEMP_PHOTO_FILE_NAME);
-        } else {
-            activity.mFileTemp = new File(activity.getFilesDir() + appImagePath, TEMP_PHOTO_FILE_NAME);
-        }
-        //musicControl = true;
-        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        try {
-            Uri mImageCaptureUri = null;
-            String state2 = Environment.getExternalStorageState();
-            if (Environment.MEDIA_MOUNTED.equals(state2)) {
-                mImageCaptureUri = Uri.fromFile(activity.mFileTemp);
-            } else {
-                mImageCaptureUri = InternalStorageContentProvider.CONTENT_URI;
-            }
-            intent.putExtra(android.provider.MediaStore.EXTRA_OUTPUT, mImageCaptureUri);
-            intent.putExtra("return-data", true);
-            getActivity().startActivityForResult(intent, activity.REQUEST_CODE_TAKE_PICTURE);
-
-        } catch (ActivityNotFoundException e) {
-        }
-
-        activity.intent_source = 2;
-    }*/
-
-
-   /* // load image from Gallery by Rokan
-    public void loadImageGallery() {
-        Intent intent = new Intent();
-        intent.setType("image/*");
-        intent.setAction(Intent.ACTION_GET_CONTENT);
-        getActivity().startActivityForResult(Intent.createChooser(intent, "Select Picture"), activity.SELECT_PICTURE);
-
-        intent_source = 1;
-    }*/
-
-
-    /*public void onActivityResult(int requestCode, int resultCode, Intent data) {
-
-
-        imageSelection(requestCode, resultCode, data);
-
-        switch (requestCode) {
-            case PICK_FILE_REQUEST:
-                documentName = resultActivity(resultCode, data, tvDocument);
-                break;
-            case PICK_VIDEO_REQUEST:
-                videoName = resultActivity(resultCode, data, tvVideo);
-                break;
-            case PICK_AUDIO_REQUEST:
-                audioName = resultActivity(resultCode, data, tvAudio);
-                break;
-        }
-        super.onActivityResult(requestCode, resultCode, data);
-    }*/
-
     public String resultActivity(int resultCode, Intent data, TextView textView) {
-
         if (resultCode == RESULT_OK) {
             // Get the Uri of the selected file
             Uri uri = data.getData();
@@ -514,7 +410,6 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
             File myFile = new File(uriString);
             String path = myFile.getAbsolutePath();
             //tvDocument.setText(path);
-
 
             if (uriString.startsWith("content://")) {
                 Cursor cursor = null;
@@ -532,66 +427,8 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
                 displayName = myFile.getName();
             }
         }
-
         return displayName;
     }
-
-
-    /*public void imageSelection(int requestCode, int resultCode, Intent data) {
-        fileProcessing = new FileProcessing(activity);
-        Bitmap widgetImage = null;
-        if (resultCode == RESULT_OK) {
-
-            // Load Image from Gallery
-            if (requestCode == SELECT_PICTURE && intent_source == 1) {
-                openCropper(data.getData());
-            }
-
-            // load image from Camera
-            if (requestCode == REQUEST_CODE_TAKE_PICTURE && intent_source == 2) {
-                openCropper(Uri.fromFile(new File(mFileTemp.getAbsolutePath())));
-
-            }
-
-            // Load image after Cropping (Transparent)
-            if (requestCode == com.theartofdev.edmodo.cropper.CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
-                com.theartofdev.edmodo.cropper.CropImage.ActivityResult result = com.theartofdev.edmodo.cropper.CropImage.getActivityResult(data);
-                Uri resultUri = result.getUri();
-                Bitmap bitmap = null;
-                try {
-                    bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), resultUri);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-
-
-                setImagePro(bitmap);
-
-
-            } else if (resultCode == com.theartofdev.edmodo.cropper.CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
-                Toast.makeText(activity, "Crop Error", Toast.LENGTH_SHORT).show();
-            }
-
-
-            // Getting file with Material File picker
-            if (requestCode == MATERIAL_FILE_PICKER) {
-                filePath = data.getStringExtra(FilePickerActivity.RESULT_FILE_PATH);
-                int intFileSize = fileProcessing.fileSize(filePath);
-                if (intFileSize <= StaticAccess.TAG_SOUND_FILE_SIZE) {
-
-                } else {
-                    CustomToast.t(activity, getResources().getString(R.string.notSupported));
-                }
-
-            }
-
-        }
-
-        setImagePro(widgetImage);
-        intent_source = 0;
-
-    }*/
-
 
     public void setImagePro(Bitmap bitmap) {
         //scale bitmap
@@ -602,7 +439,6 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
             imgProc.setImageWith_loader(ivCamera, imgPath);
             b.recycle();
         }
-
     }
 
     public void enterStorage(String type, int FLAG) {
@@ -624,7 +460,6 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
         return imgFilePath;
     }
 
-
     private void crimeTitle() {
         if (position == 0) {
             tvCrimeTitle.setText(R.string.a);
@@ -635,10 +470,7 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
         } else if (position == 3) {
             tvCrimeTitle.setText(R.string.d);
         }
-
-
     }
-
 
     public void backToPrevious() {
         Intent intent = new Intent(activity, MainActivity.class);
@@ -646,5 +478,4 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
         startActivity(intent);
         activity.finish();
     }
-
 }

@@ -41,6 +41,15 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.dtec.helloatu.utilities.StaticAccess.MATERIAL_FILE_PICKER;
+import static com.dtec.helloatu.utilities.StaticAccess.PICK_AUDIO_REQUEST;
+import static com.dtec.helloatu.utilities.StaticAccess.PICK_FILE_REQUEST;
+import static com.dtec.helloatu.utilities.StaticAccess.PICK_VIDEO_REQUEST;
+import static com.dtec.helloatu.utilities.StaticAccess.REQUEST_CODE_TAKE_PICTURE;
+import static com.dtec.helloatu.utilities.StaticAccess.SELECT_PICTURE;
+import static com.dtec.helloatu.utilities.StaticAccess.TEMP_PHOTO_FILE_NAME;
+
+
 public class FragmentBaseActivity extends FragmentActivity implements View.OnClickListener {
 
     FragmentBaseActivity activity;
@@ -56,15 +65,8 @@ public class FragmentBaseActivity extends FragmentActivity implements View.OnCli
     public String videoName;
     public String audioName;
 
-    public static final String TEMP_PHOTO_FILE_NAME = "temp_photo.jpg";
     public MarshMallowPermission marshMallowPermission;
     FileProcessing fileProcessing;
-    public static final int SELECT_PICTURE = 0x1;
-    public static final int REQUEST_CODE_TAKE_PICTURE = 0x8;
-    public static final int MATERIAL_FILE_PICKER = 0x3;
-    public static final int PICK_FILE_REQUEST = 0x5;
-    public static final int PICK_VIDEO_REQUEST = 0x9;
-    public static final int PICK_AUDIO_REQUEST = 0x4;
     public String filePath;
 
     public File mFileTemp;
@@ -270,7 +272,7 @@ public class FragmentBaseActivity extends FragmentActivity implements View.OnCli
         Intent intent = new Intent();
         intent.setType("image/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(Intent.createChooser(intent, "Select Picture"), activity.SELECT_PICTURE);
+        startActivityForResult(Intent.createChooser(intent, "Select Picture"), SELECT_PICTURE);
 
         intent_source = 1;
     }
@@ -300,7 +302,7 @@ public class FragmentBaseActivity extends FragmentActivity implements View.OnCli
             }
             intent.putExtra(android.provider.MediaStore.EXTRA_OUTPUT, mImageCaptureUri);
             intent.putExtra("return-data", true);
-            startActivityForResult(intent, activity.REQUEST_CODE_TAKE_PICTURE);
+            startActivityForResult(intent, REQUEST_CODE_TAKE_PICTURE);
 
         } catch (ActivityNotFoundException e) {
         }
