@@ -20,6 +20,7 @@ import com.dtec.helloatu.dao.Crime;
 import com.dtec.helloatu.listener.CustomItemClickListener;
 import com.dtec.helloatu.manager.DatabaseManager;
 import com.dtec.helloatu.pojo.Category;
+import com.dtec.helloatu.utilities.GridSpacingItemDecoration;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,9 +41,6 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         activity = this;
-        //databaseManager = new DatabaseManager(activity);
-        //currentCrime = getIntent().getLongExtra("currentCrime", 0);
-        //crimId = databaseManager.getCrimeById(currentCrime);
 
         tvMarque = (TextView) findViewById(R.id.tvMarque);
         tvTerrorismInfo = (TextView) findViewById(R.id.tvTerrorismInfo);
@@ -60,9 +58,11 @@ public class MainActivity extends Activity {
 
         RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(this, 2);
         recyclerView.setLayoutManager(mLayoutManager);
-        recyclerView.addItemDecoration(new GridSpacingItemDecoration(2, dpToPx(10), true));
+        //recyclerView.addItemDecoration(new GridSpacingItemDecoration(2, dpToPx(10), true));
+        recyclerView.addItemDecoration(new GridSpacingItemDecoration(2, GridSpacingItemDecoration.dpToPx(10, activity), true));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(adapter);
+
         prepareCategorys();
 
 
@@ -113,9 +113,9 @@ public class MainActivity extends Activity {
     }
 
 
-    /**
+  /*  *//**
      * RecyclerView item decoration - give equal margin around grid item
-     */
+     *//*
     public class GridSpacingItemDecoration extends RecyclerView.ItemDecoration {
 
         private int spanCount;
@@ -151,13 +151,16 @@ public class MainActivity extends Activity {
         }
     }
 
-    /**
+    *//**
      * Converting dp to pixel
-     */
+     *//*
     private int dpToPx(int dp) {
         Resources r = getResources();
         return Math.round(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, r.getDisplayMetrics()));
     }
+
+
+    */
 
     @Override
     public void onBackPressed() {

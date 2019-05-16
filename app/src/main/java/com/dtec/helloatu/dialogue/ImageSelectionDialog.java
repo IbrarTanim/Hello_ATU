@@ -73,7 +73,11 @@ public class ImageSelectionDialog extends Dialog implements View.OnClickListener
             case R.id.ibtnCamera:
 
 
-                if (!fragmentBaseActivity.marshMallowPermission.checkPermissionForCamera()) {
+                fragmentBaseActivity.loadImageCamera();
+                fragmentBaseActivity.imageSelectionDialog.dismiss();
+
+
+               /* if (!fragmentBaseActivity.marshMallowPermission.checkPermissionForCamera()) {
                     fragmentBaseActivity.marshMallowPermission.requestPermissionForCamera();
                 } else {
                     if (!fragmentBaseActivity.marshMallowPermission.checkPermissionForExternalStorage()) {
@@ -82,8 +86,7 @@ public class ImageSelectionDialog extends Dialog implements View.OnClickListener
                         fragmentBaseActivity.loadImageCamera();
                         fragmentBaseActivity.imageSelectionDialog.dismiss();
                     }
-                }
-
+                }*/
 
                 /*if (!hasPermissions(fragmentBaseActivity, PERMISSIONS)) {
                     ActivityCompat.requestPermissions(fragmentBaseActivity, PERMISSIONS, PERMISSION_ALL);

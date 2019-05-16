@@ -1,0 +1,59 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/card_view_info_edit"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:layout_margin="@dimen/card_margin"
+        android:elevation="3dp"
+        card_view:cardCornerRadius="@dimen/card_album_radius">
+
+        <RelativeLayout
+            android:id="@+id/rl_info_edit"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/app_color"
+            android:clickable="true">
+
+            <ImageView
+                android:id="@+id/ivCtgPic_info_edit"
+                android:layout_width="@dimen/hundred_fourty"
+                android:layout_height="@dimen/hundred_fourty"
+                android:layout_centerHorizontal="true"
+                android:background="@color/transparent"
+                android:padding="@dimen/thirty"
+                android:scaleType="fitCenter"
+                android:src="@drawable/ic_terrorist" />
+
+            <TextView
+                android:id="@+id/tvBangla_info_edit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/ivCtgPic_info_edit"
+                android:gravity="center"
+                android:text="Bangla Title"
+                android:textColor="@color/white"
+                android:textSize="@dimen/twelve" />
+
+            <TextView
+                android:id="@+id/tvEnglish_info_edit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tvBangla_info_edit"
+                android:layout_marginBottom="@dimen/five"
+                android:gravity="center"
+                android:text="English Title"
+                android:textColor="@color/white"
+                android:textSize="@dimen/twelve" />
+
+
+        </RelativeLayout>
+
+    </android.support.v7.widget.CardView>
+
+</LinearLayout>
+

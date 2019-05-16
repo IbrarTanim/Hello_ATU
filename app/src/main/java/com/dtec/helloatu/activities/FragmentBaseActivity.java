@@ -185,6 +185,7 @@ public class FragmentBaseActivity extends FragmentActivity implements View.OnCli
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
 
         addInfoFragment = (AddInfoFragment) getSupportFragmentManager().getFragments().get(0);
+
         imageSelection(requestCode, resultCode, data);
 
         switch (requestCode) {
@@ -203,13 +204,10 @@ public class FragmentBaseActivity extends FragmentActivity implements View.OnCli
     }
 
     public void imageSelection(int requestCode, int resultCode, Intent data) {
-
         addInfoFragment = (AddInfoFragment) getSupportFragmentManager().getFragments().get(0);
-
         fileProcessing = new FileProcessing(activity);
         Bitmap widgetImage = null;
         if (resultCode == RESULT_OK) {
-
             // Load Image from Gallery
             if (requestCode == SELECT_PICTURE && intent_source == 1) {
                 openCropper(data.getData());

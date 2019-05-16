@@ -88,8 +88,8 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_add_info, container, false);
-
         activity = (FragmentBaseActivity) getActivity();
+
         marshMallowPermission = new MarshMallowPermission(activity);
         databaseManager = new DatabaseManager(activity);
         imageProcessing = new ImageProcessing(activity);
