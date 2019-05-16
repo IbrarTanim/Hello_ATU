@@ -373,6 +373,7 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
 
             case R.id.btnSubmit:
                 if (etCrimeInfo.getText().length() > 0) {
+                    crime.setCrimPosition(position);
                     crime.setCrimeInfo(etCrimeInfo.getText().toString());
                     crime.setOccurrence(spOccurrence.getSelectedItemPosition());
                     crime.setInformerName(etInformerName.getText().toString());
@@ -391,7 +392,7 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
                     imageProcessing.setImageWith_loader(ivCamera, imgPath);
                     databaseManager.insertCrime(crime);
                     backToPrevious();
-                    Toast.makeText(activity, "Form filled up Successfully", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(activity,  String.valueOf(position), Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(activity, getResources().getString(R.string.inform_terrorism), Toast.LENGTH_SHORT).show();
                 }

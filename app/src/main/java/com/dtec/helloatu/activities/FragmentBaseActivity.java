@@ -92,7 +92,7 @@ public class FragmentBaseActivity extends FragmentActivity implements View.OnCli
         if (bundle != null) {
             passedPosition = bundle.getInt("positionFragmentBaseActivity");
         }
-        //Toast.makeText(activity, String.valueOf(passedPosition), Toast.LENGTH_SHORT).show();
+        Toast.makeText(activity, String.valueOf(passedPosition), Toast.LENGTH_SHORT).show();
 
     }
 
@@ -104,7 +104,7 @@ public class FragmentBaseActivity extends FragmentActivity implements View.OnCli
         tabOne.setText(R.string.new_info);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
             tabOne.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
-            tabOne.setTextSize(25);
+            tabOne.setTextSize(22);
         }
         tabOne.setTextColor(Color.WHITE);
         tabLayout.getTabAt(0).setCustomView(tabOne);
@@ -113,7 +113,7 @@ public class FragmentBaseActivity extends FragmentActivity implements View.OnCli
         tabTwo.setText(R.string.info_edit);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
             tabTwo.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
-            tabTwo.setTextSize(25);
+            tabTwo.setTextSize(22);
         }
         tabTwo.setTextColor(Color.WHITE);
         tabLayout.getTabAt(1).setCustomView(tabTwo);

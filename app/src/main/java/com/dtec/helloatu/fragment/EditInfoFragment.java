@@ -45,7 +45,7 @@ public class EditInfoFragment extends Fragment {
 
         recycler_view_info_edit = view.findViewById(R.id.recycler_view_info_edit);
 
-        infoEditAdapter = new InfoEditAdapter(activity, crimesList, new CustomItemClickListener() {
+        infoEditAdapter = new InfoEditAdapter(activity, activity, crimesList, new CustomItemClickListener() {
             @Override
             public void onItemClick(View v, int position) {
 
@@ -55,13 +55,12 @@ public class EditInfoFragment extends Fragment {
 
         RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(activity, 2);
         recycler_view_info_edit.setLayoutManager(mLayoutManager);
-        //recycler_view_info_edit.addItemDecoration(new MainActivity.GridSpacingItemDecoration(2, dpToPx(10), true));
         recycler_view_info_edit.addItemDecoration(new GridSpacingItemDecoration(2, GridSpacingItemDecoration.dpToPx(10, activity), true));
         recycler_view_info_edit.setItemAnimator(new DefaultItemAnimator());
+
         recycler_view_info_edit.setAdapter(infoEditAdapter);
 
         // prepareCategorys();
-
         return view;
     }
 

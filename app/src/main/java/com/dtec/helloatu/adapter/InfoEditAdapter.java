@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -33,10 +34,11 @@ import java.util.List;
 public class InfoEditAdapter extends RecyclerView.Adapter<InfoEditAdapter.MyViewHolder> {
 
     private Context mContext;
+    FragmentBaseActivity activity;
     private List<Crime> crimesList;
     CustomItemClickListener clickListener;
 
-    public class MyViewHolder extends RecyclerView.ViewHolder  {
+    public class MyViewHolder extends RecyclerView.ViewHolder {
 
         public RelativeLayout rl_info_edit;
         public ImageView ivCtgPic_info_edit;
@@ -92,8 +94,9 @@ public class InfoEditAdapter extends RecyclerView.Adapter<InfoEditAdapter.MyView
     }
 
 
-    public InfoEditAdapter(Context mContext, List<Crime> crimesList, CustomItemClickListener clickListener) {
+    public InfoEditAdapter(Context mContext, FragmentBaseActivity activity, List<Crime> crimesList, CustomItemClickListener clickListener) {
         this.mContext = mContext;
+        this.activity = activity;
         this.crimesList = crimesList;
         this.clickListener = clickListener;
     }
@@ -116,9 +119,33 @@ public class InfoEditAdapter extends RecyclerView.Adapter<InfoEditAdapter.MyView
     @Override
     public void onBindViewHolder(final MyViewHolder holder, int position) {
         Crime crime = crimesList.get(position);
-        holder.tvBangla_info_edit.setText(crime.getCrimeInfo());
-        holder.tvEnglish_info_edit.setText(crime.getInformerName());
         //Glide.with(mContext).load(category.getCtgPic()).into(holder.ivCtgPic);
+        if (crime.getCrimPosition() == 0 ) {
+            holder.tvBangla_info_edit.setText(crimesList.get(position).getCrimeInfo());
+            holder.tvEnglish_info_edit.setText(crimesList.get(position).getInformerName());
+            holder.rl_info_edit.setBackgroundResource(R.color.app_color);
+            holder.ivCtgPic_info_edit.setImageResource(R.drawable.ic_terrorist);
+
+        } else  if ( 1 == crime.getCrimPosition() ) {
+            holder.tvBangla_info_edit.setText(crimesList.get(position).getCrimeInfo());
+            holder.tvEnglish_info_edit.setText(crimesList.get(position).getInformerName());
+            holder.rl_info_edit.setBackgroundResource(R.color.cyber_crime_color);
+            holder.ivCtgPic_info_edit.setImageResource(R.drawable.ic_serinze);
+
+        } else  if ( 2 == crime.getCrimPosition() ) {
+            holder.tvBangla_info_edit.setText(crimesList.get(position).getCrimeInfo());
+            holder.tvEnglish_info_edit.setText(crimesList.get(position).getInformerName());
+            holder.rl_info_edit.setBackgroundResource(R.color.bomb_crime_color);
+            holder.ivCtgPic_info_edit.setImageResource(R.drawable.ic_bomb);
+
+        } else  if ( 3 == crime.getCrimPosition() ) {
+            holder.tvBangla_info_edit.setText(crimesList.get(position).getCrimeInfo());
+            holder.tvEnglish_info_edit.setText(crimesList.get(position).getInformerName());
+            holder.rl_info_edit.setBackgroundResource(R.color.organaizational_crime_color);
+            holder.ivCtgPic_info_edit.setImageResource(R.drawable.ic_cyber_crime);
+        }
+
+
     }
 
     @Override

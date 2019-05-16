@@ -7,6 +7,7 @@ package com.dtec.helloatu.dao;
 public class Crime {
 
     private Long id;
+    private int crimPosition;
     /** Not-null value. */
     private String crimeInfo;
     /** Not-null value. */
@@ -37,8 +38,9 @@ public class Crime {
         this.id = id;
     }
 
-    public Crime(Long id, String crimeInfo, String informerName, String informerPhone, String informerAddress, String infoDocument, String infoPicture, String infoVideo, String infoAudio, int occurrence, int occurrenceInformer, int division, int divisionInformer, int district, int districtInformer) {
+    public Crime(Long id, int crimPosition, String crimeInfo, String informerName, String informerPhone, String informerAddress, String infoDocument, String infoPicture, String infoVideo, String infoAudio, int occurrence, int occurrenceInformer, int division, int divisionInformer, int district, int districtInformer) {
         this.id = id;
+        this.crimPosition = crimPosition;
         this.crimeInfo = crimeInfo;
         this.informerName = informerName;
         this.informerPhone = informerPhone;
@@ -61,6 +63,14 @@ public class Crime {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public int getCrimPosition() {
+        return crimPosition;
+    }
+
+    public void setCrimPosition(int crimPosition) {
+        this.crimPosition = crimPosition;
     }
 
     /** Not-null value. */

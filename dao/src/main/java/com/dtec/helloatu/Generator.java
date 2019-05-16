@@ -33,6 +33,7 @@ public class Generator {
     private static Entity addCrime(Schema schema) {
         Entity crime = schema.addEntity("Crime");
         crime.addIdProperty().primaryKey().autoincrement();
+        crime.addIntProperty("crimPosition").notNull();
         crime.addStringProperty("crimeInfo").notNull();
         crime.addStringProperty("informerName").notNull();
         crime.addStringProperty("informerPhone").notNull();

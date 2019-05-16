@@ -26,8 +26,7 @@
                 android:layout_centerHorizontal="true"
                 android:background="@color/transparent"
                 android:padding="@dimen/thirty"
-                android:scaleType="fitCenter"
-                android:src="@drawable/ic_terrorist" />
+                android:scaleType="fitCenter" />
 
             <TextView
                 android:id="@+id/tvBangla_info_edit"
