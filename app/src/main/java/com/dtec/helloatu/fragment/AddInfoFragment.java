@@ -392,7 +392,6 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
                     imageProcessing.setImageWith_loader(ivCamera, imgPath);
                     databaseManager.insertCrime(crime);
                     backToPrevious();
-                    Toast.makeText(activity,  String.valueOf(position), Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(activity, getResources().getString(R.string.inform_terrorism), Toast.LENGTH_SHORT).show();
                 }

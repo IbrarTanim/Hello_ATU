@@ -230,6 +230,26 @@ public class DatabaseManager implements IDatabaseManager, AsyncOperationListener
         }
     }
 
+    @Override
+    public List<Crime> listCrimesByCategoryId(int categoryId) {
+        List<Crime> crimes = null;
+        try {
+            openWritableDb();
+            CrimeDao crimeDao = daoSession.getCrimeDao();
+            QueryBuilder<Crime> queryBuilder = crimeDao.queryBuilder().where(CrimeDao.Properties.CrimPosition.eq(categoryId)).orderAsc(CrimeDao.Properties.CrimPosition);
+            crimes = queryBuilder.list();
+            daoSession.clear();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        if (crimes != null) {
+            return crimes = new ArrayList<>(crimes);
+        }
+        return crimes;
+    }
+
+
+
 
     @Override
     public void deleteAllCrime() {

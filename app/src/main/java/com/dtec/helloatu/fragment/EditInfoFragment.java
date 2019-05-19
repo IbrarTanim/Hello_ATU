@@ -41,26 +41,16 @@ public class EditInfoFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_edit_info, container, false);
         activity = (FragmentBaseActivity) getActivity();
         databaseManager = new DatabaseManager(activity);
-        crimesList = databaseManager.listCrime();
 
+        crimesList = databaseManager.listCrimesByCategoryId(activity.passedPosition);
         recycler_view_info_edit = view.findViewById(R.id.recycler_view_info_edit);
-
-        infoEditAdapter = new InfoEditAdapter(activity, activity, crimesList, new CustomItemClickListener() {
-            @Override
-            public void onItemClick(View v, int position) {
-
-            }
-        });
-
-
+        infoEditAdapter = new InfoEditAdapter(activity, activity, crimesList);
         RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(activity, 2);
         recycler_view_info_edit.setLayoutManager(mLayoutManager);
         recycler_view_info_edit.addItemDecoration(new GridSpacingItemDecoration(2, GridSpacingItemDecoration.dpToPx(10, activity), true));
         recycler_view_info_edit.setItemAnimator(new DefaultItemAnimator());
-
         recycler_view_info_edit.setAdapter(infoEditAdapter);
 
-        // prepareCategorys();
         return view;
     }
 

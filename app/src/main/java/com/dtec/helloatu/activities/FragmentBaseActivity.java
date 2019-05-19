@@ -29,6 +29,7 @@ import com.dtec.helloatu.fragment.AddInfoFragment;
 import com.dtec.helloatu.fragment.EditInfoFragment;
 import com.dtec.helloatu.utilities.CustomToast;
 import com.dtec.helloatu.utilities.FileProcessing;
+import com.dtec.helloatu.utilities.ImageProcessing;
 import com.dtec.helloatu.utilities.InternalStorageContentProvider;
 import com.dtec.helloatu.utilities.MarshMallowPermission;
 import com.dtec.helloatu.utilities.StaticAccess;
@@ -57,6 +58,7 @@ public class FragmentBaseActivity extends FragmentActivity implements View.OnCli
     private ViewPager viewPager;
     private AddInfoFragment addInfoFragment;
     public int passedPosition;
+    public ImageProcessing imageProcessing;
     ImageView ivBack;
     public ImageSelectionDialog imageSelectionDialog;
     public String appImagePath = null;
@@ -87,12 +89,12 @@ public class FragmentBaseActivity extends FragmentActivity implements View.OnCli
         setupTabIcons();
         ivBack = findViewById(R.id.ivBack);
         ivBack.setOnClickListener(this);
+        imageProcessing = new ImageProcessing(activity);
 
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
             passedPosition = bundle.getInt("positionFragmentBaseActivity");
         }
-        Toast.makeText(activity, String.valueOf(passedPosition), Toast.LENGTH_SHORT).show();
 
     }
 

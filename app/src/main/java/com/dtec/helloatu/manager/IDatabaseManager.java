@@ -45,6 +45,10 @@ public interface IDatabaseManager {
 
     boolean isCrime(int crimeId);
 
+
+
+    List<Crime> listCrimesByCategoryId(int categoryId);
+
     /**
      * Delete a Crime with a certain id from the DB
      *
