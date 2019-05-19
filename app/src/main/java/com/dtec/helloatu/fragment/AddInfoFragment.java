@@ -22,7 +22,7 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
-
+import java.util.Date;
 import com.dtec.helloatu.activities.FragmentBaseActivity;
 import com.dtec.helloatu.activities.MainActivity;
 import com.dtec.helloatu.dao.Crime;
@@ -389,6 +389,7 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
                     crime.setDivisionInformer(spDivisionInformer.getSelectedItemPosition());
                     crime.setDistrict(spDistrict.getSelectedItemPosition());
                     crime.setDistrictInformer(spDistrictInformer.getSelectedItemPosition());
+                    crime.setCreatedAt(new Date());
                     imageProcessing.setImageWith_loader(ivCamera, imgPath);
                     databaseManager.insertCrime(crime);
                     backToPrevious();

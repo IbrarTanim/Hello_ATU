@@ -30,6 +30,8 @@ public class Crime {
     private int divisionInformer;
     private int district;
     private int districtInformer;
+    /** Not-null value. */
+    private java.util.Date createdAt;
 
     public Crime() {
     }
@@ -38,7 +40,7 @@ public class Crime {
         this.id = id;
     }
 
-    public Crime(Long id, int crimPosition, String crimeInfo, String informerName, String informerPhone, String informerAddress, String infoDocument, String infoPicture, String infoVideo, String infoAudio, int occurrence, int occurrenceInformer, int division, int divisionInformer, int district, int districtInformer) {
+    public Crime(Long id, int crimPosition, String crimeInfo, String informerName, String informerPhone, String informerAddress, String infoDocument, String infoPicture, String infoVideo, String infoAudio, int occurrence, int occurrenceInformer, int division, int divisionInformer, int district, int districtInformer, java.util.Date createdAt) {
         this.id = id;
         this.crimPosition = crimPosition;
         this.crimeInfo = crimeInfo;
@@ -55,6 +57,7 @@ public class Crime {
         this.divisionInformer = divisionInformer;
         this.district = district;
         this.districtInformer = districtInformer;
+        this.createdAt = createdAt;
     }
 
     public Long getId() {
@@ -199,6 +202,16 @@ public class Crime {
 
     public void setDistrictInformer(int districtInformer) {
         this.districtInformer = districtInformer;
+    }
+
+    /** Not-null value. */
+    public java.util.Date getCreatedAt() {
+        return createdAt;
+    }
+
+    /** Not-null value; ensure this value is available before it is saved to the database. */
+    public void setCreatedAt(java.util.Date createdAt) {
+        this.createdAt = createdAt;
     }
 
 }

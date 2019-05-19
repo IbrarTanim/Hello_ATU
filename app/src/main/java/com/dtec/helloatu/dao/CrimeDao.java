@@ -39,6 +39,7 @@ public class CrimeDao extends AbstractDao<Crime, Long> {
         public final static Property DivisionInformer = new Property(13, int.class, "divisionInformer", false, "DIVISION_INFORMER");
         public final static Property District = new Property(14, int.class, "district", false, "DISTRICT");
         public final static Property DistrictInformer = new Property(15, int.class, "districtInformer", false, "DISTRICT_INFORMER");
+        public final static Property CreatedAt = new Property(16, java.util.Date.class, "createdAt", false, "CREATED_AT");
     };
 
 
@@ -69,7 +70,8 @@ public class CrimeDao extends AbstractDao<Crime, Long> {
                 "\"DIVISION\" INTEGER NOT NULL ," + // 12: division
                 "\"DIVISION_INFORMER\" INTEGER NOT NULL ," + // 13: divisionInformer
                 "\"DISTRICT\" INTEGER NOT NULL ," + // 14: district
-                "\"DISTRICT_INFORMER\" INTEGER NOT NULL );"); // 15: districtInformer
+                "\"DISTRICT_INFORMER\" INTEGER NOT NULL ," + // 15: districtInformer
+                "\"CREATED_AT\" INTEGER NOT NULL );"); // 16: createdAt
     }
 
     /** Drops the underlying database table. */
@@ -102,6 +104,7 @@ public class CrimeDao extends AbstractDao<Crime, Long> {
         stmt.bindLong(14, entity.getDivisionInformer());
         stmt.bindLong(15, entity.getDistrict());
         stmt.bindLong(16, entity.getDistrictInformer());
+        stmt.bindLong(17, entity.getCreatedAt().getTime());
     }
 
     /** @inheritdoc */
@@ -129,7 +132,8 @@ public class CrimeDao extends AbstractDao<Crime, Long> {
             cursor.getInt(offset + 12), // division
             cursor.getInt(offset + 13), // divisionInformer
             cursor.getInt(offset + 14), // district
-            cursor.getInt(offset + 15) // districtInformer
+            cursor.getInt(offset + 15), // districtInformer
+            new java.util.Date(cursor.getLong(offset + 16)) // createdAt
         );
         return entity;
     }
@@ -153,6 +157,7 @@ public class CrimeDao extends AbstractDao<Crime, Long> {
         entity.setDivisionInformer(cursor.getInt(offset + 13));
         entity.setDistrict(cursor.getInt(offset + 14));
         entity.setDistrictInformer(cursor.getInt(offset + 15));
+        entity.setCreatedAt(new java.util.Date(cursor.getLong(offset + 16)));
      }
     
     /** @inheritdoc */

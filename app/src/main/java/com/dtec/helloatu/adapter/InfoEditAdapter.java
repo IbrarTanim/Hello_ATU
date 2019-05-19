@@ -26,6 +26,7 @@ import com.dtec.helloatu.dao.Crime;
 import com.dtec.helloatu.listener.CustomItemClickListener;
 import com.dtec.helloatu.pojo.Category;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 /**
@@ -44,7 +45,7 @@ public class InfoEditAdapter extends RecyclerView.Adapter<InfoEditAdapter.MyView
         public ImageView ivCtgPic_info_edit;
         public TextView tvBangla_info_edit, tvEnglish_info_edit;
         private final Context context;
-
+        public String dateValue;
 
         public MyViewHolder(View view) {
             super(view);
@@ -54,6 +55,7 @@ public class InfoEditAdapter extends RecyclerView.Adapter<InfoEditAdapter.MyView
             ivCtgPic_info_edit = (ImageView) view.findViewById(R.id.ivCtgPic_info_edit);
             tvBangla_info_edit = (TextView) view.findViewById(R.id.tvBangla_info_edit);
             tvEnglish_info_edit = (TextView) view.findViewById(R.id.tvEnglish_info_edit);
+
             //rl_info_edit.setOnClickListener(this);
 
         }
@@ -95,10 +97,11 @@ public class InfoEditAdapter extends RecyclerView.Adapter<InfoEditAdapter.MyView
     }
 
 
-    public InfoEditAdapter(Context mContext, FragmentBaseActivity activity, List<Crime> crimesList ) {
+    public InfoEditAdapter(Context mContext, FragmentBaseActivity activity, List<Crime> crimesList) {
         this.mContext = mContext;
         this.activity = activity;
         this.crimesList = crimesList;
+
         //this.clickListener = clickListener;
     }
 
@@ -120,28 +123,30 @@ public class InfoEditAdapter extends RecyclerView.Adapter<InfoEditAdapter.MyView
     @Override
     public void onBindViewHolder(final MyViewHolder holder, int position) {
         Crime crime = crimesList.get(position);
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("E-dd-MMM-yyyy");
+        String dateValue = simpleDateFormat.format(crimesList.get(position).getCreatedAt());
         //Glide.with(mContext).load(category.getCtgPic()).into(holder.ivCtgPic);
-        if (crimesList.get(position).getCrimPosition() == 0 ) {
+        if (crimesList.get(position).getCrimPosition() == 0) {
             holder.tvBangla_info_edit.setText(crimesList.get(position).getCrimeInfo());
-            holder.tvEnglish_info_edit.setText(crimesList.get(position).getInformerName());
+            holder.tvEnglish_info_edit.setText(dateValue);
             holder.rl_info_edit.setBackgroundResource(R.color.app_color);
             holder.ivCtgPic_info_edit.setImageResource(R.drawable.ic_terrorist);
 
-        } else  if ( crimesList.get(position).getCrimPosition() ==1 ) {
+        } else if (crimesList.get(position).getCrimPosition() == 1) {
             holder.tvBangla_info_edit.setText(crimesList.get(position).getCrimeInfo());
-            holder.tvEnglish_info_edit.setText(crimesList.get(position).getInformerName());
+            holder.tvEnglish_info_edit.setText(dateValue);
             holder.rl_info_edit.setBackgroundResource(R.color.cyber_crime_color);
             holder.ivCtgPic_info_edit.setImageResource(R.drawable.ic_serinze);
 
-        } else  if ( crimesList.get(position).getCrimPosition() == 2 ) {
+        } else if (crimesList.get(position).getCrimPosition() == 2) {
             holder.tvBangla_info_edit.setText(crimesList.get(position).getCrimeInfo());
-            holder.tvEnglish_info_edit.setText(crimesList.get(position).getInformerName());
+            holder.tvEnglish_info_edit.setText(dateValue);
             holder.rl_info_edit.setBackgroundResource(R.color.bomb_crime_color);
             holder.ivCtgPic_info_edit.setImageResource(R.drawable.ic_bomb);
 
-        } else  if ( crimesList.get(position).getCrimPosition() == 3 ) {
+        } else if (crimesList.get(position).getCrimPosition() == 3) {
             holder.tvBangla_info_edit.setText(crimesList.get(position).getCrimeInfo());
-            holder.tvEnglish_info_edit.setText(crimesList.get(position).getInformerName());
+            holder.tvEnglish_info_edit.setText(dateValue);
             holder.rl_info_edit.setBackgroundResource(R.color.organaizational_crime_color);
             holder.ivCtgPic_info_edit.setImageResource(R.drawable.ic_cyber_crime);
 

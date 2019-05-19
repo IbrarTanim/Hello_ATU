@@ -48,6 +48,7 @@ public class Generator {
         crime.addIntProperty("divisionInformer").notNull();
         crime.addIntProperty("district").notNull();
         crime.addIntProperty("districtInformer").notNull();
+        crime.addDateProperty("createdAt").notNull();
         return crime;
     }
 
