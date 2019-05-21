@@ -3,7 +3,6 @@ package com.dtec.helloatu.activities;
 import android.app.Activity;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
 import android.view.View;
 
 import com.dtec.helloatu.utilities.ExceptionHandler;

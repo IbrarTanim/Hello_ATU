@@ -10,13 +10,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
-import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v4.view.ViewPager;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
@@ -33,6 +27,7 @@ import com.dtec.helloatu.utilities.ImageProcessing;
 import com.dtec.helloatu.utilities.InternalStorageContentProvider;
 import com.dtec.helloatu.utilities.MarshMallowPermission;
 import com.dtec.helloatu.utilities.StaticAccess;
+import com.google.android.material.tabs.TabLayout;
 import com.nbsp.materialfilepicker.ui.FilePickerActivity;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
@@ -41,6 +36,13 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.viewpager.widget.ViewPager;
 
 import static com.dtec.helloatu.utilities.StaticAccess.MATERIAL_FILE_PICKER;
 import static com.dtec.helloatu.utilities.StaticAccess.PICK_AUDIO_REQUEST;

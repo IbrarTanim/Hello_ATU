@@ -9,7 +9,6 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.OpenableColumns;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,6 +34,8 @@ import com.dtec.helloatu.utilities.MarshMallowPermission;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+
+import androidx.fragment.app.Fragment;
 
 import static android.app.Activity.RESULT_OK;
 import static com.dtec.helloatu.utilities.StaticAccess.PICK_AUDIO_REQUEST;
@@ -392,6 +393,7 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
                     crime.setCreatedAt(new Date());
                     imageProcessing.setImageWith_loader(ivCamera, imgPath);
                     databaseManager.insertCrime(crime);
+                    Toast.makeText(activity, getResources().getString(R.string.successful_message), Toast.LENGTH_SHORT).show();
                     backToPrevious();
                 } else {
                     Toast.makeText(activity, getResources().getString(R.string.inform_terrorism), Toast.LENGTH_SHORT).show();

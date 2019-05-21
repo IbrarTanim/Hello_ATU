@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Environment;
-import android.support.annotation.NonNull;
 import android.util.Log;
 import android.view.View;
 
@@ -22,6 +21,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+
+import androidx.annotation.NonNull;
 
 /**
  * Created by Probook 440 on 2/5/2017.
