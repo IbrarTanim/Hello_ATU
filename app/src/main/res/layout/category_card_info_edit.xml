@@ -31,7 +31,7 @@
             <TextView
                 android:id="@+id/tvBangla_info_edit"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/fifteen"
                 android:layout_below="@id/ivCtgPic_info_edit"
                 android:gravity="center"
                 android:text="Bangla Title"
