@@ -36,6 +36,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import static android.app.Activity.RESULT_OK;
 import static com.dtec.helloatu.utilities.StaticAccess.PICK_AUDIO_REQUEST;
@@ -394,6 +396,7 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
                     imageProcessing.setImageWith_loader(ivCamera, imgPath);
                     databaseManager.insertCrime(crime);
                     Toast.makeText(activity, getResources().getString(R.string.successful_message), Toast.LENGTH_SHORT).show();
+
                     backToPrevious();
                 } else {
                     Toast.makeText(activity, getResources().getString(R.string.inform_terrorism), Toast.LENGTH_SHORT).show();
