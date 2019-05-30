@@ -19,7 +19,10 @@ public class InformationActivity extends Activity implements View.OnClickListene
     CircularImageView civUserManual, civUnitDetails, civNewsFeed, civAnonymousChat;
     TextView tvUserManual, tvUnitDetails, tvNewsFeed;
 
-    boolean isButtonClicked = false;
+    boolean isUserManualClicked = false;
+    boolean isUnitDetailsClicked = false;
+    boolean isNewsFeedClicked = false;
+    boolean isAnonymousChatClicked = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +34,7 @@ public class InformationActivity extends Activity implements View.OnClickListene
         civUnitDetails = (CircularImageView) findViewById(R.id.civUnitDetails);
         civNewsFeed = (CircularImageView) findViewById(R.id.civNewsFeed);
         civAnonymousChat = (CircularImageView) findViewById(R.id.civAnonymousChat);
+
         ibtnBackInformation = (ImageButton) findViewById(R.id.ibtnBackInformation);
 
         tvUserManual = (TextView) findViewById(R.id.tvUserManual);
@@ -43,6 +47,11 @@ public class InformationActivity extends Activity implements View.OnClickListene
         civNewsFeed.setOnClickListener(this);
         civAnonymousChat.setOnClickListener(this);
         ibtnBackInformation.setOnClickListener(this);
+
+        isUserManualClicked = true;
+        isUnitDetailsClicked = true;
+        isNewsFeedClicked = true;
+        isAnonymousChatClicked = true;
 
 
     }
@@ -60,53 +69,53 @@ public class InformationActivity extends Activity implements View.OnClickListene
         switch (view.getId()) {
             case R.id.civUserManual:
 
-                if (isButtonClicked) {
+                if (isUserManualClicked) {
                     civUserManual.setImageResource(R.drawable.ic_up_arrow);
                     tvUserManual.setVisibility(View.VISIBLE);
-                    isButtonClicked = false;
+                    isUserManualClicked = false;
                 } else {
                     civUserManual.setImageResource(R.drawable.ic_down_arrow);
                     tvUserManual.setVisibility(View.GONE);
-                    isButtonClicked = true;
+                    isUserManualClicked = true;
                 }
 
 
                 break;
             case R.id.civUnitDetails:
 
-                if (isButtonClicked) {
+                if (isUnitDetailsClicked) {
                     civUnitDetails.setImageResource(R.drawable.ic_up_arrow);
                     tvUnitDetails.setVisibility(View.VISIBLE);
-                    isButtonClicked = false;
+                    isUnitDetailsClicked = false;
                 } else {
                     civUnitDetails.setImageResource(R.drawable.ic_down_arrow);
                     tvUnitDetails.setVisibility(View.GONE);
-                    isButtonClicked = true;
+                    isUnitDetailsClicked = true;
                 }
 
                 break;
             case R.id.civNewsFeed:
 
-                if (isButtonClicked) {
+                if (isNewsFeedClicked) {
                     civNewsFeed.setImageResource(R.drawable.ic_up_arrow);
                     tvNewsFeed.setVisibility(View.VISIBLE);
-                    isButtonClicked = false;
+                    isNewsFeedClicked = false;
                 } else {
                     civNewsFeed.setImageResource(R.drawable.ic_down_arrow);
                     tvNewsFeed.setVisibility(View.GONE);
-                    isButtonClicked = true;
+                    isNewsFeedClicked = true;
                 }
 
                 break;
 
             case R.id.civAnonymousChat:
 
-                if (isButtonClicked) {
+                if (isAnonymousChatClicked) {
                     civAnonymousChat.setImageResource(R.drawable.ic_up_arrow);
-                    isButtonClicked = false;
+                    isAnonymousChatClicked = false;
                 } else {
                     civAnonymousChat.setImageResource(R.drawable.ic_down_arrow);
-                    isButtonClicked = true;
+                    isAnonymousChatClicked = true;
                 }
 
 

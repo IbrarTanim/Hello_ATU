@@ -21,6 +21,7 @@ public class SplashActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
+
         activity = this;
         marshMallowPermission = new MarshMallowPermission(activity);
         tvSplash = findViewById(R.id.tvSplash);
