@@ -18,7 +18,6 @@ public class InformationActivity extends Activity implements View.OnClickListene
 
     CircularImageView civUserManual, civUnitDetails, civNewsFeed, civAnonymousChat;
     TextView tvUserManual, tvUnitDetails, tvNewsFeed;
-
     boolean isUserManualClicked = false;
     boolean isUnitDetailsClicked = false;
     boolean isNewsFeedClicked = false;
@@ -30,16 +29,15 @@ public class InformationActivity extends Activity implements View.OnClickListene
         setContentView(R.layout.activity_information);
         activity = this;
 
-        civUserManual = (CircularImageView) findViewById(R.id.civUserManual);
-        civUnitDetails = (CircularImageView) findViewById(R.id.civUnitDetails);
-        civNewsFeed = (CircularImageView) findViewById(R.id.civNewsFeed);
-        civAnonymousChat = (CircularImageView) findViewById(R.id.civAnonymousChat);
+        civUserManual = findViewById(R.id.civUserManual);
+        civUnitDetails = findViewById(R.id.civUnitDetails);
+        civNewsFeed = findViewById(R.id.civNewsFeed);
+        civAnonymousChat = findViewById(R.id.civAnonymousChat);
+        ibtnBackInformation = findViewById(R.id.ibtnBackInformation);
 
-        ibtnBackInformation = (ImageButton) findViewById(R.id.ibtnBackInformation);
-
-        tvUserManual = (TextView) findViewById(R.id.tvUserManual);
-        tvUnitDetails = (TextView) findViewById(R.id.tvUnitDetails);
-        tvNewsFeed = (TextView) findViewById(R.id.tvNewsFeed);
+        tvUserManual = findViewById(R.id.tvUserManual);
+        tvUnitDetails = findViewById(R.id.tvUnitDetails);
+        tvNewsFeed = findViewById(R.id.tvNewsFeed);
 
 
         civUserManual.setOnClickListener(this);
@@ -68,7 +66,6 @@ public class InformationActivity extends Activity implements View.OnClickListene
 
         switch (view.getId()) {
             case R.id.civUserManual:
-
                 if (isUserManualClicked) {
                     civUserManual.setImageResource(R.drawable.ic_up_arrow);
                     tvUserManual.setVisibility(View.VISIBLE);
@@ -82,7 +79,6 @@ public class InformationActivity extends Activity implements View.OnClickListene
 
                 break;
             case R.id.civUnitDetails:
-
                 if (isUnitDetailsClicked) {
                     civUnitDetails.setImageResource(R.drawable.ic_up_arrow);
                     tvUnitDetails.setVisibility(View.VISIBLE);
@@ -95,7 +91,6 @@ public class InformationActivity extends Activity implements View.OnClickListene
 
                 break;
             case R.id.civNewsFeed:
-
                 if (isNewsFeedClicked) {
                     civNewsFeed.setImageResource(R.drawable.ic_up_arrow);
                     tvNewsFeed.setVisibility(View.VISIBLE);
@@ -109,7 +104,6 @@ public class InformationActivity extends Activity implements View.OnClickListene
                 break;
 
             case R.id.civAnonymousChat:
-
                 if (isAnonymousChatClicked) {
                     civAnonymousChat.setImageResource(R.drawable.ic_up_arrow);
                     isAnonymousChatClicked = false;
