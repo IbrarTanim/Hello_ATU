@@ -302,7 +302,7 @@ public class FragmentBaseActivity extends FragmentActivity implements View.OnCli
             } else {
                 mImageCaptureUri = InternalStorageContentProvider.CONTENT_URI;
             }
-            intent.putExtra(android.provider.MediaStore.EXTRA_OUTPUT, mImageCaptureUri);
+            intent.putExtra(MediaStore.EXTRA_OUTPUT, mImageCaptureUri);
             intent.putExtra("return-data", true);
             startActivityForResult(intent, REQUEST_CODE_TAKE_PICTURE);
 
@@ -311,6 +311,13 @@ public class FragmentBaseActivity extends FragmentActivity implements View.OnCli
 
         intent_source = 2;
     }
+    // It will Implement for testing Camera issue. Rokan
+    private void nothing(){
+        Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, MediaStore.Images.Media.EXTERNAL_CONTENT_URI.toString());
+               startActivityForResult(intent,REQUEST_CODE_TAKE_PICTURE);
+    }
+
 
     private void loadFragment() {
         addInfoFragment = new AddInfoFragment();

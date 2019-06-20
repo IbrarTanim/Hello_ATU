@@ -3,6 +3,7 @@ package com.dtec.helloatu.dialogue;
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.view.View;
 import android.widget.ImageButton;
 
@@ -71,7 +72,8 @@ public class ImageSelectionDialog extends Dialog implements View.OnClickListener
         switch (v.getId()) {
             case R.id.ibtnCamera:
 
-
+                StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
+                StrictMode.setVmPolicy(builder.build());
                 fragmentBaseActivity.loadImageCamera();
                 fragmentBaseActivity.imageSelectionDialog.dismiss();
 
