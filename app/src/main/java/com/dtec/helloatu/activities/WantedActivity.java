@@ -46,7 +46,7 @@ public class WantedActivity extends Activity {
         if (bundle != null) {
             passedPosition = bundle.getInt("positionWanted");
         }
-        Toast.makeText(activity, String.valueOf(passedPosition), Toast.LENGTH_SHORT).show();
+        //Toast.makeText(activity, String.valueOf(passedPosition), Toast.LENGTH_SHORT).show();
 
 
 

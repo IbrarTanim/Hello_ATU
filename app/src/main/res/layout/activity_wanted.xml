@@ -11,6 +11,7 @@
         android:id="@+id/ibtnBackWanted"
         android:layout_width="@dimen/thirty"
         android:layout_height="@dimen/thirty"
+        android:visibility="gone"
         android:background="@color/transparent"
         android:scaleType="fitCenter"
         android:src="@drawable/ic_back" />
@@ -22,7 +23,7 @@
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:gravity="center"
-        android:text="This is Wanted Activity"
+        android:text="Add Information about Wanted Person"
         android:textAlignment="center"
         android:textColor="@color/white"
         android:textSize="@dimen/fifteen" />
