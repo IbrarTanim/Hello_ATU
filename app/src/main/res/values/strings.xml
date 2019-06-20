@@ -2,25 +2,17 @@
     <string name="app_name">Inform ATU</string>
 
     <string name="inform_terrorism">অপরাধের তথ্য দিন</string>
-
-    <string name="splash_text"><![CDATA[<html><body><big>Anti Terrorism Unit </big><br/><small>Dhaka Metropolitan Police</small></body><html>]]></string>
-
-
+    <string name="splash_text"><![CDATA[<html><body><big>Anti Terrorism Unit </big><br/><small>Bangladesh Police</small></body><html>]]></string>
     <string name="cyber_crime_en">Cyber Crime</string>
     <string name="terrorism_en">Terrorism/Extremism</string>
     <string name="bomb_en">Bomb/Explosive/Arms</string>
     <string name="organaizational_crime_en">Organaizational crime</string>
     <string name="wanted_en">Wanted</string>
     <string name="information_en">Information Cell</string>
-
     <string name="a">জঙ্গিবাদ/ উগ্রবাদ সম্পর্কিত ফরমটি পূরণ করুন।</string>
     <string name="b">সাইবার অপরাধ সম্পর্কিত ফরমটি পূরণ করুন।</string>
     <string name="c"> বোমা/ বিস্ফোরণ সম্পর্কিত ফরমটি পূরণ করুন।</string>
     <string name="d">সংগঠিত অপরাধ সম্পর্কিত ফরমটি পূরণ করুন।</string>
-
-
-
-
     <string name="terrorism_bn">জঙ্গিবাদ/ উগ্রবাদ</string>
     <string name="cyber_crime_bn"> সাইবার অপরাধ</string>
     <string name="bomb_bn">বোমা/ বিস্ফোরণ </string>

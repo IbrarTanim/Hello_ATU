@@ -55,7 +55,7 @@ public class WantedActivity extends Activity {
 
     @Override
     public void onBackPressed() {
-
+        startActivity(new Intent(activity, MainActivity.class));
         finish();
 
     }

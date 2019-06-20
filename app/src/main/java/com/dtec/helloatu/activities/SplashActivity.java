@@ -23,13 +23,11 @@ public class SplashActivity extends Activity {
         setContentView(R.layout.activity_splash);
 
         activity = this;
-        marshMallowPermission = new MarshMallowPermission(activity);
+        //marshMallowPermission = new MarshMallowPermission(activity);
         tvSplash = findViewById(R.id.tvSplash);
         tvSplash.setText(Html.fromHtml(getString(R.string.splash_text)));
-
-
         runSplash();
-        marshMallowPermission.checkPermissions();
+        //marshMallowPermission.checkPermissions();
     }
 
 
