@@ -384,10 +384,37 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
                     crime.setInformerName(etInformerName.getText().toString());
                     crime.setInformerPhone(etInformerPhone.getText().toString());
                     crime.setInformerAddress(etInformerAddress.getText().toString());
-                    crime.setInfoDocument(activity.documentName);
+
+                    if (activity.documentName != null) {
+                        crime.setInfoDocument(activity.documentName);
+                    } else {
+                        crime.setInfoDocument("");
+                    }
+
+                    if (checkGettingImage(imgPath) != null) {
+                        crime.setInfoPicture(checkGettingImage(imgPath));
+                    } else {
+                        crime.setInfoPicture("");
+                    }
+
+                    if (activity.videoName != null) {
+                        crime.setInfoVideo(activity.videoName);
+                    } else {
+                        crime.setInfoVideo("");
+                    }
+
+                    if (activity.audioName != null) {
+                        crime.setInfoAudio(activity.audioName);
+                    } else {
+                        crime.setInfoAudio("");
+                    }
+
+                    /*crime.setInfoDocument(activity.documentName);
                     crime.setInfoPicture(checkGettingImage(imgPath));
                     crime.setInfoVideo(activity.videoName);
-                    crime.setInfoAudio(activity.audioName);
+                    crime.setInfoAudio(activity.audioName);*/
+
+
                     crime.setOccurrence(spOccurrence.getSelectedItemPosition());
                     crime.setOccurrenceInformer(spOccurrenceInformer.getSelectedItemPosition());
                     crime.setDivision(spDivision.getSelectedItemPosition());
@@ -398,7 +425,6 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
                     imageProcessing.setImageWith_loader(ivCamera, imgPath);
                     databaseManager.insertCrime(crime);
                     Toast.makeText(activity, getResources().getString(R.string.successful_message), Toast.LENGTH_SHORT).show();
-
                     backToPrevious();
                 } else {
                     Toast.makeText(activity, getResources().getString(R.string.inform_terrorism), Toast.LENGTH_SHORT).show();
