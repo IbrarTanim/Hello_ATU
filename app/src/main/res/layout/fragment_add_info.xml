@@ -424,8 +424,8 @@
 
         <ImageView
             android:id="@+id/ivCamera"
-            android:layout_width="0dp"
-            android:layout_height="@dimen/two_hundred"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/hundred_fifty"
             android:layout_gravity="center"
             android:layout_marginTop="@dimen/twenty"
             android:background="@drawable/cell_border"
@@ -508,7 +508,7 @@
             <Button
                 android:id="@+id/btnSubmit"
                 android:layout_width="@dimen/zero"
-                android:layout_height="@dimen/fifty"
+                android:layout_height="@dimen/fourty"
                 android:layout_weight="2"
                 android:background="@drawable/cell_border"
                 android:drawableLeft="@drawable/ic_tick"
@@ -528,7 +528,7 @@
             <Button
                 android:id="@+id/btnCancel"
                 android:layout_width="@dimen/zero"
-                android:layout_height="@dimen/fifty"
+                android:layout_height="@dimen/fourty"
                 android:layout_weight="2"
                 android:background="@drawable/cell_border"
                 android:drawableLeft="@drawable/ic_cancel"

@@ -2,7 +2,7 @@
     <string name="app_name">Inform ATU</string>
 
     <string name="inform_terrorism">অপরাধের তথ্য দিন</string>
-    <string name="splash_text"><![CDATA[<html><body><big>Anti Terrorism Unit </big><br/><small>Bangladesh Police</small></body><html>]]></string>
+    <string name="splash_text"><![CDATA[<html><body><big>Anti Terrorism Unit </big><br/>Bangladesh Police</body><html>]]></string>
     <string name="cyber_crime_en">Cyber Crime</string>
     <string name="terrorism_en">Terrorism/Extremism</string>
     <string name="bomb_en">Bomb/Explosive/Arms</string>
@@ -116,7 +116,7 @@
 
     <string name="SorryText">SORRY! FOR SOMETHING WENT WRONG.</string>
     <string name="occurrence_place">ঘটনাস্থল  (Place of Occurrence)</string>
-    <string name="app_name_bn">এন্টিটেরোরিজম ইউনিট \n ঢাকা মেট্রোপলিটন পুলিশ</string>
+    <string name="app_name_bn">এন্টিটেরোরিজম ইউনিট \n বাংলাদেশ পুলিশ</string>
 
     <string name="unit_detail_text">
       \nProposal on 26 July, 2016 as Police Anti Terrorism Unit, Proposed Manpower 600 (after the incident of Holy Artisan).
