@@ -424,7 +424,7 @@
 
         <ImageView
             android:id="@+id/ivCamera"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="@dimen/hundred_fifty"
             android:layout_gravity="center"
             android:layout_marginTop="@dimen/twenty"
@@ -441,13 +441,14 @@
 
         <TextView
             android:id="@+id/tvDocument"
-            android:layout_width="@dimen/zero"
+            android:layout_width="match_parent"
             android:layout_height="@dimen/thirty_five"
             android:layout_marginTop="@dimen/ten"
+            android:paddingLeft="@dimen/five"
             android:background="@drawable/cell_border"
-            android:gravity="center"
+            android:gravity="left|center"
             android:textColor="@color/black"
-            android:textSize="@dimen/eighteen"
+            android:textSize="@dimen/fifteen"
             android:visibility="gone"
             app:layout_constraintBottom_toTopOf="@+id/tvVideo"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -457,18 +458,35 @@
 
         <TextView
             android:id="@+id/tvVideo"
-            android:layout_width="@dimen/zero"
+            android:layout_width="match_parent"
             android:layout_height="@dimen/thirty_five"
             android:layout_marginTop="@dimen/ten"
             android:background="@drawable/cell_border"
-            android:gravity="center"
+            android:gravity="left|center"
+            android:paddingLeft="@dimen/five"
             android:textColor="@color/black"
-            android:textSize="@dimen/eighteen"
+            android:textSize="@dimen/fifteen"
             android:visibility="gone"
             app:layout_constraintBottom_toTopOf="@+id/tvAudio"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvDocument" />
+
+
+        <VideoView
+            android:id="@+id/videoView"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/hundred_fifty"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:layout_marginBottom="@dimen/ten"
+            android:layout_marginTop="@dimen/ten"
+            android:background="@drawable/cell_border"
+            android:padding="@dimen/five"
+            android:scaleType="fitCenter"
+            android:visibility="gone"
+            app:layout_constraintBottom_toTopOf="@+id/tvAudio"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvVideo" />
 
         <TextView
             android:id="@+id/tvAudio"
@@ -476,9 +494,10 @@
             android:layout_height="@dimen/thirty_five"
             android:layout_marginTop="@dimen/ten"
             android:background="@drawable/cell_border"
-            android:gravity="center"
+            android:gravity="left|center"
+            android:paddingLeft="@dimen/five"
             android:textColor="@color/black"
-            android:textSize="@dimen/eighteen"
+            android:textSize="@dimen/fifteen"
             android:visibility="gone"
             app:layout_constraintBottom_toTopOf="@+id/llButtons"
             app:layout_constraintLeft_toLeftOf="parent"

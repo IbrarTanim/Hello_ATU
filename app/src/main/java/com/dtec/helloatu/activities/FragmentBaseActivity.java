@@ -189,7 +189,6 @@ public class FragmentBaseActivity extends FragmentActivity implements View.OnCli
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
 
         addInfoFragment = (AddInfoFragment) getSupportFragmentManager().getFragments().get(0);
-
         imageSelection(requestCode, resultCode, data);
 
         switch (requestCode) {
@@ -210,6 +209,7 @@ public class FragmentBaseActivity extends FragmentActivity implements View.OnCli
     public void imageSelection(int requestCode, int resultCode, Intent data) {
         addInfoFragment = (AddInfoFragment) getSupportFragmentManager().getFragments().get(0);
         fileProcessing = new FileProcessing(activity);
+
         Bitmap widgetImage = null;
         if (resultCode == RESULT_OK) {
             // Load Image from Gallery
@@ -311,11 +311,12 @@ public class FragmentBaseActivity extends FragmentActivity implements View.OnCli
 
         intent_source = 2;
     }
+
     // It will Implement for testing Camera issue. Rokan
-    private void nothing(){
+    private void nothing() {
         Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
         intent.putExtra(MediaStore.EXTRA_OUTPUT, MediaStore.Images.Media.EXTERNAL_CONTENT_URI.toString());
-               startActivityForResult(intent,REQUEST_CODE_TAKE_PICTURE);
+        startActivityForResult(intent, REQUEST_CODE_TAKE_PICTURE);
     }
 
 

@@ -2,10 +2,12 @@ package com.dtec.helloatu.fragment;
 
 import com.dtec.helloatu.R;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.OpenableColumns;
@@ -21,7 +23,9 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.VideoView;
 
+import java.io.IOException;
 import java.util.Date;
 
 import com.dtec.helloatu.activities.FragmentBaseActivity;
@@ -68,6 +72,9 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
     String displayName;
     public int itemPicFlag = 0;
     int position = -1;
+
+    VideoView videoView;
+    public MediaPlayer mediaPlayer;
 
     DatabaseManager databaseManager;
     ImageButton ibDocument, ibCamera, ibVideo, ibAudio;
@@ -124,6 +131,7 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
         ibAudio = view.findViewById(R.id.ibAudio);
         btnSubmit = view.findViewById(R.id.btnSubmit);
         btnCancel = view.findViewById(R.id.btnCancel);
+        videoView = view.findViewById(R.id.videoView);
 
         btnSubmit.setOnClickListener(this);
         btnCancel.setOnClickListener(this);
@@ -362,17 +370,21 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
         switch (view.getId()) {
 
             case R.id.ibDocument:
+                stopMediaPlayer();
                 enterStorage(getString(R.string.type_docs), PICK_FILE_REQUEST);
                 break;
             case R.id.ibCamera:
+                stopMediaPlayer();
                 activity.imageSelectionDialog = new ImageSelectionDialog(activity, activity, itemPicFlag);
                 DialogNavBarHide.navBarHide(activity, activity.imageSelectionDialog);
                 break;
             case R.id.ibVideo:
+                stopMediaPlayer();
                 enterStorage(getString(R.string.type_video), PICK_VIDEO_REQUEST);
                 break;
 
             case R.id.ibAudio:
+                stopMediaPlayer();
                 enterStorage(getString(R.string.type_audio), PICK_AUDIO_REQUEST);
                 break;
 
@@ -429,13 +441,26 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
                 } else {
                     Toast.makeText(activity, getResources().getString(R.string.inform_terrorism), Toast.LENGTH_SHORT).show();
                 }
+                stopMediaPlayer();
                 break;
             case R.id.btnCancel:
+                stopMediaPlayer();
                 backToPrevious();
                 break;
         }
     }
 
+    public void stopMediaPlayer() {
+
+        if (mediaPlayer != null && mediaPlayer.isPlaying()) {
+            mediaPlayer.stop();
+        }
+        if (videoView.isPlaying()) {
+            videoView.setVisibility(View.GONE);
+        }
+    }
+
+    @SuppressLint("SetTextI18n")
     public String resultActivity(int resultCode, Intent data, TextView textView) {
         if (resultCode == RESULT_OK) {
             // Get the Uri of the selected file
@@ -451,8 +476,25 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
                     cursor = activity.getContentResolver().query(uri, null, null, null, null);
                     if (cursor != null && cursor.moveToFirst()) {
                         displayName = cursor.getString(cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME));
-                        textView.setText(displayName);
-                        textView.setVisibility(View.VISIBLE);
+                       /* textView.setText(displayName);
+                        textView.setVisibility(View.VISIBLE);*/
+
+                        if (textView == tvDocument) {
+                            textView.setVisibility(View.VISIBLE);
+                            textView.setText(getString(R.string.document) + ": " + displayName);
+
+                        } else if (textView == tvVideo) {
+                            playVideo(uri);
+                            textView.setVisibility(View.VISIBLE);
+                            textView.setText(getString(R.string.video) + ": " + displayName);
+
+                        } else if (textView == tvAudio) {
+                            playAudio(uri);
+                            textView.setVisibility(View.VISIBLE);
+                            textView.setText(getString(R.string.audio) + ": " + displayName);
+                        }
+
+
                     }
                 } finally {
                     cursor.close();
@@ -463,6 +505,26 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
         }
         return displayName;
     }
+
+    public void playVideo(Uri uri) {
+        videoView.setVisibility(View.VISIBLE);
+        videoView.setVideoURI(uri);
+        videoView.requestFocus();
+        videoView.start();
+    }
+
+    public void playAudio(Uri uri) {
+        mediaPlayer = new MediaPlayer();
+        try {
+            mediaPlayer.setDataSource(activity, uri);
+            mediaPlayer.prepare();
+            mediaPlayer.start();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
 
     public void setImagePro(Bitmap bitmap) {
         //scale bitmap
