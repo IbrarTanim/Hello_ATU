@@ -14,6 +14,7 @@ import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -189,24 +190,24 @@ public class FragmentBaseActivity extends FragmentActivity implements View.OnCli
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
 
         addInfoFragment = (AddInfoFragment) getSupportFragmentManager().getFragments().get(0);
-        imageSelection(requestCode, resultCode, data);
+        imageSelection(requestCode, resultCode, data, addInfoFragment.tvCamera, addInfoFragment.llCamera);
 
         switch (requestCode) {
 
             case PICK_FILE_REQUEST:
-                documentName = addInfoFragment.resultActivity(resultCode, data, addInfoFragment.tvDocument);
+                documentName = addInfoFragment.resultActivity(resultCode, data, addInfoFragment.tvDocument, addInfoFragment.llDocument);
                 break;
             case PICK_VIDEO_REQUEST:
-                videoName = addInfoFragment.resultActivity(resultCode, data, addInfoFragment.tvVideo);
+                videoName = addInfoFragment.resultActivity(resultCode, data, addInfoFragment.tvVideo, addInfoFragment.llVideo);
                 break;
             case PICK_AUDIO_REQUEST:
-                audioName = addInfoFragment.resultActivity(resultCode, data, addInfoFragment.tvAudio);
+                audioName = addInfoFragment.resultActivity(resultCode, data, addInfoFragment.tvAudio, addInfoFragment.llAudio);
                 break;
         }
         super.onActivityResult(requestCode, resultCode, data);
     }
 
-    public void imageSelection(int requestCode, int resultCode, Intent data) {
+    public void imageSelection(int requestCode, int resultCode, Intent data, TextView textView, LinearLayout linearLayout) {
         addInfoFragment = (AddInfoFragment) getSupportFragmentManager().getFragments().get(0);
         fileProcessing = new FileProcessing(activity);
 
@@ -234,7 +235,8 @@ public class FragmentBaseActivity extends FragmentActivity implements View.OnCli
                     e.printStackTrace();
                 }
 
-                addInfoFragment.setImagePro(bitmap);
+                addInfoFragment.setImagePro(bitmap, textView);
+                linearLayout.setVisibility(View.VISIBLE);
 
 
             } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
@@ -255,7 +257,8 @@ public class FragmentBaseActivity extends FragmentActivity implements View.OnCli
             }
 
         }
-        addInfoFragment.setImagePro(widgetImage);
+       // linearLayout.setVisibility(View.VISIBLE);
+        addInfoFragment.setImagePro(widgetImage, textView);
         intent_source = 0;
 
     }

@@ -265,10 +265,46 @@
             android:layout_marginTop="@dimen/twenty"
             android:orientation="horizontal"
             android:weightSum="14.5"
-            app:layout_constraintBottom_toTopOf="@+id/ivCamera"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvIfAvailable">
+
+            <View
+                android:layout_width="@dimen/zero"
+                android:layout_height="match_parent"
+                android:layout_weight=".5" />
+
+
+            <LinearLayout
+                android:layout_width="@dimen/zero"
+                android:layout_height="@dimen/hundred"
+                android:layout_weight="3"
+                android:background="@drawable/camera_border"
+                android:orientation="vertical"
+                android:weightSum="3">
+
+                <ImageButton
+                    android:id="@+id/ibCamera"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/zero"
+                    android:layout_weight="2"
+                    android:background="@color/transparent"
+                    android:padding="@dimen/ten"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/ic_camera_white" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/zero"
+                    android:layout_weight="1"
+                    android:gravity="top|center"
+                    android:text="@string/picture"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/twelve"
+                    android:textStyle="bold" />
+
+
+            </LinearLayout>
 
             <View
                 android:layout_width="@dimen/zero"
@@ -299,42 +335,6 @@
                     android:layout_weight="1"
                     android:gravity="top|center"
                     android:text="@string/document"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/twelve"
-                    android:textStyle="bold" />
-
-
-            </LinearLayout>
-
-            <View
-                android:layout_width="@dimen/zero"
-                android:layout_height="match_parent"
-                android:layout_weight=".5" />
-
-            <LinearLayout
-                android:layout_width="@dimen/zero"
-                android:layout_height="@dimen/hundred"
-                android:layout_weight="3"
-                android:background="@drawable/camera_border"
-                android:orientation="vertical"
-                android:weightSum="3">
-
-                <ImageButton
-                    android:id="@+id/ibCamera"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/zero"
-                    android:layout_weight="2"
-                    android:background="@color/transparent"
-                    android:padding="@dimen/ten"
-                    android:scaleType="fitCenter"
-                    android:src="@drawable/ic_camera_white" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/zero"
-                    android:layout_weight="1"
-                    android:gravity="top|center"
-                    android:text="@string/picture"
                     android:textColor="@color/white"
                     android:textSize="@dimen/twelve"
                     android:textStyle="bold" />
@@ -422,6 +422,48 @@
 
         </LinearLayout>
 
+
+        <LinearLayout
+            android:id="@+id/llCamera"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/thirty_five"
+            android:layout_marginTop="@dimen/ten"
+            android:background="@drawable/cell_border"
+            android:orientation="horizontal"
+            android:visibility="gone"
+            android:weightSum="1"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/llStorages">
+
+            <TextView
+                android:id="@+id/tvCamera"
+                android:layout_width="@dimen/zero"
+                android:layout_height="match_parent"
+                android:layout_weight=".8"
+                android:gravity="left|center"
+                android:paddingLeft="@dimen/five"
+                android:textColor="@color/black"
+                android:textSize="@dimen/twelve"
+                android:visibility="visible" />
+
+            <TextView
+                android:id="@+id/tvPicShowHide"
+                android:layout_width="@dimen/zero"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_weight=".2"
+                android:background="@drawable/play_border"
+                android:gravity="center"
+                android:paddingLeft="@dimen/five"
+                android:text="@string/show"
+                android:textColor="@color/white"
+                android:textSize="@dimen/eighteen"
+                android:visibility="visible" />
+
+        </LinearLayout>
+
+
         <ImageView
             android:id="@+id/ivCamera"
             android:layout_width="match_parent"
@@ -430,79 +472,163 @@
             android:layout_marginTop="@dimen/twenty"
             android:background="@drawable/cell_border"
             android:padding="@dimen/five"
-            android:scaleType="fitCenter"
+            android:scaleType="fitXY"
             android:src="@drawable/camera"
             android:visibility="gone"
-            app:layout_constraintBottom_toTopOf="@+id/tvDocument"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/llStorages" />
+            app:layout_constraintTop_toBottomOf="@+id/llCamera" />
 
 
-        <TextView
-            android:id="@+id/tvDocument"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/thirty_five"
-            android:layout_marginTop="@dimen/ten"
-            android:paddingLeft="@dimen/five"
-            android:background="@drawable/cell_border"
-            android:gravity="left|center"
-            android:textColor="@color/black"
-            android:textSize="@dimen/fifteen"
-            android:visibility="gone"
-            app:layout_constraintBottom_toTopOf="@+id/tvVideo"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/ivCamera" />
-
-
-        <TextView
-            android:id="@+id/tvVideo"
+        <LinearLayout
+            android:id="@+id/llDocument"
             android:layout_width="match_parent"
             android:layout_height="@dimen/thirty_five"
             android:layout_marginTop="@dimen/ten"
             android:background="@drawable/cell_border"
-            android:gravity="left|center"
-            android:paddingLeft="@dimen/five"
-            android:textColor="@color/black"
-            android:textSize="@dimen/fifteen"
+            android:orientation="horizontal"
             android:visibility="gone"
-            app:layout_constraintBottom_toTopOf="@+id/tvAudio"
+            android:weightSum="1"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvDocument" />
+            app:layout_constraintTop_toBottomOf="@+id/ivCamera">
+
+            <TextView
+                android:id="@+id/tvDocument"
+                android:layout_width="@dimen/zero"
+                android:layout_height="match_parent"
+                android:layout_weight=".8"
+                android:gravity="left|center"
+                android:paddingLeft="@dimen/five"
+                android:textColor="@color/black"
+                android:textSize="@dimen/twelve"
+                android:visibility="visible" />
+
+            <TextView
+                android:id="@+id/tvDocumentShowHide"
+                android:layout_width="@dimen/zero"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_weight=".2"
+                android:background="@drawable/play_border"
+                android:gravity="center"
+                android:paddingLeft="@dimen/five"
+                android:text="@string/show"
+                android:textColor="@color/white"
+                android:textSize="@dimen/eighteen"
+                android:visibility="visible" />
+
+        </LinearLayout>
+
+        <com.github.barteksc.pdfviewer.PDFView
+            android:id="@+id/pdfView"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/hundred_fifty"
+            android:layout_marginTop="@dimen/ten"
+            android:layout_marginBottom="@dimen/ten"
+            android:background="@drawable/cell_border"
+            android:padding="@dimen/fifteen"
+            android:visibility="gone"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/llDocument" />
+
+
+        <LinearLayout
+            android:id="@+id/llVideo"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/thirty_five"
+            android:layout_marginTop="@dimen/ten"
+            android:background="@drawable/cell_border"
+            android:orientation="horizontal"
+            android:visibility="gone"
+            android:weightSum="1"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/pdfView">
+
+            <TextView
+                android:id="@+id/tvVideo"
+                android:layout_width="@dimen/zero"
+                android:layout_height="match_parent"
+                android:layout_weight=".8"
+                android:gravity="left|center"
+                android:paddingLeft="@dimen/five"
+                android:textColor="@color/black"
+                android:textSize="@dimen/twelve"
+                android:visibility="visible" />
+
+            <TextView
+                android:id="@+id/tvVideoPlayStop"
+                android:layout_width="@dimen/zero"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_weight=".2"
+                android:background="@drawable/play_border"
+                android:gravity="center"
+                android:paddingLeft="@dimen/five"
+                android:text="@string/play"
+                android:textColor="@color/white"
+                android:textSize="@dimen/eighteen"
+                android:visibility="visible" />
+
+        </LinearLayout>
 
 
         <VideoView
             android:id="@+id/videoView"
             android:layout_width="match_parent"
             android:layout_height="@dimen/hundred_fifty"
-            app:layout_constraintLeft_toLeftOf="parent"
-            android:layout_marginBottom="@dimen/ten"
             android:layout_marginTop="@dimen/ten"
+            android:layout_marginBottom="@dimen/ten"
             android:background="@drawable/cell_border"
             android:padding="@dimen/five"
             android:scaleType="fitCenter"
             android:visibility="gone"
-            app:layout_constraintBottom_toTopOf="@+id/tvAudio"
+            app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvVideo" />
+            app:layout_constraintTop_toBottomOf="@+id/llVideo" />
 
-        <TextView
-            android:id="@+id/tvAudio"
-            android:layout_width="@dimen/zero"
+
+        <LinearLayout
+            android:id="@+id/llAudio"
+            android:layout_width="match_parent"
             android:layout_height="@dimen/thirty_five"
             android:layout_marginTop="@dimen/ten"
             android:background="@drawable/cell_border"
-            android:gravity="left|center"
-            android:paddingLeft="@dimen/five"
-            android:textColor="@color/black"
-            android:textSize="@dimen/fifteen"
+            android:orientation="horizontal"
             android:visibility="gone"
-            app:layout_constraintBottom_toTopOf="@+id/llButtons"
+            android:weightSum="1"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvVideo" />
+            app:layout_constraintTop_toBottomOf="@+id/videoView">
+
+            <TextView
+                android:id="@+id/tvAudio"
+                android:layout_width="@dimen/zero"
+                android:layout_height="match_parent"
+                android:layout_weight=".8"
+                android:gravity="left|center"
+                android:paddingLeft="@dimen/five"
+                android:textColor="@color/black"
+                android:textSize="@dimen/twelve"
+                android:visibility="visible" />
+
+            <TextView
+                android:id="@+id/tvAudioPlayStop"
+                android:layout_width="@dimen/zero"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_weight=".2"
+                android:background="@drawable/play_border"
+                android:gravity="center"
+                android:paddingLeft="@dimen/five"
+                android:text="@string/play"
+                android:textColor="@color/white"
+                android:textSize="@dimen/eighteen"
+                android:visibility="visible" />
+
+        </LinearLayout>
 
 
         <LinearLayout
@@ -516,7 +642,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvAudio">
+            app:layout_constraintTop_toBottomOf="@+id/llAudio">
 
             <View
                 android:layout_width="@dimen/zero"

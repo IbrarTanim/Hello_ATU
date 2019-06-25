@@ -140,6 +140,10 @@
 <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="successful_message">Form Filled Up Successfully</string>
+    <string name="stop">Stop</string>
+    <string name="play">Play</string>
+    <string name="hide">Hide</string>
+    <string name="show">Show</string>
 
 
 </resources>
