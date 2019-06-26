@@ -183,7 +183,7 @@ public class FragmentBaseActivity extends FragmentActivity implements View.OnCli
         Intent intent = new Intent(activity, MainActivity.class);
         startActivity(intent);
         finish();
-
+        addInfoFragment.stopVideoAudioPlayer();
     }
 
 

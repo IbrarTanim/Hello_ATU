@@ -41,6 +41,7 @@ import com.dtec.helloatu.utilities.MarshMallowPermission;
 import com.github.barteksc.pdfviewer.PDFView;
 import com.github.barteksc.pdfviewer.listener.OnLoadCompleteListener;
 import com.github.barteksc.pdfviewer.listener.OnPageChangeListener;
+import com.github.barteksc.pdfviewer.listener.OnPageScrollListener;
 import com.github.barteksc.pdfviewer.scroll.DefaultScrollHandle;
 import com.shockwave.pdfium.PdfDocument;
 
@@ -49,8 +50,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 
 import static android.app.Activity.RESULT_OK;
 import static androidx.constraintlayout.motion.widget.MotionScene.TAG;
@@ -58,7 +57,7 @@ import static com.dtec.helloatu.utilities.StaticAccess.PICK_AUDIO_REQUEST;
 import static com.dtec.helloatu.utilities.StaticAccess.PICK_FILE_REQUEST;
 import static com.dtec.helloatu.utilities.StaticAccess.PICK_VIDEO_REQUEST;
 
-public class AddInfoFragment extends Fragment implements View.OnClickListener, AdapterView.OnItemSelectedListener, OnPageChangeListener, OnLoadCompleteListener {
+public class AddInfoFragment extends Fragment implements View.OnClickListener, AdapterView.OnItemSelectedListener, OnPageChangeListener, OnLoadCompleteListener, OnPageScrollListener {
 
     FragmentBaseActivity activity;
     public MarshMallowPermission marshMallowPermission;
@@ -73,16 +72,18 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
     Button btnSubmit, btnCancel;
     EditText etCrimeInfo, etInformerName, etInformerPhone, etInformerAddress;
     PDFView pdfView;
+    LinearLayout llPDFView;
     public LinearLayout llDocument, llCamera, llVideo, llAudio;
     public TextView tvDocument, tvCamera, tvVideo, tvAudio, tvCrimeTitle;
     TextView tvDocumentShowHide, tvPicShowHide, tvVideoPlayStop, tvAudioPlayStop;
 
     public ImageView ivCamera;
     String imgPath = "";
+    String videoCheck;
     Crime crime;
     ImageProcessing imgProc;
     String displayName;
-    String pdfUrl;
+    Uri pdfUrl;
     public int itemPicFlag = 0;
     int position = -1;
     Integer pageNumber = 0;
@@ -129,7 +130,6 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
         imgProc = new ImageProcessing(activity);
         crime = new Crime();
         activity.appImagePath = imgProc.getImageDir();
-
         spDivision = view.findViewById(R.id.spDivision);
         spDivisionInformer = view.findViewById(R.id.spDivisionInformer);
         spDistrictInformer = view.findViewById(R.id.spDistrictInformer);
@@ -154,6 +154,27 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
         btnSubmit = view.findViewById(R.id.btnSubmit);
         btnCancel = view.findViewById(R.id.btnCancel);
         videoView = view.findViewById(R.id.videoView);
+        videoView.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+            @Override
+            public void onCompletion(MediaPlayer mp) {
+                if (!isVideoPlay) {
+                    videoView.setVisibility(View.GONE);
+                    tvVideoPlayStop.setText(getString(R.string.play));
+                    isVideoPlay = true;
+                }
+            }
+        });
+
+      /*  mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+            @Override
+            public void onCompletion(MediaPlayer mp) {
+                if (!isAudioPlay) {
+                    tvAudioPlayStop.setText(getString(R.string.play));
+                    isAudioPlay = true;
+                }
+
+            }
+        });*/
 
         llDocument = view.findViewById(R.id.llDocument);
         llCamera = view.findViewById(R.id.llCamera);
@@ -165,6 +186,7 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
         tvVideoPlayStop = view.findViewById(R.id.tvVideoPlayStop);
         tvAudioPlayStop = view.findViewById(R.id.tvAudioPlayStop);
         pdfView = view.findViewById(R.id.pdfView);
+        llPDFView = view.findViewById(R.id.llPDFView);
 
         btnSubmit.setOnClickListener(this);
         btnCancel.setOnClickListener(this);
@@ -415,31 +437,34 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
 
             case R.id.ibDocument:
                 enterStorage(getString(R.string.type_docs), PICK_FILE_REQUEST);
+                stopVideoAudioPlayer();
                 break;
             case R.id.ibCamera:
                 activity.imageSelectionDialog = new ImageSelectionDialog(activity, activity, itemPicFlag);
                 DialogNavBarHide.navBarHide(activity, activity.imageSelectionDialog);
+                stopVideoAudioPlayer();
                 break;
             case R.id.ibVideo:
                 enterStorage(getString(R.string.type_video), PICK_VIDEO_REQUEST);
+                stopVideoAudioPlayer();
                 break;
 
             case R.id.ibAudio:
                 enterStorage(getString(R.string.type_audio), PICK_AUDIO_REQUEST);
+                stopVideoAudioPlayer();
                 break;
 
             case R.id.tvDocumentShowHide:
                 if (isDocumentShow) {
                     showPDF(pdfUrl);
-                    pdfView.setVisibility(View.VISIBLE);
+                    llPDFView.setVisibility(View.VISIBLE);
                     tvDocumentShowHide.setText(getString(R.string.hide));
                     isDocumentShow = false;
                 } else {
                     tvDocumentShowHide.setText(getString(R.string.show));
-                    pdfView.setVisibility(View.GONE);
+                    llPDFView.setVisibility(View.GONE);
                     isDocumentShow = true;
                 }
-
                 break;
 
             case R.id.tvPicShowHide:
@@ -474,6 +499,7 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
                     playAudio(uriAudio);
                     isAudioPlay = false;
                     tvAudioPlayStop.setText(getString(R.string.stop));
+
                 } else {
                     if (mediaPlayer != null && mediaPlayer.isPlaying()) {
                         mediaPlayer.stop();
@@ -481,7 +507,6 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
                     }
                     isAudioPlay = true;
                 }
-
 
                 break;
 
@@ -532,22 +557,15 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
                 } else {
                     Toast.makeText(activity, getResources().getString(R.string.inform_terrorism), Toast.LENGTH_SHORT).show();
                 }
+                stopVideoAudioPlayer();
                 break;
             case R.id.btnCancel:
                 backToPrevious();
+                stopVideoAudioPlayer();
                 break;
         }
     }
 
-  /*  public void stopMediaPlayer() {
-
-        if (mediaPlayer != null && mediaPlayer.isPlaying()) {
-            mediaPlayer.stop();
-        }
-        if (videoView.isPlaying()) {
-            videoView.setVisibility(View.GONE);
-        }
-    }*/
 
     @SuppressLint("SetTextI18n")
     public String resultActivity(int resultCode, Intent data, TextView textView, LinearLayout linearLayout) {
@@ -570,7 +588,8 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
                         if (textView == tvDocument) {
                             textView.setVisibility(View.VISIBLE);
                             textView.setText(getString(R.string.document) + ": " + displayName);
-                            pdfUrl = displayName;
+                            //pdfUrl = displayName;
+                            pdfUrl = data.getData();
 
                         } else if (textView == tvVideo) {
                             //playVideo(uri);
@@ -602,7 +621,25 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
         videoView.setVideoURI(uri);
         videoView.requestFocus();
         videoView.start();
+
     }
+
+
+    public void stopVideoAudioPlayer() {
+        if (videoView.isPlaying()) {
+            videoView.stopPlayback();
+            videoView.setVisibility(View.GONE);
+            tvVideoPlayStop.setText(getString(R.string.play));
+            isVideoPlay = true;
+        }
+        if (mediaPlayer != null && mediaPlayer.isPlaying()) {
+            mediaPlayer.stop();
+            tvAudioPlayStop.setText(getString(R.string.play));
+            isAudioPlay = true;
+        }
+
+    }
+
 
     public void playAudio(Uri uri) {
         mediaPlayer = new MediaPlayer();
@@ -610,27 +647,47 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
             mediaPlayer.setDataSource(activity, uri);
             mediaPlayer.prepare();
             mediaPlayer.start();
+            mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                @Override
+                public void onCompletion(MediaPlayer mp) {
+                    if (!isAudioPlay) {
+                        tvAudioPlayStop.setText(getString(R.string.play));
+                        isAudioPlay = true;
+                    }
+                }
+            });
         } catch (IOException e) {
             e.printStackTrace();
         }
 
     }
 
-    public void showPDF(String pdfURL) {
+
+    public void showPDF(Uri pdfURL) {
         /*Intent intent = new Intent(Intent.ACTION_VIEW);
         intent.setData(Uri.parse(pdfURL));
         startActivity(intent);
 */
-        pdfView.fromUri(Uri.parse(pdfURL))
+        pdfView.fromUri(pdfURL)
                 .defaultPage(pageNumber)
                 .enableSwipe(true)
                 .swipeHorizontal(false)
+                .onPageScroll(this)
                 .onPageChange(this)
                 .enableAnnotationRendering(true)
                 .onLoad(this)
                 .scrollHandle(new DefaultScrollHandle(activity))
                 .load();
+
     }
+
+
+   /* PDFView.Configurator.onRender(new OnRenderListener() {
+        @Override
+        public void onInitiallyRendered(int pages, float pageWidth, float pageHeight) {
+            pdfView.fitToWidth(pageIndex);
+        }
+    });*/
 
 
     public void setImagePro(Bitmap bitmap, TextView textView) {
@@ -694,6 +751,7 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
         PdfDocument.Meta meta = pdfView.getDocumentMeta();
         printBookmarksTree(pdfView.getTableOfContents(), "-");
     }
+
     public void printBookmarksTree(List<PdfDocument.Bookmark> tree, String sep) {
         for (PdfDocument.Bookmark b : tree) {
 
@@ -705,5 +763,10 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
         }
     }
 
+
+    @Override
+    public void onPageScrolled(int page, float positionOffset) {
+        pageNumber = page;
+    }
 
 }
