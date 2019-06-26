@@ -626,21 +626,21 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
 
 
     public void stopVideoAudioPlayer() {
-        if (videoView.isPlaying()) {
-            videoView.stopPlayback();
-            videoView.setVisibility(View.GONE);
-            tvVideoPlayStop.setText(getString(R.string.play));
-            isVideoPlay = true;
+
+
+            if (videoView.isPlaying()) {
+                videoView.stopPlayback();
+                videoView.setVisibility(View.GONE);
+                tvVideoPlayStop.setText(getString(R.string.play));
+                isVideoPlay = true;
+            }
+            if (mediaPlayer != null && mediaPlayer.isPlaying()) {
+                mediaPlayer.stop();
+                tvAudioPlayStop.setText(getString(R.string.play));
+                isAudioPlay = true;
+            }
         }
-        if (mediaPlayer != null && mediaPlayer.isPlaying()) {
-            mediaPlayer.stop();
-            tvAudioPlayStop.setText(getString(R.string.play));
-            isAudioPlay = true;
-        }
-
-    }
-
-
+        
     public void playAudio(Uri uri) {
         mediaPlayer = new MediaPlayer();
         try {

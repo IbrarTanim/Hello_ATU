@@ -179,7 +179,7 @@ public class FragmentBaseActivity extends FragmentActivity implements View.OnCli
 
     @Override
     public void onBackPressed() {
-
+        addInfoFragment = (AddInfoFragment) getSupportFragmentManager().getFragments().get(0);
         Intent intent = new Intent(activity, MainActivity.class);
         startActivity(intent);
         finish();
