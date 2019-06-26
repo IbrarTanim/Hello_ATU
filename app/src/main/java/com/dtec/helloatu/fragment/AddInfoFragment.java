@@ -617,17 +617,12 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
     }
 
     public void playVideo(Uri uri) {
-        //videoView.setVisibility(View.VISIBLE);
         videoView.setVideoURI(uri);
         videoView.requestFocus();
         videoView.start();
-
     }
 
-
     public void stopVideoAudioPlayer() {
-
-
             if (videoView.isPlaying()) {
                 videoView.stopPlayback();
                 videoView.setVisibility(View.GONE);
@@ -639,8 +634,20 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
                 tvAudioPlayStop.setText(getString(R.string.play));
                 isAudioPlay = true;
             }
+            if(llPDFView.isShown()){
+                llPDFView.setVisibility(View.GONE);
+                tvDocumentShowHide.setText(getString(R.string.show));
+                isDocumentShow = true;
+            }
+            if(ivCamera.isShown()){
+                ivCamera.setVisibility(View.GONE);
+                tvPicShowHide.setText(getString(R.string.show));
+                isPicsShow = true;
+            }
+
+
         }
-        
+
     public void playAudio(Uri uri) {
         mediaPlayer = new MediaPlayer();
         try {
