@@ -528,6 +528,7 @@
             android:layout_marginTop="@dimen/ten"
             android:layout_marginBottom="@dimen/ten"
             android:background="@drawable/cell_border"
+            android:orientation="vertical"
             android:visibility="gone"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
@@ -540,7 +541,6 @@
                 android:layout_margin="@dimen/five" />
 
         </LinearLayout>
-
 
         <LinearLayout
             android:id="@+id/llVideo"
