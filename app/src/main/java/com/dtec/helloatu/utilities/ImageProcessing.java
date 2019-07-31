@@ -119,6 +119,19 @@ public class ImageProcessing {
         return BitmapFactory.decodeByteArray(decodedByte, 0, decodedByte.length);
     }
 
+    // convert from bitmap to byte array
+    public byte[] getBytesFromBitmap(Bitmap bitmap) {
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 70, stream);
+        return stream.toByteArray();
+    }
+
+
+  /*  // get the base 64 string
+    String imgString = Base64.encodeToString(getBytesFromBitmap(Bitmap bitmap),
+            Base64.NO_WRAP);*/
+
+
     // Save image to SD card
     public String imageSave(Bitmap bmp) {
         try {

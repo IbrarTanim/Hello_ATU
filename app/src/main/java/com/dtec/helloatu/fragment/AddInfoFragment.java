@@ -11,6 +11,7 @@ import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.OpenableColumns;
+import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,7 +29,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.VideoView;
 
+import java.io.ByteArrayOutputStream;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Date;
 
 import com.dtec.helloatu.activities.FragmentBaseActivity;
@@ -37,14 +41,16 @@ import com.dtec.helloatu.dao.Crime;
 import com.dtec.helloatu.dialogue.DialogNavBarHide;
 import com.dtec.helloatu.dialogue.ImageSelectionDialog;
 import com.dtec.helloatu.manager.DatabaseManager;
+import com.dtec.helloatu.pojo.DistrictList;
+import com.dtec.helloatu.pojo.DistrictMain;
+import com.dtec.helloatu.utilities.FileProcessing;
 import com.dtec.helloatu.utilities.ImageProcessing;
 import com.dtec.helloatu.utilities.MarshMallowPermission;
 import com.github.barteksc.pdfviewer.PDFView;
 import com.github.barteksc.pdfviewer.listener.OnLoadCompleteListener;
 import com.github.barteksc.pdfviewer.listener.OnPageChangeListener;
-import com.github.barteksc.pdfviewer.listener.OnPageScrollListener;
 import com.github.barteksc.pdfviewer.scroll.DefaultScrollHandle;
-import com.shockwave.pdfium.PdfDocument;
+import com.google.gson.Gson;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -53,7 +59,6 @@ import java.util.List;
 import androidx.fragment.app.Fragment;
 
 import static android.app.Activity.RESULT_OK;
-import static androidx.constraintlayout.motion.widget.MotionScene.TAG;
 import static com.dtec.helloatu.utilities.StaticAccess.PICK_AUDIO_REQUEST;
 import static com.dtec.helloatu.utilities.StaticAccess.PICK_FILE_REQUEST;
 import static com.dtec.helloatu.utilities.StaticAccess.PICK_VIDEO_REQUEST;
@@ -68,6 +73,7 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
     public Spinner spOccurrenceInformer;
     public Spinner spDivision;
     public Spinner spDivisionInformer;
+    ScrollView scrollViewAddInfo;
     public Spinner spDistrict;
     public Spinner spDistrictInformer;
     Button btnSubmit, btnCancel;
@@ -77,16 +83,23 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
     public LinearLayout llDocument, llCamera, llVideo, llAudio;
     public TextView tvDocument, tvCamera, tvVideo, tvAudio, tvCrimeTitle;
     TextView tvDocumentShowHide, tvPicShowHide, tvVideoPlayStop, tvAudioPlayStop;
+    FileProcessing fileProcessing;
 
     public ImageView ivCamera;
     String imgPath = "";
+    String byteConvertedImage;
     String videoCheck;
     Crime crime;
+    String strFile;
     ImageProcessing imgProc;
     String displayName;
+    byte[] displayByte;
+
     Uri pdfUrl;
     public int itemPicFlag = 0;
     int position = -1;
+    String categoryName;
+
     Integer pageNumber = 0;
 
     Uri uriVideo;
@@ -113,6 +126,14 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
     List<String> dstDhaka;
     List<String> dstChittagong;
     List<String> dstSylhet;
+
+    List<String> mohanogorDhaka;
+    List<String> mohanogorChittagong;
+    List<String> mohanogorSylhet;
+    List<String> mohanogorRajshahi;
+    List<String> mohanogorKhulna;
+    List<String> mohanogorBarishal;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -155,6 +176,8 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
         btnSubmit = view.findViewById(R.id.btnSubmit);
         btnCancel = view.findViewById(R.id.btnCancel);
         videoView = view.findViewById(R.id.videoView);
+        scrollViewAddInfo = view.findViewById(R.id.scrollViewAddInfo);
+        fileProcessing = new FileProcessing(activity);
 
         llDocument = view.findViewById(R.id.llDocument);
         llCamera = view.findViewById(R.id.llCamera);
@@ -192,8 +215,16 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
         isVideoPlay = true;
         isAudioPlay = true;
 
-        division = new ArrayList<String>();
-        division.add(getString(R.string.division_selection));
+
+        //getAssetJsonData(activity);
+        loadJSONFromAsset();
+        getJsonFileFromLocally();
+
+
+
+        //division = new ArrayList<String>();
+
+        /*division.add(getString(R.string.division_selection));
         division.add(getString(R.string.div_dhaka));
         division.add(getString(R.string.div_chittagong));
         division.add(getString(R.string.div_rajshai));
@@ -201,7 +232,8 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
         division.add(getString(R.string.div_barishal));
         division.add(getString(R.string.div_sylhet));
         division.add(getString(R.string.div_rongpur));
-        division.add(getString(R.string.div_mymensing));
+        division.add(getString(R.string.div_mymensing));*/
+
         divisionAdapter = new ArrayAdapter<String>(activity, android.R.layout.simple_spinner_item, division);
         divisionAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spDivision.setAdapter(divisionAdapter);
@@ -217,8 +249,91 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
         spOccurrence.setAdapter(occurrenceAdapter);
         spOccurrenceInformer.setAdapter(occurrenceAdapter);
 
+        mohanogorDhaka = new ArrayList<String>();
+
+       /* mohanogorDhaka.add(getString(R.string.gulshan));
+        mohanogorDhaka.add(getString(R.string.adabor));
+        mohanogorDhaka.add(getString(R.string.airport));
+        mohanogorDhaka.add(getString(R.string.badda));
+        mohanogorDhaka.add(getString(R.string.banani));
+        mohanogorDhaka.add(getString(R.string.bongshal));
+        mohanogorDhaka.add(getString(R.string.vashantec));
+        mohanogorDhaka.add(getString(R.string.cantornment));
+        mohanogorDhaka.add(getString(R.string.chalkbazar));
+        mohanogorDhaka.add(getString(R.string.darussalam));
+        mohanogorDhaka.add(getString(R.string.dokkhinkhan));
+        mohanogorDhaka.add(getString(R.string.dhanmondi));
+        mohanogorDhaka.add(getString(R.string.gendaria));
+        mohanogorDhaka.add(getString(R.string.hazaribugh));
+        mohanogorDhaka.add(getString(R.string.jatrabari));
+        mohanogorDhaka.add(getString(R.string.kodomtoli));
+        mohanogorDhaka.add(getString(R.string.kafrul));
+        mohanogorDhaka.add(getString(R.string.kolabagan));
+        mohanogorDhaka.add(getString(R.string.kamrangichor));
+        mohanogorDhaka.add(getString(R.string.khilgaon));
+        mohanogorDhaka.add(getString(R.string.khilkhet));
+        mohanogorDhaka.add(getString(R.string.kotowali));
+        mohanogorDhaka.add(getString(R.string.lalbagh));
+        mohanogorDhaka.add(getString(R.string.mirpur_model));
+        mohanogorDhaka.add(getString(R.string.mohummedpur));
+        mohanogorDhaka.add(getString(R.string.motijhel));
+        mohanogorDhaka.add(getString(R.string.mugda));
+        mohanogorDhaka.add(getString(R.string.notun_bazar));
+        mohanogorDhaka.add(getString(R.string.pollobi));
+        mohanogorDhaka.add(getString(R.string.paltan_model));
+        mohanogorDhaka.add(getString(R.string.ramna_model));
+        mohanogorDhaka.add(getString(R.string.rampura));
+        mohanogorDhaka.add(getString(R.string.rupnagar));
+        mohanogorDhaka.add(getString(R.string.sobujbug));
+        mohanogorDhaka.add(getString(R.string.sha_ali));
+        mohanogorDhaka.add(getString(R.string.shabug));
+        mohanogorDhaka.add(getString(R.string.sherebangla_nogor));
+        mohanogorDhaka.add(getString(R.string.shempur));
+        mohanogorDhaka.add(getString(R.string.sutrapur));
+        mohanogorDhaka.add(getString(R.string.shajahanpur));
+        mohanogorDhaka.add(getString(R.string.tejgaon));
+        mohanogorDhaka.add(getString(R.string.tejgaon_industrial));
+        mohanogorDhaka.add(getString(R.string.turag));
+        mohanogorDhaka.add(getString(R.string.uttora_model));
+        mohanogorDhaka.add(getString(R.string.uttorkhan));
+        mohanogorDhaka.add(getString(R.string.uttora_west));
+        mohanogorDhaka.add(getString(R.string.vatara));
+        mohanogorDhaka.add(getString(R.string.wari));
+        mohanogorDhaka.add(getString(R.string.demra));*/
+
+
+        mohanogorChittagong = new ArrayList<String>();
+
+        /*mohanogorChittagong.add("কোতোয়ালী");
+        mohanogorChittagong.add("চাঁদগাও");
+        mohanogorChittagong.add("পাঁচলাইশ");
+        mohanogorChittagong.add("ডবলমুরিং");
+        mohanogorChittagong.add("পাহাড়তলী");
+        mohanogorChittagong.add("বাঁদর");
+        mohanogorChittagong.add("বাইজিদ বোস্তামি");
+        mohanogorChittagong.add("হালীশহর");
+        mohanogorChittagong.add("কর্ণফুলী");
+        mohanogorChittagong.add("পতেঙ্গা");
+        mohanogorChittagong.add("বাঁকলিয়া");
+        mohanogorChittagong.add("আকবর শাহ");
+        mohanogorChittagong.add("সদরঘাট");
+        mohanogorChittagong.add("ইপিজেড");
+        mohanogorChittagong.add("চকবাজার");
+        mohanogorChittagong.add("কুলশী");*/
+
+
+        mohanogorSylhet = new ArrayList<String>();
+
+       /* mohanogorSylhet.add("কোতোয়ালী");
+        mohanogorSylhet.add("দক্ষিন সুরমা");
+        mohanogorSylhet.add("জালালাবাদ");
+        mohanogorSylhet.add("এয়ারপোর্ট");
+        mohanogorSylhet.add("মোগলাবাজার");
+        mohanogorSylhet.add("হযরত শাহপরান");*/
+
+
         dstDhaka = new ArrayList<String>();
-        dstDhaka.add(getString(R.string.district_selection));
+        /*dstDhaka.add(getString(R.string.district_selection));
         dstDhaka.add(getString(R.string.div_dhaka));
         dstDhaka.add(getString(R.string.dst_gazipur));
         dstDhaka.add(getString(R.string.dst_faridpur));
@@ -231,10 +346,26 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
         dstDhaka.add(getString(R.string.dst_narayangonj));
         dstDhaka.add(getString(R.string.dst_norsingdi));
         dstDhaka.add(getString(R.string.dst_rajbari));
-        dstDhaka.add(getString(R.string.dst_tangail));
+        dstDhaka.add(getString(R.string.dst_tangail));*/
 
-        thanaDhaka = new ArrayList<String>();
-        thanaDhaka.add(getString(R.string.country_selection));
+        dstChittagong = new ArrayList<String>();
+
+        /*dstChittagong.add(getString(R.string.div_chittagong));
+        dstChittagong.add(getString(R.string.dst_coxbazar));
+        dstChittagong.add(getString(R.string.dst_khagrachori));
+        dstChittagong.add(getString(R.string.dst_rangamati));
+        dstChittagong.add(getString(R.string.dst_bandorban));
+        dstChittagong.add(getString(R.string.dst_feni));
+        dstChittagong.add(getString(R.string.dst_noakhali));
+        dstChittagong.add(getString(R.string.dst_lakshmipur));
+        dstChittagong.add(getString(R.string.dst_chandpur));
+        dstChittagong.add(getString(R.string.dst_comilla));
+        dstChittagong.add(getString(R.string.dst_bbaria));*/
+
+
+
+
+       /* thanaDhaka.add(getString(R.string.country_selection));
         thanaDhaka.add(getString(R.string.india));
         thanaDhaka.add(getString(R.string.america));
         thanaDhaka.add(getString(R.string.canada));
@@ -245,47 +376,37 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
         thanaDhaka.add(getString(R.string.indoneshia));
         thanaDhaka.add(getString(R.string.srilanka));
         thanaDhaka.add(getString(R.string.pakisthan));
-        thanaDhaka.add(getString(R.string.katar));
+        thanaDhaka.add(getString(R.string.katar));*/
 
-        dstChittagong = new ArrayList<String>();
-        dstChittagong.add(getString(R.string.div_chittagong));
-        dstChittagong.add(getString(R.string.dst_coxbazar));
-        dstChittagong.add(getString(R.string.dst_khagrachori));
-        dstChittagong.add(getString(R.string.dst_rangamati));
-        dstChittagong.add(getString(R.string.dst_bandorban));
-        dstChittagong.add(getString(R.string.dst_feni));
-        dstChittagong.add(getString(R.string.dst_noakhali));
-        dstChittagong.add(getString(R.string.dst_lakshmipur));
-        dstChittagong.add(getString(R.string.dst_chandpur));
-        dstChittagong.add(getString(R.string.dst_comilla));
-        dstChittagong.add(getString(R.string.dst_bbaria));
 
         dstSylhet = new ArrayList<String>();
-        dstSylhet.add(getString(R.string.div_sylhet));
+
+        /*dstSylhet.add(getString(R.string.div_sylhet));
         dstSylhet.add(getString(R.string.dst_sunamgonj));
         dstSylhet.add(getString(R.string.dst_hobigonj));
-        dstSylhet.add(getString(R.string.dst_mowlobibazar));
+        dstSylhet.add(getString(R.string.dst_mowlobibazar));*/
 
         List<String> district = new ArrayList<String>();
-        district.add("কুমিল্লা");
+        /*district.add("কুমিল্লা");
         district.add("কক্সবাজার");
         district.add("ফেনী");
         district.add("নোয়াখালী ");
-        district.add("লক্ষ্মীপুর");
+        district.add("লক্ষ্মীপুর");*/
 
         List<String> thana = new ArrayList<String>();
-        thana.add("কাপাসিয়া ");
+        /*thana.add("কাপাসিয়া ");
         thana.add("কচুয়া");
         thana.add("শ্যামনগর");
         thana.add("কেশবপুর");
         thana.add("লোহাগড়া");
-        thana.add("মহেশপুর");
+        thana.add("মহেশপুর");*/
 
         ArrayAdapter<String> thanaAdapter = new ArrayAdapter<String>(activity, android.R.layout.simple_spinner_item, thanaDhaka);
         thanaAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spThana.setAdapter(thanaAdapter);
 
         position = activity.passedPosition;
+        categoryName = activity.passedCategoryName;
         crimeTitle();
         return view;
     }
@@ -303,7 +424,7 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
                     spDistrict.setVisibility(View.GONE);
                     spThana.setVisibility(View.GONE);
                 } else if (itemOccurrence == getString(R.string.district)) {
-                    divisionAdapter = new ArrayAdapter<String>(activity, android.R.layout.simple_spinner_item, dstDhaka);
+                    divisionAdapter = new ArrayAdapter<String>(activity, android.R.layout.simple_spinner_item, division);
                     divisionAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     spDivision.setAdapter(divisionAdapter);
                     spDivision.setVisibility(View.VISIBLE);
@@ -413,8 +534,8 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
     @SuppressLint("SetTextI18n")
     @Override
     public void onClick(View view) {
+        scrollViewAddInfo.fullScroll(scrollViewAddInfo.FOCUS_DOWN);
         switch (view.getId()) {
-
             case R.id.ibDocument:
                 enterStorage(getString(R.string.type_docs), PICK_FILE_REQUEST);
                 stopVideoAudioPlayer();
@@ -439,10 +560,12 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
                     showPDF(pdfUrl);
                     llPDFView.setVisibility(View.VISIBLE);
                     tvDocumentShowHide.setText(getString(R.string.hide));
+                    scrollViewAddInfo.requestDisallowInterceptTouchEvent(true);
                     isDocumentShow = false;
                 } else {
                     tvDocumentShowHide.setText(getString(R.string.show));
                     llPDFView.setVisibility(View.GONE);
+                    scrollViewAddInfo.requestDisallowInterceptTouchEvent(false);
                     isDocumentShow = true;
                 }
                 break;
@@ -492,46 +615,103 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
 
             case R.id.btnSubmit:
                 if (etCrimeInfo.getText().length() > 0) {
+                    crime.setCrimCategory(categoryName);
                     crime.setCrimPosition(position);
                     crime.setCrimeInfo(etCrimeInfo.getText().toString());
-                    crime.setOccurrence(spOccurrence.getSelectedItemPosition());
                     crime.setInformerName(etInformerName.getText().toString());
                     crime.setInformerPhone(etInformerPhone.getText().toString());
                     crime.setInformerAddress(etInformerAddress.getText().toString());
 
                     if (activity.documentName != null) {
-                        crime.setInfoDocument(activity.documentName);
+                        crime.setInfoDocument(activity.documentName.toString());
                     } else {
                         crime.setInfoDocument("");
                     }
 
-                    if (checkGettingImage(imgPath) != null) {
-                        crime.setInfoPicture(checkGettingImage(imgPath));
+                    //byte[] imageBytePath =  checkGettingImage(imgPath).getBytes();
+
+                    if (checkGettingImage(byteConvertedImage) != null) {
+                        crime.setInfoPicture(byteConvertedImage);
                     } else {
                         crime.setInfoPicture("");
                     }
 
+                    /*if (checkGettingImage(imgPath) != null) {
+                        crime.setInfoPicture(checkGettingImage(imgPath));
+                    } else {
+                        crime.setInfoPicture("");
+                    }
+                    */
+
+
                     if (activity.videoName != null) {
-                        crime.setInfoVideo(activity.videoName);
+                        crime.setInfoVideo(activity.videoName.toString());
                     } else {
                         crime.setInfoVideo("");
                     }
 
                     if (activity.audioName != null) {
-                        crime.setInfoAudio(activity.audioName);
+                        crime.setInfoAudio(activity.audioName.toString());
                     } else {
                         crime.setInfoAudio("");
                     }
 
-                    crime.setOccurrence(spOccurrence.getSelectedItemPosition());
-                    crime.setOccurrenceInformer(spOccurrenceInformer.getSelectedItemPosition());
-                    crime.setDivision(spDivision.getSelectedItemPosition());
-                    crime.setDivisionInformer(spDivisionInformer.getSelectedItemPosition());
-                    crime.setDistrict(spDistrict.getSelectedItemPosition());
-                    crime.setDistrictInformer(spDistrictInformer.getSelectedItemPosition());
+
+                    if (spOccurrence.getSelectedItem().toString() != null) {
+                        crime.setOccurrence(spOccurrence.getSelectedItem().toString());
+                    } else {
+                        crime.setOccurrence(" ");
+                    }
+
+                    if (spOccurrenceInformer.getSelectedItem().toString() != null) {
+                        crime.setOccurrenceInformer(spOccurrenceInformer.getSelectedItem().toString());
+                    } else {
+                        crime.setOccurrenceInformer(" ");
+                    }
+
+                    if (spDivision.getSelectedItem().toString() != null) {
+                        crime.setDivision(spDivision.getSelectedItem().toString());
+                    } else {
+                        crime.setDivision(" ");
+                    }
+
+                   /* if (spDivisionInformer.getSelectedItem().toString() != null) {
+                        crime.setDivisionInformer(spDivisionInformer.getSelectedItem().toString());
+                    } else {
+                        crime.setDivisionInformer(" ");
+                    }*/
+
+                    if (spDistrict.getSelectedItem().toString() != null) {
+                        crime.setDistrict(spDistrict.getSelectedItem().toString());
+                    } else {
+                        crime.setDistrict(" ");
+                    }
+                    if (spDistrictInformer.getSelectedItem().toString() != null) {
+                        crime.setDistrictInformer(spDistrictInformer.getSelectedItem().toString());
+                    } else {
+                        crime.setDistrictInformer(" ");
+                    }
+
+
+
+                   /* crime.setOccurrence(spOccurrence.getSelectedItem().toString());
+                    crime.setOccurrenceInformer(spOccurrenceInformer.getSelectedItem().toString());
+                    crime.setDivision(spDivision.getSelectedItem().toString());
+                    crime.setDivisionInformer(spDivisionInformer.getSelectedItem().toString());
+                    crime.setDistrict(spDistrict.getSelectedItem().toString());
+                    crime.setDistrictInformer(spDistrictInformer.getSelectedItem().toString());
+                    */
+
+
                     crime.setCreatedAt(new Date());
-                    imageProcessing.setImageWith_loader(ivCamera, imgPath);
+                    imageProcessing.setImageWith_loader(ivCamera, byteConvertedImage);
+                    //imageProcessing.setImageWith_loader(ivCamera, imgPath);
                     databaseManager.insertCrime(crime);
+
+                    Gson gson = new Gson();
+                    String json = gson.toJson(crime); //convert
+                    System.out.println(json);
+
                     Toast.makeText(activity, getResources().getString(R.string.successful_message), Toast.LENGTH_SHORT).show();
                     backToPrevious();
                 } else {
@@ -548,14 +728,25 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
 
 
     @SuppressLint("SetTextI18n")
-    public String resultActivity(int resultCode, Intent data, TextView textView, LinearLayout linearLayout) {
+    public byte[] resultActivity(int resultCode, Intent data, TextView textView, LinearLayout linearLayout) {
         if (resultCode == RESULT_OK) {
             // Get the Uri of the selected file
             Uri uri = data.getData();
             String uriString = uri.toString();
             File myFile = new File(uriString);
             String path = myFile.getAbsolutePath();
+
             //tvDocument.setText(path);
+            //fileConversion(myFile);
+            //strFile = fileProcessing.createSoundFile(path);
+
+
+            try {
+                fullyReadFileToBytes(myFile);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
 
             if (uriString.startsWith("content://")) {
                 Cursor cursor = null;
@@ -563,16 +754,26 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
                     cursor = activity.getContentResolver().query(uri, null, null, null, null);
                     if (cursor != null && cursor.moveToFirst()) {
                         displayName = cursor.getString(cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME));
+                        displayByte = uriTobyte(data.getData());
+
+
                         linearLayout.setVisibility(View.VISIBLE);
                         if (textView == tvDocument) {
                             textView.setVisibility(View.VISIBLE);
                             textView.setText(getString(R.string.document) + ": " + displayName);
                             pdfUrl = data.getData();
+                            //uriTobyte(pdfUrl);
+
 
                         } else if (textView == tvVideo) {
                             textView.setVisibility(View.VISIBLE);
                             textView.setText(getString(R.string.video) + ": " + displayName);
                             uriVideo = data.getData();
+
+                           /* byte[] abc = uriTobyte(uriVideo);
+                            String text = new String(abc, Charsets.UTF_8);
+                            Toast.makeText(activity, "Value" + String.valueOf(abc), Toast.LENGTH_SHORT).show();*/
+
 
                         } else if (textView == tvAudio) {
                             textView.setVisibility(View.VISIBLE);
@@ -587,7 +788,95 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
                 displayName = myFile.getName();
             }
         }
-        return displayName;
+        //return displayName;
+        return displayByte;
+    }
+
+
+   /* public String convertion() {
+        String strFile = null;
+        File file = new File(pathOnSdCard);
+        try {
+            byte[] data = FileUtils.readFileToByteArray(file);//Convert any file, image or video into byte array
+            strFile = Base64.encodeToString(data, Base64.NO_WRAP);//Convert byte array into string
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return strFile;
+    }*/
+
+
+    private byte[] uriTobyte(Uri data) {
+        //Uri data = result.getData();
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        FileInputStream fis;
+        try {
+            fis = new FileInputStream(new File(data.getPath()));
+            byte[] buf = new byte[1024];
+            int n;
+            while (-1 != (n = fis.read(buf)))
+                baos.write(buf, 0, n);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return baos.toByteArray();
+    }
+
+
+    byte[] fullyReadFileToBytes(File f) throws IOException {
+        int size = (int) f.length();
+        byte bytes[] = new byte[size];
+        byte tmpBuff[] = new byte[size];
+        FileInputStream fis = new FileInputStream(f);
+        ;
+        try {
+
+            int read = fis.read(bytes, 0, size);
+            if (read < size) {
+                int remain = size - read;
+                while (remain > 0) {
+                    read = fis.read(tmpBuff, 0, remain);
+                    System.arraycopy(tmpBuff, 0, bytes, size - remain, read);
+                    remain -= read;
+                }
+            }
+        } catch (IOException e) {
+            throw e;
+        } finally {
+            fis.close();
+        }
+
+        return bytes;
+
+
+
+
+
+
+
+
+
+
+        /*
+        //File file = new File("video.mp4");
+        FileInputStream fis = null;
+        try {
+            fis = new FileInputStream(file);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+        byte[] buf = new byte[1024];
+        try {
+            for (int readNum; (readNum = fis.read(buf)) != -1;) {
+                bos.write(buf, 0, readNum); //no doubt here is 0
+                System.out.println("read " + readNum + " bytes,");
+            }
+        } catch (IOException ex) {
+            //Logger.getLogger(genJpeg.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        byte[] bytes = bos.toByteArray();*/
+
     }
 
     public void playVideo(Uri uri) {
@@ -628,7 +917,6 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
             tvPicShowHide.setText(getString(R.string.show));
             isPicsShow = true;
         }
-
 
     }
 
@@ -684,10 +972,20 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
         //scale bitmap
         if (bitmap != null) {
             Bitmap b = (bitmap);
+            byteConvertedImage = Base64.encodeToString(imgProc.getBytesFromBitmap(bitmap), Base64.NO_WRAP);
+
+
             imgPath = imgProc.imageSave(b);
+            textView.setText(getString(R.string.picture) + ": " + byteConvertedImage);
+            imgProc.setImageWith_loader(ivCamera, byteConvertedImage);
+            b.recycle();
+
+            /* imgPath = imgProc.imageSave(b);
             textView.setText(getString(R.string.picture) + ": " + imgPath);
             imgProc.setImageWith_loader(ivCamera, imgPath);
-            b.recycle();
+            b.recycle();*/
+
+
         }
     }
 
@@ -727,5 +1025,106 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
         startActivity(intent);
         activity.finish();
     }
+
+
+    /*public String fileConversion(String pathOnSdCard ){
+        String strFileCon = null;
+        File file=new File(pathOnSdCard);
+        try {
+            byte[] data = FileUtils.readFileToByteArray(file);//Convert any file, image or video into byte array
+            strFileCon = Base64.encodeToString(data, Base64.NO_WRAP);//Convert byte array into string
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return strFileCon;
+    }*/
+
+
+    public byte[] convert(String path) throws IOException {
+
+        FileInputStream fis = new FileInputStream(path);
+        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+        byte[] b = new byte[1024];
+
+        for (int readNum; (readNum = fis.read(b)) != -1; ) {
+            bos.write(b, 0, readNum);
+        }
+
+        byte[] bytes = bos.toByteArray();
+
+        return bytes;
+    }
+
+
+    /*public String loadJSONFromAsset() {
+        DistrictsMain allDistrictAndThanaList = null;
+        try {
+            AssetManager assetManager = activity.getAssets();
+            InputStream ims = assetManager.open("districts.json");
+            Gson gson = new Gson();
+            Reader reader = new InputStreamReader(ims);
+             allDistrictAndThanaList = gson.fromJson(reader, DistrictsMain.class);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return allDistrictAndThanaList.toString();
+    }*/
+
+
+    public String loadJSONFromAsset() {
+        String json = null;
+        try {
+            InputStream is = activity.getAssets().open("districts.json");       //TODO Json File  name from assets folder
+            int size = is.available();
+            byte[] buffer = new byte[size];
+            is.read(buffer);
+            is.close();
+            json = new String(buffer, "UTF-8");
+        } catch (IOException ex) {
+            ex.printStackTrace();
+            return null;
+        }
+        return json;
+    }
+
+    public void getJsonFileFromLocally() {
+        try {
+
+
+            Gson gson = new Gson();
+            DistrictList ds = gson.fromJson(loadJSONFromAsset() , DistrictList.class);
+            List<DistrictMain> list_ = ds.getDistrictList();
+            division = new ArrayList<String>();
+            thanaDhaka = new ArrayList<String>();
+            for (DistrictMain list:list_ ) {
+                  division.add(list.getDistrict());
+                  list.getThanaList();
+
+                  if(list.getDistrict()== "ঢাকা" )
+                  {
+
+
+
+                  }
+            }
+
+            Log.e("asdasd",list_.toString());
+
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
+
+
+
+
+
+
 
 }

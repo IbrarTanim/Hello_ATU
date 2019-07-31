@@ -81,7 +81,10 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MyView
                     intent.putExtra("positionForm", getAdapterPosition());*/
 
                     intent = new Intent(context, FragmentBaseActivity.class);
+                    //String category = categoryList.get(getAdapterPosition()).getCtgTitleBangla();
                     intent.putExtra("positionFragmentBaseActivity", getAdapterPosition());
+                    intent.putExtra("categoryFragmentBaseActivity", categoryList.get(getAdapterPosition()).getCtgTitleBangla());
+
                     break;
             }
             context.startActivity(intent);

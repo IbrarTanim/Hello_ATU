@@ -11,7 +11,7 @@ import com.dtec.helloatu.R;
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 
 /**
- * Created by RAFI on 10/2/2016.
+ * Created by Rokan on 10/2/2016.
  */
 
 public class AppController extends Application {

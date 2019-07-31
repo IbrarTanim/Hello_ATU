@@ -145,5 +145,55 @@
     <string name="hide">Hide</string>
     <string name="show">Show</string>
 
+    <string name="gulshan">গুলশান</string>
+    <string name="adabor">আদাবর</string>
+    <string name="airport">বিমানবন্দর</string>
+    <string name="badda">বাড্ডা</string>
+    <string name="banani">বনানী</string>
+    <string name="bongshal">বংশাল</string>
+    <string name="vashantec">ভাষানটেক</string>
+    <string name="cantornment">সেনানিবাস</string>
+    <string name="chalkbazar">চকবাজার</string>
+    <string name="darussalam">দারুসালাম</string>
+    <string name="dokkhinkhan">দক্ষিণখান</string>
+    <string name="dhanmondi">ধানমন্ডি</string>
+    <string name="gendaria">গেন্ডারিয়া</string>
+    <string name="hazaribugh">হাজারীবাগ</string>
+    <string name="jatrabari">যাত্রাবাড়ী</string>
+    <string name="kodomtoli">কদমতলী</string>
+    <string name="kafrul">কাফরুল</string>
+    <string name="kolabagan">কলাবাগান</string>
+    <string name="kamrangichor">কামরাঙ্গীরচর</string>
+    <string name="khilgaon">খিলগাঁও</string>
+    <string name="khilkhet">খিলক্ষেত</string>
+    <string name="kotowali">কোতোয়ালী</string>
+    <string name="lalbagh">লালবাগ</string>
+    <string name="mirpur_model">মিরপুর মডেল</string>
+    <string name="mohummedpur">মোহাম্মদপুর</string>
+    <string name="motijhel">মতিঝিল</string>
+    <string name="mugda">মুগদা</string>
+    <string name="notun_bazar">নতুন বাজার</string>
+    <string name="pollobi">পল্লবী</string>
+    <string name="paltan_model">পল্টন মডেল</string>
+    <string name="ramna_model">রমনা মডেল</string>
+    <string name="rampura">রামপুরা</string>
+    <string name="rupnagar">রূপনগর</string>
+    <string name="sobujbug">সবুজবাগ</string>
+    <string name="sha_ali">শাহ আলী</string>
+    <string name="shabug">শাহবাগ</string>
+    <string name="sherebangla_nogor">শেরেবাংলা নগর</string>
+    <string name="shempur">শ্যামপুর</string>
+    <string name="sutrapur">সূত্রাপুর</string>
+    <string name="shajahanpur">শাজাহানপুর</string>
+    <string name="tejgaon">তেজগাঁও</string>
+    <string name="tejgaon_industrial">তেজগাঁও আই/এ</string>
+    <string name="turag">তুরাগ</string>
+    <string name="uttora_model">উত্তরা মডেল</string>
+    <string name="uttorkhan">উত্তরখান</string>
+    <string name="uttora_west">উত্তরা পশ্চিম</string>
+    <string name="vatara">ভাটারা</string>
+    <string name="wari">ওয়ারী</string>
+    <string name="demra">ডেমরা</string>
+
 
 </resources>

@@ -9,6 +9,8 @@ public class Crime {
     private Long id;
     private int crimPosition;
     /** Not-null value. */
+    private String crimCategory;
+    /** Not-null value. */
     private String crimeInfo;
     /** Not-null value. */
     private String informerName;
@@ -24,12 +26,18 @@ public class Crime {
     private String infoVideo;
     /** Not-null value. */
     private String infoAudio;
-    private int occurrence;
-    private int occurrenceInformer;
-    private int division;
-    private int divisionInformer;
-    private int district;
-    private int districtInformer;
+    /** Not-null value. */
+    private String occurrence;
+    /** Not-null value. */
+    private String occurrenceInformer;
+    /** Not-null value. */
+    private String division;
+    /** Not-null value. */
+    private String divisionInformer;
+    /** Not-null value. */
+    private String district;
+    /** Not-null value. */
+    private String districtInformer;
     /** Not-null value. */
     private java.util.Date createdAt;
 
@@ -40,9 +48,10 @@ public class Crime {
         this.id = id;
     }
 
-    public Crime(Long id, int crimPosition, String crimeInfo, String informerName, String informerPhone, String informerAddress, String infoDocument, String infoPicture, String infoVideo, String infoAudio, int occurrence, int occurrenceInformer, int division, int divisionInformer, int district, int districtInformer, java.util.Date createdAt) {
+    public Crime(Long id, int crimPosition, String crimCategory, String crimeInfo, String informerName, String informerPhone, String informerAddress, String infoDocument, String infoPicture, String infoVideo, String infoAudio, String occurrence, String occurrenceInformer, String division, String divisionInformer, String district, String districtInformer, java.util.Date createdAt) {
         this.id = id;
         this.crimPosition = crimPosition;
+        this.crimCategory = crimCategory;
         this.crimeInfo = crimeInfo;
         this.informerName = informerName;
         this.informerPhone = informerPhone;
@@ -74,6 +83,16 @@ public class Crime {
 
     public void setCrimPosition(int crimPosition) {
         this.crimPosition = crimPosition;
+    }
+
+    /** Not-null value. */
+    public String getCrimCategory() {
+        return crimCategory;
+    }
+
+    /** Not-null value; ensure this value is available before it is saved to the database. */
+    public void setCrimCategory(String crimCategory) {
+        this.crimCategory = crimCategory;
     }
 
     /** Not-null value. */
@@ -156,51 +175,63 @@ public class Crime {
         this.infoAudio = infoAudio;
     }
 
-    public int getOccurrence() {
+    /** Not-null value. */
+    public String getOccurrence() {
         return occurrence;
     }
 
-    public void setOccurrence(int occurrence) {
+    /** Not-null value; ensure this value is available before it is saved to the database. */
+    public void setOccurrence(String occurrence) {
         this.occurrence = occurrence;
     }
 
-    public int getOccurrenceInformer() {
+    /** Not-null value. */
+    public String getOccurrenceInformer() {
         return occurrenceInformer;
     }
 
-    public void setOccurrenceInformer(int occurrenceInformer) {
+    /** Not-null value; ensure this value is available before it is saved to the database. */
+    public void setOccurrenceInformer(String occurrenceInformer) {
         this.occurrenceInformer = occurrenceInformer;
     }
 
-    public int getDivision() {
+    /** Not-null value. */
+    public String getDivision() {
         return division;
     }
 
-    public void setDivision(int division) {
+    /** Not-null value; ensure this value is available before it is saved to the database. */
+    public void setDivision(String division) {
         this.division = division;
     }
 
-    public int getDivisionInformer() {
+    /** Not-null value. */
+    public String getDivisionInformer() {
         return divisionInformer;
     }
 
-    public void setDivisionInformer(int divisionInformer) {
+    /** Not-null value; ensure this value is available before it is saved to the database. */
+    public void setDivisionInformer(String divisionInformer) {
         this.divisionInformer = divisionInformer;
     }
 
-    public int getDistrict() {
+    /** Not-null value. */
+    public String getDistrict() {
         return district;
     }
 
-    public void setDistrict(int district) {
+    /** Not-null value; ensure this value is available before it is saved to the database. */
+    public void setDistrict(String district) {
         this.district = district;
     }
 
-    public int getDistrictInformer() {
+    /** Not-null value. */
+    public String getDistrictInformer() {
         return districtInformer;
     }
 
-    public void setDistrictInformer(int districtInformer) {
+    /** Not-null value; ensure this value is available before it is saved to the database. */
+    public void setDistrictInformer(String districtInformer) {
         this.districtInformer = districtInformer;
     }
 

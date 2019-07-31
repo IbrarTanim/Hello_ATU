@@ -61,14 +61,20 @@ public class FragmentBaseActivity extends FragmentActivity implements View.OnCli
     private ViewPager viewPager;
     private AddInfoFragment addInfoFragment;
     public int passedPosition;
+    public String passedCategoryName;
     public ImageProcessing imageProcessing;
     ImageView ivBack;
     public ImageSelectionDialog imageSelectionDialog;
     public String appImagePath = null;
 
-    public String documentName;
+   /* public String documentName;
     public String videoName;
-    public String audioName;
+    public String audioName;*/
+
+    public byte[] documentName;
+    public byte[] videoName;
+    public byte[] audioName;
+
 
     public MarshMallowPermission marshMallowPermission;
     FileProcessing fileProcessing;
@@ -97,6 +103,7 @@ public class FragmentBaseActivity extends FragmentActivity implements View.OnCli
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
             passedPosition = bundle.getInt("positionFragmentBaseActivity");
+            passedCategoryName = bundle.getString("categoryFragmentBaseActivity");
         }
 
     }
@@ -257,7 +264,7 @@ public class FragmentBaseActivity extends FragmentActivity implements View.OnCli
             }
 
         }
-       // linearLayout.setVisibility(View.VISIBLE);
+        // linearLayout.setVisibility(View.VISIBLE);
         addInfoFragment.setImagePro(widgetImage, textView);
         intent_source = 0;
 
@@ -330,6 +337,9 @@ public class FragmentBaseActivity extends FragmentActivity implements View.OnCli
         transactionMonth.addToBackStack(null);
         transactionMonth.replace(R.id.flContentView, addInfoFragment, "AddInfoFragment").commit();
     }
+
+
+
 
 }
 
