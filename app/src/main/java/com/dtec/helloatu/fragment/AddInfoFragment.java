@@ -114,6 +114,7 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
     String jsonCountry = "country.json";
 
     String itemOccurrence;
+    String itemOccurrenceInformer;
 
     boolean isDocumentShow = false;
     boolean isPicsShow = false;
@@ -134,19 +135,7 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
     List<String> listDistrict;
     List<String> listDistrictThana;
     List<String> listMohanogor;
-    List<String> listMohanogorThana;
     List<String> listCountry;
-
-
-   /* List<String> thanaDhaka;
-    List<String> dstDhaka;
-    List<String> dstChittagong;
-    List<String> dstSylhet;
-
-    List<String> mohanogorDhaka;
-    List<String> mohanogorChittagong;
-    List<String> mohanogorSylhet;*/
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -216,8 +205,6 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
 
         spDistrict.setOnItemSelectedListener(this);
         spDistrictInformer.setOnItemSelectedListener(this);
-        spThana.setOnItemSelectedListener(this);
-        spThanaInformer.setOnItemSelectedListener(this);
         spDimoutInformer.setOnItemSelectedListener(this);
         spDimout.setOnItemSelectedListener(this);
 
@@ -279,7 +266,6 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
                 break;
             case R.id.spDistrict:
                 String itemDistrict = parent.getItemAtPosition(position).toString();
-
                 if (itemOccurrence == getString(R.string.mohanogor)) {
                     List<String> mohanogorThana = getMohanogorThanaFromJson(itemDistrict);
                     mohanogorThanaAdapter = new ArrayAdapter<String>(activity, android.R.layout.simple_spinner_item, mohanogorThana);
@@ -287,9 +273,7 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
                     spThana.setAdapter(mohanogorThanaAdapter);
                     spThana.setVisibility(View.VISIBLE);
                     spDistrict.setVisibility(View.VISIBLE);
-
                 } else if (itemOccurrence == getString(R.string.district)) {
-                    //String itemDistrict = parent.getItemAtPosition(position).toString();
                     List<String> thana = getThanaFromJson(itemDistrict);
                     thanaAdapter = new ArrayAdapter<String>(activity, android.R.layout.simple_spinner_item, thana);
                     thanaAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -297,64 +281,48 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
                     spThana.setVisibility(View.VISIBLE);
                     spDistrict.setVisibility(View.VISIBLE);
                 }
-
-
-                break;
-            case R.id.spThana:
-                String itemThana = parent.getItemAtPosition(position).toString();
                 break;
 
             case R.id.spDimoutInformer:
-                String itemOccurrenceInformer = parent.getItemAtPosition(position).toString();
+                itemOccurrenceInformer = parent.getItemAtPosition(position).toString();
                 if (itemOccurrenceInformer == getString(R.string.mohanogor)) {
                     districtAdapter = new ArrayAdapter<String>(activity, android.R.layout.simple_spinner_item, listMohanogor);
                     districtAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     spDistrictInformer.setAdapter(districtAdapter);
                     spDistrictInformer.setVisibility(View.VISIBLE);
                     spThanaInformer.setVisibility(View.GONE);
-                    // spThanaInformer.setVisibility(View.GONE);
                 } else if (itemOccurrenceInformer == getString(R.string.district)) {
                     districtAdapter = new ArrayAdapter<String>(activity, android.R.layout.simple_spinner_item, listDistrict);
                     districtAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     spDistrictInformer.setAdapter(districtAdapter);
                     spDistrictInformer.setVisibility(View.VISIBLE);
                     spThanaInformer.setVisibility(View.GONE);
-                    //spThana.setVisibility(View.GONE);
                 } else if (itemOccurrenceInformer == getString(R.string.bdout)) {
                     districtAdapter = new ArrayAdapter<String>(activity, android.R.layout.simple_spinner_item, listCountry);
                     districtAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     spDistrictInformer.setAdapter(districtAdapter);
                     spDistrictInformer.setVisibility(View.VISIBLE);
                     spThanaInformer.setVisibility(View.GONE);
-                    //spThana.setVisibility(View.GONE);
                 }
                 break;
 
             case R.id.spDistrictInformer:
                 String itemDistrictInformer = parent.getItemAtPosition(position).toString();
-                if (itemDistrictInformer == getString(R.string.div_dhaka)) {
-                    thanaAdapter = new ArrayAdapter<String>(activity, android.R.layout.simple_spinner_item, listDistrictThana);
+                if (itemOccurrenceInformer == getString(R.string.mohanogor)) {
+                    List<String> mohanogorThana = getMohanogorThanaFromJson(itemDistrictInformer);
+                    mohanogorThanaAdapter = new ArrayAdapter<String>(activity, android.R.layout.simple_spinner_item, mohanogorThana);
+                    mohanogorThanaAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    spThanaInformer.setAdapter(mohanogorThanaAdapter);
+                    spThanaInformer.setVisibility(View.VISIBLE);
+                    spDistrictInformer.setVisibility(View.VISIBLE);
+                } else if (itemOccurrenceInformer == getString(R.string.district)) {
+                    List<String> thana = getThanaFromJson(itemDistrictInformer);
+                    thanaAdapter = new ArrayAdapter<String>(activity, android.R.layout.simple_spinner_item, thana);
                     thanaAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     spThanaInformer.setAdapter(thanaAdapter);
                     spThanaInformer.setVisibility(View.VISIBLE);
                     spDistrictInformer.setVisibility(View.VISIBLE);
-                    //spThana.setVisibility(View.GONE);
-                } else if (itemDistrictInformer == getString(R.string.div_chittagong)) {
-                    thanaAdapter = new ArrayAdapter<String>(activity, android.R.layout.simple_spinner_item, listDistrictThana);
-                    thanaAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                    spThanaInformer.setAdapter(thanaAdapter);
-                    spThanaInformer.setVisibility(View.VISIBLE);
-                    spDistrictInformer.setVisibility(View.VISIBLE);
-                    //spThana.setVisibility(View.GONE);
-                } else if (itemDistrictInformer == getString(R.string.div_sylhet)) {
-                    thanaAdapter = new ArrayAdapter<String>(activity, android.R.layout.simple_spinner_item, listDistrictThana);
-                    thanaAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                    spThanaInformer.setAdapter(thanaAdapter);
-                    spThanaInformer.setVisibility(View.VISIBLE);
-                    spDistrictInformer.setVisibility(View.VISIBLE);
-                    //spThana.setVisibility(View.GONE);
                 }
-
                 break;
         }
     }
