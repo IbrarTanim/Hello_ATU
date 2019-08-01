@@ -31,6 +31,7 @@ import android.widget.VideoView;
 
 import java.io.ByteArrayOutputStream;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Date;
@@ -332,7 +333,6 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
 
     }
 
-
     @SuppressLint("SetTextI18n")
     @Override
     public void onClick(View view) {
@@ -562,6 +562,25 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
         return displayByte;
     }
 
+
+    public byte[] convert(String path) throws IOException {
+
+        FileInputStream fis = new FileInputStream(path);
+        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+        byte[] b = new byte[1024];
+
+        for (int readNum; (readNum = fis.read(b)) != -1;) {
+            bos.write(b, 0, readNum);
+        }
+
+        byte[] bytes = bos.toByteArray();
+
+        return bytes;
+    }
+
+
+
+
     private byte[] uriTobyte(Uri data) {
         //Uri data = result.getData();
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -742,20 +761,6 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
         activity.finish();
     }
 
-    public byte[] convert(String path) throws IOException {
-
-        FileInputStream fis = new FileInputStream(path);
-        ByteArrayOutputStream bos = new ByteArrayOutputStream();
-        byte[] b = new byte[1024];
-
-        for (int readNum; (readNum = fis.read(b)) != -1; ) {
-            bos.write(b, 0, readNum);
-        }
-
-        byte[] bytes = bos.toByteArray();
-
-        return bytes;
-    }
 
     public String loadJSONFromAsset(String jsonFile) {
         String json = null;
