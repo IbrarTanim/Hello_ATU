@@ -2,10 +2,11 @@
 package com.dtec.helloatu.pojo;
 
 import java.util.List;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class MohanogorList {
+public class MohanogorMain {
 
     @SerializedName("mohanogor")
     @Expose

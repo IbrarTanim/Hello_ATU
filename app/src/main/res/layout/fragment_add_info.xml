@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
     android:id="@+id/scrollViewAddInfo"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -73,34 +73,21 @@
             android:textColor="@color/black"
             android:textSize="@dimen/fifteen"
             android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@+id/spOccurrence"
+            app:layout_constraintBottom_toTopOf="@+id/spDimout"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/etCrimeInfo" />
 
 
         <Spinner
-            android:id="@+id/spOccurrence"
+            android:id="@+id/spDimout"
             android:layout_width="0dp"
             android:layout_height="@dimen/thirty_five"
             android:background="@drawable/selector_dropdown"
-            app:layout_constraintBottom_toTopOf="@+id/spDivision"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvOccurancePlace" />
-
-        <Spinner
-            android:id="@+id/spDivision"
-            android:layout_width="0dp"
-            android:layout_height="@dimen/thirty_five"
-            android:layout_marginTop="@dimen/ten"
-            android:background="@drawable/selector_dropdown"
-            android:visibility="gone"
             app:layout_constraintBottom_toTopOf="@+id/spDistrict"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/spOccurrence" />
-
+            app:layout_constraintTop_toBottomOf="@+id/tvOccurancePlace" />
 
         <Spinner
             android:id="@+id/spDistrict"
@@ -112,7 +99,8 @@
             app:layout_constraintBottom_toTopOf="@+id/spThana"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/spDivision" />
+            app:layout_constraintTop_toBottomOf="@+id/spDimout" />
+
 
         <Spinner
             android:id="@+id/spThana"
@@ -125,7 +113,6 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/spDistrict" />
-
 
         <TextView
             android:id="@+id/tvInformerIdentity"
@@ -200,35 +187,22 @@
             android:scrollbars="vertical"
             android:textColor="@color/black"
             android:textSize="@dimen/eighteen"
-            app:layout_constraintBottom_toTopOf="@+id/spOccurrenceInformer"
+            app:layout_constraintBottom_toTopOf="@+id/spDimoutInformer"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/etInformerPhone" />
 
 
         <Spinner
-            android:id="@+id/spOccurrenceInformer"
+            android:id="@+id/spDimoutInformer"
             android:layout_width="@dimen/zero"
             android:layout_height="@dimen/thirty_five"
             android:layout_marginTop="@dimen/ten"
             android:background="@drawable/selector_dropdown"
-            app:layout_constraintBottom_toTopOf="@+id/spDivisionInformer"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/etInformerAddress" />
-
-        <Spinner
-            android:id="@+id/spDivisionInformer"
-            android:layout_width="0dp"
-            android:layout_height="@dimen/thirty_five"
-            android:layout_marginTop="@dimen/ten"
-            android:background="@drawable/selector_dropdown"
-            android:visibility="gone"
             app:layout_constraintBottom_toTopOf="@+id/spDistrictInformer"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/spOccurrenceInformer" />
-
+            app:layout_constraintTop_toBottomOf="@+id/etInformerAddress" />
 
         <Spinner
             android:id="@+id/spDistrictInformer"
@@ -237,10 +211,23 @@
             android:layout_marginTop="@dimen/ten"
             android:background="@drawable/selector_dropdown"
             android:visibility="gone"
+            app:layout_constraintBottom_toTopOf="@+id/spThanaInformer"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/spDimoutInformer" />
+
+
+        <Spinner
+            android:id="@+id/spThanaInformer"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/thirty_five"
+            android:layout_marginTop="@dimen/ten"
+            android:background="@drawable/selector_dropdown"
+            android:visibility="gone"
             app:layout_constraintBottom_toTopOf="@+id/tvIfAvailable"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/spDivisionInformer" />
+            app:layout_constraintTop_toBottomOf="@+id/spDistrictInformer" />
 
 
         <TextView
@@ -256,7 +243,7 @@
             app:layout_constraintBottom_toTopOf="@+id/llStorages"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/spDistrictInformer" />
+            app:layout_constraintTop_toBottomOf="@+id/spThanaInformer" />
 
 
         <LinearLayout

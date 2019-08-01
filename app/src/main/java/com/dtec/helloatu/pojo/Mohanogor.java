@@ -9,14 +9,14 @@ public class Mohanogor {
 
     @SerializedName("mohanogor_list")
     @Expose
-    private List<MohanogorList> mohanogorList = null;
+    private List<MohanogorMain> mohanogorMain = null;
 
-    public List<MohanogorList> getMohanogorList() {
-        return mohanogorList;
+    public List<MohanogorMain> getMohanogorMain() {
+        return mohanogorMain;
     }
 
-    public void setMohanogorList(List<MohanogorList> mohanogorList) {
-        this.mohanogorList = mohanogorList;
+    public void setMohanogorMain(List<MohanogorMain> mohanogorMain) {
+        this.mohanogorMain = mohanogorMain;
     }
 
 }
