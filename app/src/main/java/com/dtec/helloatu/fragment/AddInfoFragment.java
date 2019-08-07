@@ -3,13 +3,9 @@ package com.dtec.helloatu.fragment;
 import com.android.volley.AuthFailureError;
 import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
-import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.VolleyLog;
-import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
 import com.dtec.helloatu.R;
 
 import android.annotation.SuppressLint;
@@ -42,17 +38,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.VideoView;
 
-import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.Date;
 
 import com.dtec.helloatu.activities.FragmentBaseActivity;
@@ -67,7 +56,6 @@ import com.dtec.helloatu.pojo.DistrictMain;
 import com.dtec.helloatu.pojo.Mohanogor;
 import com.dtec.helloatu.pojo.MohanogorMain;
 import com.dtec.helloatu.utilities.AppController;
-import com.dtec.helloatu.utilities.CustomRequest;
 import com.dtec.helloatu.utilities.FileProcessing;
 import com.dtec.helloatu.utilities.ImageProcessing;
 import com.dtec.helloatu.utilities.MarshMallowPermission;
@@ -77,12 +65,7 @@ import com.github.barteksc.pdfviewer.listener.OnPageChangeListener;
 import com.github.barteksc.pdfviewer.scroll.DefaultScrollHandle;
 import com.google.gson.Gson;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.File;
 import java.util.ArrayList;
-import java.util.Formatter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -91,11 +74,11 @@ import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 
 import static android.app.Activity.RESULT_OK;
-import static com.dtec.helloatu.utilities.ImageProcessing.tempFileName;
 import static com.dtec.helloatu.utilities.StaticAccess.PICK_AUDIO_REQUEST;
 import static com.dtec.helloatu.utilities.StaticAccess.PICK_FILE_REQUEST;
 import static com.dtec.helloatu.utilities.StaticAccess.PICK_VIDEO_REQUEST;
 import static com.dtec.helloatu.utilities.StaticAccess.ROOT_URL_ATU;
+import static com.dtec.helloatu.utilities.StaticAccess.TAG_APP_AUTH_TOKEN;
 import static com.dtec.helloatu.utilities.StaticAccess.TAG_CREATED_AT;
 import static com.dtec.helloatu.utilities.StaticAccess.TAG_CRIME_CATEGORY;
 import static com.dtec.helloatu.utilities.StaticAccess.TAG_CRIME_INFO;
@@ -150,8 +133,14 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
     Crime crime;
     String strFile;
     ImageProcessing imgProc;
-    String displayName;
-    String displayFileName;
+
+    String displayDocumentName;
+    String displayVideoName;
+    String displayAudioName;
+
+    String displayDocumentFileName;
+    String displayVideoFileName;
+    String displayAudioFileName;
     byte[] displayByte;
 
     Uri pdfUrl;
@@ -572,66 +561,99 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
 
 
     @SuppressLint("SetTextI18n")
-    public String resultActivity(int resultCode, Intent data, TextView textView, LinearLayout linearLayout) {
+    public String resultActivityForDocument(int requestCode, int resultCode, Intent data, TextView textView, LinearLayout linearLayout) {
+
         if (resultCode == RESULT_OK) {
-            // Get the Uri of the selected file
-            Uri uri = data.getData();
-            String uriString = uri.toString();
-            File myFile = new File(uriString);
-            String path = myFile.getAbsolutePath();
+            Cursor cursor = null;
+            linearLayout.setVisibility(View.VISIBLE);
+            if (requestCode == PICK_FILE_REQUEST && textView == tvDocument) {
+                Uri uriData = data.getData();
+                String uriStringData = uriData.toString();
 
-
-            if (uriString.startsWith("content://")) {
-                Cursor cursor = null;
                 try {
-                    cursor = activity.getContentResolver().query(uri, null, null, null, null);
+                    cursor = activity.getContentResolver().query(uriData, null, null, null, null);
                     if (cursor != null && cursor.moveToFirst()) {
-                        displayFileName = cursor.getString(cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME));
+                        displayDocumentFileName = cursor.getString(cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME));
                         try {
-                            displayName = Base64.encodeToString(getBytes(uriString), Base64.NO_WRAP);
+                            displayDocumentName = Base64.encodeToString(getBytes(uriStringData), Base64.NO_WRAP);
 
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
-                        //displayByte = uriTobyte(data.getData());
 
-                        linearLayout.setVisibility(View.VISIBLE);
-                        if (textView == tvDocument) {
+                        textView.setVisibility(View.VISIBLE);
+                        textView.setText(getString(R.string.document) + ": " + displayDocumentFileName);
+                        pdfUrl = data.getData();
 
-
-                            textView.setVisibility(View.VISIBLE);
-                            textView.setText(getString(R.string.document) + ": " + displayFileName);
-                            pdfUrl = data.getData();
-                        } else if (textView == tvVideo) {
-                            textView.setVisibility(View.VISIBLE);
-                            textView.setText(getString(R.string.video) + ": " + displayFileName);
-                            uriVideo = data.getData();
-                        } else if (textView == tvAudio) {
-                            textView.setVisibility(View.VISIBLE);
-                            textView.setText(getString(R.string.audio) + ": " + displayFileName);
-                            uriAudio = data.getData();
-                        }
                     }
                 } finally {
                     cursor.close();
                 }
-            } else if (uriString.startsWith("file://")) {
-                displayName = myFile.getName();
+
             }
         }
-        //return displayName;
-        return displayName;
+        return displayDocumentName;
+    }
+
+    public String resultActivityForVideo(int requestCode, int resultCode, Intent data, TextView textView, LinearLayout linearLayout) {
+
+        if (resultCode == RESULT_OK) {
+            Cursor cursor = null;
+            linearLayout.setVisibility(View.VISIBLE);
+            if (requestCode == PICK_VIDEO_REQUEST && textView == tvVideo) {
+                Uri uriData = data.getData();
+                String uriStringData = uriData.toString();
+                try {
+                    cursor = activity.getContentResolver().query(uriData, null, null, null, null);
+                    if (cursor != null && cursor.moveToFirst()) {
+                        displayVideoFileName = cursor.getString(cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME));
+                        try {
+                            displayVideoName = Base64.encodeToString(getBytes(uriStringData), Base64.NO_WRAP);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                        textView.setVisibility(View.VISIBLE);
+                        textView.setText(getString(R.string.video) + ": " + displayVideoFileName);
+                        uriVideo = data.getData();
+                    }
+                } finally {
+                    cursor.close();
+                }
+
+            }
+
+        }
+        return displayVideoName;
     }
 
 
-    public void important() {
-        try {
-            String valueFile = Base64.encodeToString(getBytes(uriVideo.toString()), Base64.NO_WRAP);
-            Toast.makeText(activity, valueFile, Toast.LENGTH_SHORT).show();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    public String resultActivityForAudio(int requestCode, int resultCode, Intent data, TextView textView, LinearLayout linearLayout) {
 
+        if (resultCode == RESULT_OK) {
+            Cursor cursor = null;
+            linearLayout.setVisibility(View.VISIBLE);
+            if (requestCode == PICK_AUDIO_REQUEST && textView == tvAudio) {
+                Uri uriData = data.getData();
+                String uriStringData = uriData.toString();
+                try {
+                    cursor = activity.getContentResolver().query(uriData, null, null, null, null);
+                    if (cursor != null && cursor.moveToFirst()) {
+                        displayAudioFileName = cursor.getString(cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME));
+                        try {
+                            displayAudioName = Base64.encodeToString(getBytes(uriStringData), Base64.NO_WRAP);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                        textView.setVisibility(View.VISIBLE);
+                        textView.setText(getString(R.string.audio) + ": " + displayAudioFileName);
+                        uriAudio = data.getData();
+                    }
+                } finally {
+                    cursor.close();
+                }
+            }
+        }
+        return displayAudioName;
     }
 
 
@@ -646,65 +668,6 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
         return data;
     }
 
-    public byte[] convert(String path) throws IOException {
-
-        FileInputStream fis = new FileInputStream(path);
-        ByteArrayOutputStream bos = new ByteArrayOutputStream();
-        byte[] b = new byte[1024];
-
-        for (int readNum; (readNum = fis.read(b)) != -1; ) {
-            bos.write(b, 0, readNum);
-        }
-
-        byte[] bytes = bos.toByteArray();
-
-        return bytes;
-    }
-
-
-    private byte[] uriTobyte(Uri data) {
-        //Uri data = result.getData();
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        FileInputStream fis;
-        try {
-            fis = new FileInputStream(new File(data.getPath()));
-            byte[] buf = new byte[1024];
-            int n;
-            while (-1 != (n = fis.read(buf)))
-                baos.write(buf, 0, n);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return baos.toByteArray();
-    }
-
-
-    byte[] fullyReadFileToBytes(File f) throws IOException {
-        int size = (int) f.length();
-        byte bytes[] = new byte[size];
-        byte tmpBuff[] = new byte[size];
-        FileInputStream fis = new FileInputStream(f);
-        ;
-        try {
-
-            int read = fis.read(bytes, 0, size);
-            if (read < size) {
-                int remain = size - read;
-                while (remain > 0) {
-                    read = fis.read(tmpBuff, 0, remain);
-                    System.arraycopy(tmpBuff, 0, bytes, size - remain, read);
-                    remain -= read;
-                }
-            }
-        } catch (IOException e) {
-            throw e;
-        } finally {
-            fis.close();
-        }
-
-        return bytes;
-
-    }
 
     public void playVideo(Uri uri) {
         videoView.setVideoURI(uri);
@@ -989,6 +952,7 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
 
 
                 String date = String.valueOf(new Date());
+                String tokenValue = getString(R.string.token);
                 String category = categoryName;
                 String positionvalue = String.valueOf(position);
                 String crimInfoValue = etCrimeInfo.getText().toString();
@@ -1014,6 +978,7 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
                     params.put(TAG_CREATED_AT, date);
                     params.put(TAG_CRIME_CATEGORY, category);
                     params.put(TAG_CRIME_POSITION, positionvalue);
+                    params.put(TAG_APP_AUTH_TOKEN, tokenValue);
 
 
                     if (crimInfoValue != null && !TextUtils.isEmpty(crimInfoValue)) {
@@ -1021,6 +986,7 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
                     } else {
                         params.put("", "");
                     }
+
 
                     if (informerAddressValue != null && !TextUtils.isEmpty(informerAddressValue)) {
                         params.put(TAG_INFORMER_ADDRESS, informerAddressValue);
@@ -1070,7 +1036,7 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
 
 
                     if (audioFile != null && !TextUtils.isEmpty(audioFile)) {
-                        params.put(TAG_INFO_AUDIO_NAME, displayFileName);
+                        params.put(TAG_INFO_AUDIO_NAME, displayAudioFileName);
                     } else {
                         params.put("", "");
                     }
@@ -1082,7 +1048,7 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
                     }
 
                     if (documentFile != null && !TextUtils.isEmpty(documentFile)) {
-                        params.put(TAG_INFO_DOCUMENT_NAME, displayFileName);
+                        params.put(TAG_INFO_DOCUMENT_NAME, displayDocumentFileName);
                     } else {
                         params.put("", "");
                     }
@@ -1109,7 +1075,7 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
 
 
                     if (videofile != null && !TextUtils.isEmpty(videofile)) {
-                        params.put(TAG_INFO_VIDEO_NAME, displayFileName);
+                        params.put(TAG_INFO_VIDEO_NAME, displayVideoFileName);
                     } else {
                         params.put("", "");
                     }
@@ -1135,28 +1101,6 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
                 } else {
                     Toast.makeText(activity, getResources().getString(R.string.inform_terrorism), Toast.LENGTH_SHORT).show();
                 }
-
-
-
-
-                   /* Map<String, String> params = new HashMap<String, String>();
-                    params.put(TAG_CREATED_AT, String.valueOf(new Date()));
-                    params.put(TAG_CRIME_CATEGORY, categoryName);
-                    params.put(TAG_CRIME_POSITION, String.valueOf(position));
-                    params.put(TAG_CRIME_INFO, etCrimeInfo.getText().toString());
-                    params.put(TAG_DISTRICT, spThana.getSelectedItem().toString());
-                    params.put(TAG_DISTRICT_INFORMER, spThanaInformer.getSelectedItem().toString());
-                    params.put(TAG_DIVISION, spDistrict.getSelectedItem().toString());
-                    params.put(TAG_DIVISION_INFORMER, spDistrictInformer.getSelectedItem().toString());
-                    params.put(TAG_INFO_AUDIO, activity.audioName.toString());
-                    params.put(TAG_INFO_DOCUMENT, activity.documentName.toString());
-                    params.put(TAG_INFO_PICTURE, byteConvertedImage);
-                    params.put(TAG_INFO_VIDEO, activity.videoName.toString());
-                    params.put(TAG_INFORMER_ADDRESS, etInformerAddress.getText().toString());
-                    params.put(TAG_INFORMER_NAME, etInformerName.getText().toString());
-                    params.put(TAG_INFORMER_PHONE, etInformerPhone.getText().toString());
-                    params.put(TAG_OCCURENCE, spDimout.getSelectedItem().toString());
-                    params.put(TAG_INFORMER_OCCURRENCE, spDimoutInformer.getSelectedItem().toString());*/
 
                 Gson gson = new Gson();
                 String json = gson.toJson(params); //convert

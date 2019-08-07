@@ -69,10 +69,6 @@ public class FragmentBaseActivity extends FragmentActivity implements View.OnCli
     public ImageSelectionDialog imageSelectionDialog;
     public String appImagePath = null;
 
-   /* public String documentName;
-    public String videoName;
-    public String audioName;*/
-
     public String documentName;
     public String videoName;
     public String audioName;
@@ -201,18 +197,22 @@ public class FragmentBaseActivity extends FragmentActivity implements View.OnCli
         addInfoFragment = (AddInfoFragment) getSupportFragmentManager().getFragments().get(0);
         imageSelection(requestCode, resultCode, data, addInfoFragment.tvCamera, addInfoFragment.llCamera);
 
+       /* documentName = addInfoFragment.resultActivity(requestCode, resultCode, data, addInfoFragment.tvDocument, addInfoFragment.llDocument);
+        videoName = addInfoFragment.resultActivity(requestCode, resultCode, data, addInfoFragment.tvVideo, addInfoFragment.llVideo);
+        audioName = addInfoFragment.resultActivity(requestCode, resultCode, data, addInfoFragment.tvAudio, addInfoFragment.llAudio);*/
+
         switch (requestCode) {
 
             case PICK_FILE_REQUEST:
-                documentName = addInfoFragment.resultActivity(resultCode, data, addInfoFragment.tvDocument, addInfoFragment.llDocument);
+                documentName = addInfoFragment.resultActivityForDocument(requestCode, resultCode, data, addInfoFragment.tvDocument, addInfoFragment.llDocument);
 
                 break;
             case PICK_VIDEO_REQUEST:
-                videoName = addInfoFragment.resultActivity(resultCode, data, addInfoFragment.tvVideo, addInfoFragment.llVideo);
+                videoName = addInfoFragment.resultActivityForVideo(requestCode, resultCode, data, addInfoFragment.tvVideo, addInfoFragment.llVideo);
 
                 break;
             case PICK_AUDIO_REQUEST:
-                audioName = addInfoFragment.resultActivity(resultCode, data, addInfoFragment.tvAudio, addInfoFragment.llAudio);
+                audioName = addInfoFragment.resultActivityForAudio(requestCode, resultCode, data, addInfoFragment.tvAudio, addInfoFragment.llAudio);
                 break;
         }
         super.onActivityResult(requestCode, resultCode, data);

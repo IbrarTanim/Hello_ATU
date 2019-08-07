@@ -18,6 +18,7 @@ public class StaticAccess {
     public static final String ROOT_URL_ATU= "http://192.168.3.92:8000/api/fileUpload/upload";
 
     public static final String TAG_CREATED_AT = "createdAt";
+    public static final String TAG_APP_AUTH_TOKEN = "appAuthToken";
     public static final String TAG_CRIME_CATEGORY = "crimCategory";
     public static final String TAG_CRIME_POSITION = "crimPosition";
     public static final String TAG_CRIME_INFO = "crimeInfo";
