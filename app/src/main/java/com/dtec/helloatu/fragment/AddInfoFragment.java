@@ -1,16 +1,29 @@
 package com.dtec.helloatu.fragment;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.NetworkResponse;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.VolleyLog;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.dtec.helloatu.R;
 
 import android.annotation.SuppressLint;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.media.MediaPlayer;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.OpenableColumns;
+import android.text.TextUtils;
 import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -29,11 +42,17 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.VideoView;
 
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.Date;
 
 import com.dtec.helloatu.activities.FragmentBaseActivity;
@@ -47,6 +66,8 @@ import com.dtec.helloatu.pojo.DistrictList;
 import com.dtec.helloatu.pojo.DistrictMain;
 import com.dtec.helloatu.pojo.Mohanogor;
 import com.dtec.helloatu.pojo.MohanogorMain;
+import com.dtec.helloatu.utilities.AppController;
+import com.dtec.helloatu.utilities.CustomRequest;
 import com.dtec.helloatu.utilities.FileProcessing;
 import com.dtec.helloatu.utilities.ImageProcessing;
 import com.dtec.helloatu.utilities.MarshMallowPermission;
@@ -56,16 +77,46 @@ import com.github.barteksc.pdfviewer.listener.OnPageChangeListener;
 import com.github.barteksc.pdfviewer.scroll.DefaultScrollHandle;
 import com.google.gson.Gson;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Formatter;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 
 import static android.app.Activity.RESULT_OK;
+import static com.dtec.helloatu.utilities.ImageProcessing.tempFileName;
 import static com.dtec.helloatu.utilities.StaticAccess.PICK_AUDIO_REQUEST;
 import static com.dtec.helloatu.utilities.StaticAccess.PICK_FILE_REQUEST;
 import static com.dtec.helloatu.utilities.StaticAccess.PICK_VIDEO_REQUEST;
+import static com.dtec.helloatu.utilities.StaticAccess.ROOT_URL_ATU;
+import static com.dtec.helloatu.utilities.StaticAccess.TAG_CREATED_AT;
+import static com.dtec.helloatu.utilities.StaticAccess.TAG_CRIME_CATEGORY;
+import static com.dtec.helloatu.utilities.StaticAccess.TAG_CRIME_INFO;
+import static com.dtec.helloatu.utilities.StaticAccess.TAG_CRIME_POSITION;
+import static com.dtec.helloatu.utilities.StaticAccess.TAG_DISTRICT;
+import static com.dtec.helloatu.utilities.StaticAccess.TAG_DISTRICT_INFORMER;
+import static com.dtec.helloatu.utilities.StaticAccess.TAG_DIVISION;
+import static com.dtec.helloatu.utilities.StaticAccess.TAG_DIVISION_INFORMER;
+import static com.dtec.helloatu.utilities.StaticAccess.TAG_INFORMER_ADDRESS;
+import static com.dtec.helloatu.utilities.StaticAccess.TAG_INFORMER_NAME;
+import static com.dtec.helloatu.utilities.StaticAccess.TAG_INFORMER_OCCURRENCE;
+import static com.dtec.helloatu.utilities.StaticAccess.TAG_INFORMER_PHONE;
+import static com.dtec.helloatu.utilities.StaticAccess.TAG_INFO_AUDIO;
+import static com.dtec.helloatu.utilities.StaticAccess.TAG_INFO_AUDIO_NAME;
+import static com.dtec.helloatu.utilities.StaticAccess.TAG_INFO_DOCUMENT;
+import static com.dtec.helloatu.utilities.StaticAccess.TAG_INFO_DOCUMENT_NAME;
+import static com.dtec.helloatu.utilities.StaticAccess.TAG_INFO_PICTURE;
+import static com.dtec.helloatu.utilities.StaticAccess.TAG_INFO_PICTURE_NAME;
+import static com.dtec.helloatu.utilities.StaticAccess.TAG_INFO_VIDEO;
+import static com.dtec.helloatu.utilities.StaticAccess.TAG_INFO_VIDEO_NAME;
+import static com.dtec.helloatu.utilities.StaticAccess.TAG_OCCURENCE;
 
 public class AddInfoFragment extends Fragment implements View.OnClickListener, AdapterView.OnItemSelectedListener {
 
@@ -90,6 +141,8 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
     List<DistrictMain> listDistrictMain;
     List<MohanogorMain> mohanogorMains;
 
+    ProgressDialog pDialog;
+
     public ImageView ivCamera;
     String imgPath = "";
     String byteConvertedImage;
@@ -98,6 +151,7 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
     String strFile;
     ImageProcessing imgProc;
     String displayName;
+    String displayFileName;
     byte[] displayByte;
 
     Uri pdfUrl;
@@ -218,6 +272,11 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
         getDistrictJsonFile();
         getMohanogorJsonFile();
         getCountryJsonFile();
+
+
+        pDialog = new ProgressDialog(activity);
+        pDialog.setMessage(getString(R.string.progress_message));
+        pDialog.setCancelable(false);
 
         districtAdapter = new ArrayAdapter<String>(activity, android.R.layout.simple_spinner_item, listDistrict);
         districtAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -416,7 +475,11 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
                 break;
 
             case R.id.btnSubmit:
-                if (etCrimeInfo.getText().length() > 0) {
+
+                makeJSONObjectRequest();
+                stopVideoAudioPlayer();
+
+           /*     if (etCrimeInfo.getText().length() > 0) {
                     crime.setCrimCategory(categoryName);
                     crime.setCrimPosition(position);
                     crime.setCrimeInfo(etCrimeInfo.getText().toString());
@@ -497,6 +560,8 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
                     Toast.makeText(activity, getResources().getString(R.string.inform_terrorism), Toast.LENGTH_SHORT).show();
                 }
                 stopVideoAudioPlayer();
+               */
+
                 break;
             case R.id.btnCancel:
                 backToPrevious();
@@ -507,7 +572,7 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
 
 
     @SuppressLint("SetTextI18n")
-    public byte[] resultActivity(int resultCode, Intent data, TextView textView, LinearLayout linearLayout) {
+    public String resultActivity(int resultCode, Intent data, TextView textView, LinearLayout linearLayout) {
         if (resultCode == RESULT_OK) {
             // Get the Uri of the selected file
             Uri uri = data.getData();
@@ -515,39 +580,35 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
             File myFile = new File(uriString);
             String path = myFile.getAbsolutePath();
 
-            try {
-                fullyReadFileToBytes(myFile);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
 
             if (uriString.startsWith("content://")) {
                 Cursor cursor = null;
                 try {
                     cursor = activity.getContentResolver().query(uri, null, null, null, null);
                     if (cursor != null && cursor.moveToFirst()) {
-                        displayName = cursor.getString(cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME));
-                        displayByte = uriTobyte(data.getData());
+                        displayFileName = cursor.getString(cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME));
+                        try {
+                            displayName = Base64.encodeToString(getBytes(uriString), Base64.NO_WRAP);
 
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                        //displayByte = uriTobyte(data.getData());
 
                         linearLayout.setVisibility(View.VISIBLE);
                         if (textView == tvDocument) {
+
+
                             textView.setVisibility(View.VISIBLE);
-                            textView.setText(getString(R.string.document) + ": " + displayName);
+                            textView.setText(getString(R.string.document) + ": " + displayFileName);
                             pdfUrl = data.getData();
-                            //uriTobyte(pdfUrl);
-
-
                         } else if (textView == tvVideo) {
                             textView.setVisibility(View.VISIBLE);
-                            textView.setText(getString(R.string.video) + ": " + displayName);
+                            textView.setText(getString(R.string.video) + ": " + displayFileName);
                             uriVideo = data.getData();
-
-
                         } else if (textView == tvAudio) {
                             textView.setVisibility(View.VISIBLE);
-                            textView.setText(getString(R.string.audio) + ": " + displayName);
+                            textView.setText(getString(R.string.audio) + ": " + displayFileName);
                             uriAudio = data.getData();
                         }
                     }
@@ -559,9 +620,31 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
             }
         }
         //return displayName;
-        return displayByte;
+        return displayName;
     }
 
+
+    public void important() {
+        try {
+            String valueFile = Base64.encodeToString(getBytes(uriVideo.toString()), Base64.NO_WRAP);
+            Toast.makeText(activity, valueFile, Toast.LENGTH_SHORT).show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+
+    public static byte[] getBytes(Object obj) throws java.io.IOException {
+        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+        ObjectOutputStream oos = new ObjectOutputStream(bos);
+        oos.writeObject(obj);
+        oos.flush();
+        oos.close();
+        bos.close();
+        byte[] data = bos.toByteArray();
+        return data;
+    }
 
     public byte[] convert(String path) throws IOException {
 
@@ -569,7 +652,7 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
         ByteArrayOutputStream bos = new ByteArrayOutputStream();
         byte[] b = new byte[1024];
 
-        for (int readNum; (readNum = fis.read(b)) != -1;) {
+        for (int readNum; (readNum = fis.read(b)) != -1; ) {
             bos.write(b, 0, readNum);
         }
 
@@ -577,8 +660,6 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
 
         return bytes;
     }
-
-
 
 
     private byte[] uriTobyte(Uri data) {
@@ -709,20 +790,20 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
                 .load();
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public void setImagePro(Bitmap bitmap, TextView textView) {
         //scale bitmap
         if (bitmap != null) {
             Bitmap b = (bitmap);
             byteConvertedImage = Base64.encodeToString(imgProc.getBytesFromBitmap(bitmap), Base64.NO_WRAP);
-
-
             imgPath = imgProc.imageSave(b);
-            textView.setText(getString(R.string.picture) + ": " + byteConvertedImage);
-            imgProc.setImageWith_loader(ivCamera, byteConvertedImage);
+            textView.setText(getString(R.string.picture) + ": " + imgPath);
+            imgProc.setImageWith_loader(ivCamera, imgPath);
             b.recycle();
 
         }
     }
+
 
     public void enterStorage(String type, int FLAG) {
         Intent intent = new Intent();
@@ -870,6 +951,234 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+
+    /// making json request
+    private void makeJSONObjectRequest() {
+
+        showpDialog();
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, ROOT_URL_ATU,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Toast.makeText(activity.getApplicationContext(), response, Toast.LENGTH_SHORT).show();
+                        hidepDialog();
+                        Toast.makeText(activity, getResources().getString(R.string.successful_message), Toast.LENGTH_SHORT).show();
+                        backToPrevious();
+                    }
+                },
+
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                        NetworkResponse response = error.networkResponse;
+                        String errorMsg = "";
+                        if (response != null && response.data != null) {
+                            String errorString = new String(response.data);
+                            Log.i("log error", errorString);
+                        }
+                        Toast.makeText(activity.getApplicationContext(), error.toString(), Toast.LENGTH_SHORT).show();
+                        hidepDialog();
+                    }
+                }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+
+
+                String date = String.valueOf(new Date());
+                String category = categoryName;
+                String positionvalue = String.valueOf(position);
+                String crimInfoValue = etCrimeInfo.getText().toString();
+                String informerAddressValue = etInformerAddress.getText().toString();
+                String informerNameValue = etInformerName.getText().toString();
+                String informerPhoneValue = etInformerPhone.getText().toString();
+                String thanaValue = spThana.getSelectedItem().toString();
+                String thanaInformerValue = spThanaInformer.getSelectedItem().toString();
+                String districtValue = spDistrict.getSelectedItem().toString();
+                String districtInformerValue = spDistrictInformer.getSelectedItem().toString();
+                String audioFile = activity.audioName;
+                String documentFile = activity.documentName;
+                String imagefile = byteConvertedImage;
+                String videofile = activity.videoName;
+
+                String dimOutValue = spDimout.getSelectedItem().toString();
+                String dimOutInformerValue = spDimoutInformer.getSelectedItem().toString();
+
+
+                Map<String, String> params = new HashMap<String, String>();
+                if (etCrimeInfo.getText().length() > 0 && !TextUtils.isEmpty(crimInfoValue)) {
+
+                    params.put(TAG_CREATED_AT, date);
+                    params.put(TAG_CRIME_CATEGORY, category);
+                    params.put(TAG_CRIME_POSITION, positionvalue);
+
+
+                    if (crimInfoValue != null && !TextUtils.isEmpty(crimInfoValue)) {
+                        params.put(TAG_CRIME_INFO, crimInfoValue);
+                    } else {
+                        params.put("", "");
+                    }
+
+                    if (informerAddressValue != null && !TextUtils.isEmpty(informerAddressValue)) {
+                        params.put(TAG_INFORMER_ADDRESS, informerAddressValue);
+                    } else {
+                        params.put("", "");
+                    }
+
+                    if (informerNameValue != null && !TextUtils.isEmpty(informerNameValue)) {
+                        params.put(TAG_INFORMER_NAME, informerNameValue);
+                    } else {
+                        params.put("", "");
+                    }
+
+                    if (informerPhoneValue != null && !TextUtils.isEmpty(informerPhoneValue)) {
+                        params.put(TAG_INFORMER_PHONE, informerPhoneValue);
+                    } else {
+                        params.put("", "");
+                    }
+
+
+                    if (thanaValue != null && !TextUtils.isEmpty(thanaValue)) {
+                        params.put(TAG_DISTRICT, thanaValue);
+                    } else {
+                        params.put("", "");
+                    }
+
+
+                    if (thanaInformerValue != null && !TextUtils.isEmpty(thanaInformerValue)) {
+                        params.put(TAG_DISTRICT_INFORMER, thanaInformerValue);
+                    } else {
+                        params.put("", "");
+                    }
+
+
+                    if (districtValue != null && !TextUtils.isEmpty(districtValue)) {
+                        params.put(TAG_DIVISION, districtValue);
+                    } else {
+                        params.put("", "");
+                    }
+
+
+                    if (districtInformerValue != null && !TextUtils.isEmpty(districtInformerValue)) {
+                        params.put(TAG_DIVISION_INFORMER, districtInformerValue);
+                    } else {
+                        params.put("", "");
+                    }
+
+
+                    if (audioFile != null && !TextUtils.isEmpty(audioFile)) {
+                        params.put(TAG_INFO_AUDIO_NAME, displayFileName);
+                    } else {
+                        params.put("", "");
+                    }
+
+                    if (audioFile != null && !TextUtils.isEmpty(audioFile)) {
+                        params.put(TAG_INFO_AUDIO, audioFile);
+                    } else {
+                        params.put("", "");
+                    }
+
+                    if (documentFile != null && !TextUtils.isEmpty(documentFile)) {
+                        params.put(TAG_INFO_DOCUMENT_NAME, displayFileName);
+                    } else {
+                        params.put("", "");
+                    }
+
+
+                    if (documentFile != null && !TextUtils.isEmpty(documentFile)) {
+                        params.put(TAG_INFO_DOCUMENT, documentFile);
+                    } else {
+                        params.put("", "");
+                    }
+
+
+                    if (imagefile != null && !TextUtils.isEmpty(imagefile)) {
+                        params.put(TAG_INFO_PICTURE_NAME, imgPath);
+                    } else {
+                        params.put("", "");
+                    }
+
+                    if (imagefile != null && !TextUtils.isEmpty(imagefile)) {
+                        params.put(TAG_INFO_PICTURE, imagefile);
+                    } else {
+                        params.put("", "");
+                    }
+
+
+                    if (videofile != null && !TextUtils.isEmpty(videofile)) {
+                        params.put(TAG_INFO_VIDEO_NAME, displayFileName);
+                    } else {
+                        params.put("", "");
+                    }
+
+
+                    if (videofile != null && !TextUtils.isEmpty(videofile)) {
+                        params.put(TAG_INFO_VIDEO, videofile);
+                    } else {
+                        params.put("", "");
+                    }
+
+
+                    if (dimOutValue != null && !TextUtils.isEmpty(dimOutValue)) {
+                        params.put(TAG_OCCURENCE, dimOutValue);
+                    } else {
+                        params.put("", "");
+                    }
+                    if (dimOutInformerValue != null && !TextUtils.isEmpty(dimOutInformerValue)) {
+                        params.put(TAG_INFORMER_OCCURRENCE, dimOutInformerValue);
+                    } else {
+                        params.put("", "");
+                    }
+                } else {
+                    Toast.makeText(activity, getResources().getString(R.string.inform_terrorism), Toast.LENGTH_SHORT).show();
+                }
+
+
+
+
+                   /* Map<String, String> params = new HashMap<String, String>();
+                    params.put(TAG_CREATED_AT, String.valueOf(new Date()));
+                    params.put(TAG_CRIME_CATEGORY, categoryName);
+                    params.put(TAG_CRIME_POSITION, String.valueOf(position));
+                    params.put(TAG_CRIME_INFO, etCrimeInfo.getText().toString());
+                    params.put(TAG_DISTRICT, spThana.getSelectedItem().toString());
+                    params.put(TAG_DISTRICT_INFORMER, spThanaInformer.getSelectedItem().toString());
+                    params.put(TAG_DIVISION, spDistrict.getSelectedItem().toString());
+                    params.put(TAG_DIVISION_INFORMER, spDistrictInformer.getSelectedItem().toString());
+                    params.put(TAG_INFO_AUDIO, activity.audioName.toString());
+                    params.put(TAG_INFO_DOCUMENT, activity.documentName.toString());
+                    params.put(TAG_INFO_PICTURE, byteConvertedImage);
+                    params.put(TAG_INFO_VIDEO, activity.videoName.toString());
+                    params.put(TAG_INFORMER_ADDRESS, etInformerAddress.getText().toString());
+                    params.put(TAG_INFORMER_NAME, etInformerName.getText().toString());
+                    params.put(TAG_INFORMER_PHONE, etInformerPhone.getText().toString());
+                    params.put(TAG_OCCURENCE, spDimout.getSelectedItem().toString());
+                    params.put(TAG_INFORMER_OCCURRENCE, spDimoutInformer.getSelectedItem().toString());*/
+
+                Gson gson = new Gson();
+                String json = gson.toJson(params); //convert
+                System.out.println(json);
+
+                return params;
+            }
+
+        };
+        AppController.getInstance().addToRequestQueue(stringRequest);
+
+    }
+
+
+    private void showpDialog() {
+        if (!pDialog.isShowing())
+            pDialog.show();
+    }
+
+    private void hidepDialog() {
+        if (pDialog.isShowing())
+            pDialog.dismiss();
     }
 
 

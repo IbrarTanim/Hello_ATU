@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
@@ -45,6 +46,7 @@ import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager.widget.ViewPager;
 
+import static com.dtec.helloatu.fragment.AddInfoFragment.getBytes;
 import static com.dtec.helloatu.utilities.StaticAccess.MATERIAL_FILE_PICKER;
 import static com.dtec.helloatu.utilities.StaticAccess.PICK_AUDIO_REQUEST;
 import static com.dtec.helloatu.utilities.StaticAccess.PICK_FILE_REQUEST;
@@ -71,9 +73,9 @@ public class FragmentBaseActivity extends FragmentActivity implements View.OnCli
     public String videoName;
     public String audioName;*/
 
-    public byte[] documentName;
-    public byte[] videoName;
-    public byte[] audioName;
+    public String documentName;
+    public String videoName;
+    public String audioName;
 
 
     public MarshMallowPermission marshMallowPermission;
@@ -203,9 +205,11 @@ public class FragmentBaseActivity extends FragmentActivity implements View.OnCli
 
             case PICK_FILE_REQUEST:
                 documentName = addInfoFragment.resultActivity(resultCode, data, addInfoFragment.tvDocument, addInfoFragment.llDocument);
+
                 break;
             case PICK_VIDEO_REQUEST:
                 videoName = addInfoFragment.resultActivity(resultCode, data, addInfoFragment.tvVideo, addInfoFragment.llVideo);
+
                 break;
             case PICK_AUDIO_REQUEST:
                 audioName = addInfoFragment.resultActivity(resultCode, data, addInfoFragment.tvAudio, addInfoFragment.llAudio);

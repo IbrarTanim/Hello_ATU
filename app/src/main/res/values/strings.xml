@@ -189,6 +189,7 @@
     <string name="vatara">ভাটারা</string>
     <string name="wari">ওয়ারী</string>
     <string name="demra">ডেমরা</string>
+    <string name="progress_message">Please wait...</string>
 
 
 </resources>
