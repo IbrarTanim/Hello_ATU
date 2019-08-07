@@ -191,6 +191,7 @@
     <string name="demra">ডেমরা</string>
     <string name="progress_message">Please wait...</string>
     <string name="token">rXjPmSrkV7DtTFO</string>
+    <string name="missing_data">Data Not added</string>
 
 
 </resources>

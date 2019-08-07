@@ -305,6 +305,7 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
                     spDistrict.setAdapter(districtAdapter);
                     spDistrict.setVisibility(View.VISIBLE);
                     spThana.setVisibility(View.GONE);
+
                 } else if (itemOccurrence == getString(R.string.bdout)) {
                     districtAdapter = new ArrayAdapter<String>(activity, android.R.layout.simple_spinner_item, listCountry);
                     districtAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -959,10 +960,13 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
                 String informerAddressValue = etInformerAddress.getText().toString();
                 String informerNameValue = etInformerName.getText().toString();
                 String informerPhoneValue = etInformerPhone.getText().toString();
+
                 String thanaValue = spThana.getSelectedItem().toString();
                 String thanaInformerValue = spThanaInformer.getSelectedItem().toString();
+
                 String districtValue = spDistrict.getSelectedItem().toString();
                 String districtInformerValue = spDistrictInformer.getSelectedItem().toString();
+
                 String audioFile = activity.audioName;
                 String documentFile = activity.documentName;
                 String imagefile = byteConvertedImage;
@@ -984,120 +988,122 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
                     if (crimInfoValue != null && !TextUtils.isEmpty(crimInfoValue)) {
                         params.put(TAG_CRIME_INFO, crimInfoValue);
                     } else {
-                        params.put("", "");
+                        params.put(TAG_CRIME_INFO, getString(R.string.missing_data));
                     }
 
 
                     if (informerAddressValue != null && !TextUtils.isEmpty(informerAddressValue)) {
                         params.put(TAG_INFORMER_ADDRESS, informerAddressValue);
                     } else {
-                        params.put("", "");
+                        params.put(TAG_INFORMER_ADDRESS, getString(R.string.missing_data));
                     }
 
                     if (informerNameValue != null && !TextUtils.isEmpty(informerNameValue)) {
                         params.put(TAG_INFORMER_NAME, informerNameValue);
                     } else {
-                        params.put("", "");
+                        params.put(TAG_INFORMER_NAME, getString(R.string.missing_data));
                     }
 
                     if (informerPhoneValue != null && !TextUtils.isEmpty(informerPhoneValue)) {
                         params.put(TAG_INFORMER_PHONE, informerPhoneValue);
                     } else {
-                        params.put("", "");
+                        params.put(TAG_INFORMER_PHONE, getString(R.string.missing_data));
                     }
 
 
-                    if (thanaValue != null && !TextUtils.isEmpty(thanaValue)) {
+                    if (spThana.getSelectedItem() != null && !TextUtils.isEmpty(thanaValue)) {
                         params.put(TAG_DISTRICT, thanaValue);
                     } else {
-                        params.put("", "");
+                        params.put(TAG_DISTRICT, getString(R.string.missing_data));
                     }
 
 
-                    if (thanaInformerValue != null && !TextUtils.isEmpty(thanaInformerValue)) {
+                    if (spThanaInformer.getSelectedItem() != null && !TextUtils.isEmpty(thanaInformerValue)) {
                         params.put(TAG_DISTRICT_INFORMER, thanaInformerValue);
                     } else {
-                        params.put("", "");
+                        params.put(TAG_DISTRICT_INFORMER, getString(R.string.missing_data));
                     }
 
 
-                    if (districtValue != null && !TextUtils.isEmpty(districtValue)) {
+                    if (spDistrict.getSelectedItem() != null && !TextUtils.isEmpty(districtValue)) {
                         params.put(TAG_DIVISION, districtValue);
                     } else {
-                        params.put("", "");
+                        params.put(TAG_DIVISION, getString(R.string.missing_data));
                     }
 
 
-                    if (districtInformerValue != null && !TextUtils.isEmpty(districtInformerValue)) {
+                    if (spDistrictInformer.getSelectedItem() != null && !TextUtils.isEmpty(districtInformerValue)) {
                         params.put(TAG_DIVISION_INFORMER, districtInformerValue);
                     } else {
-                        params.put("", "");
+                        params.put(TAG_DIVISION_INFORMER, getString(R.string.missing_data));
+                    }
+
+
+                    if (spDimout.getSelectedItem() != null && !TextUtils.isEmpty(dimOutValue)) {
+                        params.put(TAG_OCCURENCE, dimOutValue);
+                    } else {
+                        params.put(TAG_OCCURENCE, getString(R.string.missing_data));
+                    }
+
+                    if (spDimoutInformer.getSelectedItem() != null && !TextUtils.isEmpty(dimOutInformerValue)) {
+                        params.put(TAG_INFORMER_OCCURRENCE, dimOutInformerValue);
+                    } else {
+                        params.put(TAG_INFORMER_OCCURRENCE, getString(R.string.missing_data));
                     }
 
 
                     if (audioFile != null && !TextUtils.isEmpty(audioFile)) {
                         params.put(TAG_INFO_AUDIO_NAME, displayAudioFileName);
                     } else {
-                        params.put("", "");
+                        params.put(TAG_INFO_AUDIO_NAME, getString(R.string.missing_data));
                     }
 
                     if (audioFile != null && !TextUtils.isEmpty(audioFile)) {
                         params.put(TAG_INFO_AUDIO, audioFile);
                     } else {
-                        params.put("", "");
+                        params.put(TAG_INFO_AUDIO, getString(R.string.missing_data));
                     }
 
                     if (documentFile != null && !TextUtils.isEmpty(documentFile)) {
                         params.put(TAG_INFO_DOCUMENT_NAME, displayDocumentFileName);
                     } else {
-                        params.put("", "");
+                        params.put(TAG_INFO_DOCUMENT_NAME, getString(R.string.missing_data));
                     }
 
 
                     if (documentFile != null && !TextUtils.isEmpty(documentFile)) {
                         params.put(TAG_INFO_DOCUMENT, documentFile);
                     } else {
-                        params.put("", "");
+                        params.put(TAG_INFO_DOCUMENT, getString(R.string.missing_data));
                     }
 
 
                     if (imagefile != null && !TextUtils.isEmpty(imagefile)) {
                         params.put(TAG_INFO_PICTURE_NAME, imgPath);
                     } else {
-                        params.put("", "");
+                        params.put(TAG_INFO_PICTURE_NAME, getString(R.string.missing_data));
                     }
 
                     if (imagefile != null && !TextUtils.isEmpty(imagefile)) {
                         params.put(TAG_INFO_PICTURE, imagefile);
                     } else {
-                        params.put("", "");
+                        params.put(TAG_INFO_PICTURE, getString(R.string.missing_data));
                     }
 
 
                     if (videofile != null && !TextUtils.isEmpty(videofile)) {
                         params.put(TAG_INFO_VIDEO_NAME, displayVideoFileName);
                     } else {
-                        params.put("", "");
+                        params.put(TAG_INFO_VIDEO_NAME, getString(R.string.missing_data));
                     }
 
 
                     if (videofile != null && !TextUtils.isEmpty(videofile)) {
                         params.put(TAG_INFO_VIDEO, videofile);
                     } else {
-                        params.put("", "");
+                        params.put(TAG_INFO_VIDEO, getString(R.string.missing_data));
                     }
 
-
-                    if (dimOutValue != null && !TextUtils.isEmpty(dimOutValue)) {
-                        params.put(TAG_OCCURENCE, dimOutValue);
-                    } else {
-                        params.put("", "");
-                    }
-                    if (dimOutInformerValue != null && !TextUtils.isEmpty(dimOutInformerValue)) {
-                        params.put(TAG_INFORMER_OCCURRENCE, dimOutInformerValue);
-                    } else {
-                        params.put("", "");
-                    }
                 } else {
                     Toast.makeText(activity, getResources().getString(R.string.inform_terrorism), Toast.LENGTH_SHORT).show();
                 }
