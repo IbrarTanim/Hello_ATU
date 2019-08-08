@@ -15,7 +15,8 @@ public class StaticAccess {
     public static final int PICK_VIDEO_REQUEST = 0x9;
     public static final int PICK_AUDIO_REQUEST = 0x4;
 
-    public static final String ROOT_URL_ATU= "http://192.168.3.92:8000/api/fileUpload/upload";
+    //public static final String ROOT_URL_ATU= "http://192.168.3.92:8000/api/fileUpload/upload";
+    public static final String ROOT_URL_ATU= "http://192.168.3.65:5566//api/fileUpload/upload";
 
     public static final String TAG_CREATED_AT = "createdAt";
     public static final String TAG_APP_AUTH_TOKEN = "appAuthToken";

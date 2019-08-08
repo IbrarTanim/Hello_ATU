@@ -10,6 +10,7 @@ import com.dtec.helloatu.R;
 
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -38,7 +39,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.VideoView;
 
+import java.io.BufferedInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.DataInputStream;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.ObjectOutputStream;
@@ -576,7 +581,10 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
                     if (cursor != null && cursor.moveToFirst()) {
                         displayDocumentFileName = cursor.getString(cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME));
                         try {
-                            displayDocumentName = Base64.encodeToString(getBytes(uriStringData), Base64.NO_WRAP);
+                            //displayDocumentName = Base64.encodeToString(getBytes(uriStringData), Base64.NO_WRAP);
+                            InputStream inputStream = activity.getContentResolver().openInputStream(uriData);
+                            byte[] bytes   = getConvertedData(inputStream);
+                            displayDocumentName = Base64.encodeToString(bytes, Base64.DEFAULT);
 
                         } catch (IOException e) {
                             e.printStackTrace();
@@ -609,7 +617,11 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
                     if (cursor != null && cursor.moveToFirst()) {
                         displayVideoFileName = cursor.getString(cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME));
                         try {
-                            displayVideoName = Base64.encodeToString(getBytes(uriStringData), Base64.NO_WRAP);
+                            //displayVideoName = Base64.encodeToString(getBytes(uriStringData), Base64.NO_WRAP);
+                            InputStream inputStream = activity.getContentResolver().openInputStream(uriData);
+                            byte[] bytes   = getConvertedData(inputStream);
+                            displayVideoName = Base64.encodeToString(bytes, Base64.DEFAULT);
+
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
@@ -641,7 +653,13 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
                     if (cursor != null && cursor.moveToFirst()) {
                         displayAudioFileName = cursor.getString(cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME));
                         try {
-                            displayAudioName = Base64.encodeToString(getBytes(uriStringData), Base64.NO_WRAP);
+                            //displayAudioName = Base64.encodeToString(getBytes(uriStringData), Base64.NO_WRAP);
+
+                            InputStream inputStream = activity.getContentResolver().openInputStream(uriData);
+                            byte[] bytes   = getConvertedData(inputStream);
+                            displayAudioName = Base64.encodeToString(bytes, Base64.DEFAULT);
+
+
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
@@ -656,6 +674,28 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
         }
         return displayAudioName;
     }
+
+
+
+
+
+    public byte[] getConvertedData(InputStream inputStream) throws IOException {
+        ByteArrayOutputStream byteBuffer = new ByteArrayOutputStream();
+        int bufferSize = 1024;
+        byte[] buffer = new byte[bufferSize];
+
+        int len = 0;
+        while ((len = inputStream.read(buffer)) != -1) {
+            byteBuffer.write(buffer, 0, len);
+        }
+        return byteBuffer.toByteArray();
+    }
+
+
+
+
+
+
 
 
     public static byte[] getBytes(Object obj) throws java.io.IOException {
