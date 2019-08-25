@@ -19,6 +19,8 @@ public class Crime {
     /** Not-null value. */
     private String informerAddress;
     /** Not-null value. */
+    private String informerEmail;
+    /** Not-null value. */
     private String infoDocument;
     /** Not-null value. */
     private String infoPicture;
@@ -48,7 +50,7 @@ public class Crime {
         this.id = id;
     }
 
-    public Crime(Long id, int crimPosition, String crimCategory, String crimeInfo, String informerName, String informerPhone, String informerAddress, String infoDocument, String infoPicture, String infoVideo, String infoAudio, String occurrence, String occurrenceInformer, String division, String divisionInformer, String district, String districtInformer, java.util.Date createdAt) {
+    public Crime(Long id, int crimPosition, String crimCategory, String crimeInfo, String informerName, String informerPhone, String informerAddress, String informerEmail, String infoDocument, String infoPicture, String infoVideo, String infoAudio, String occurrence, String occurrenceInformer, String division, String divisionInformer, String district, String districtInformer, java.util.Date createdAt) {
         this.id = id;
         this.crimPosition = crimPosition;
         this.crimCategory = crimCategory;
@@ -56,6 +58,7 @@ public class Crime {
         this.informerName = informerName;
         this.informerPhone = informerPhone;
         this.informerAddress = informerAddress;
+        this.informerEmail = informerEmail;
         this.infoDocument = infoDocument;
         this.infoPicture = infoPicture;
         this.infoVideo = infoVideo;
@@ -133,6 +136,16 @@ public class Crime {
     /** Not-null value; ensure this value is available before it is saved to the database. */
     public void setInformerAddress(String informerAddress) {
         this.informerAddress = informerAddress;
+    }
+
+    /** Not-null value. */
+    public String getInformerEmail() {
+        return informerEmail;
+    }
+
+    /** Not-null value; ensure this value is available before it is saved to the database. */
+    public void setInformerEmail(String informerEmail) {
+        this.informerEmail = informerEmail;
     }
 
     /** Not-null value. */

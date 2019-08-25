@@ -39,6 +39,7 @@
     <string name="inform_name">তথ্য দাতার নাম </string>
     <string name="phone_number">ফোন নম্বর</string>
     <string name="address">ঠিকানা</string>
+    <string name="email"> ই-মেইল</string>
     <string name="aditional_info">প্রদত্ত তথ্য সংক্রান্ত কোন ছবি,ডকুমেন্ট,ভিডিও বা অডিও যদি থাকে সংযুক্ত করুন</string>
     <string name="picture">ছবি</string>
     <string name="video">ভিডিও</string>
@@ -119,22 +120,59 @@
     <string name="app_name_bn">এন্টিটেরোরিজম ইউনিট \n বাংলাদেশ পুলিশ</string>
 
     <string name="unit_detail_text">
+
       \nIf we think about the Holy Artisan Bakery attack, apart from the bloodshed and image crisis of our country in international arena, it also lessened the investment of foreign countries to ours. Bangladesh Police and ATU is working to prevent terrorism so that, this country can make up this economic man-made disaster and make our economy keep growing. Now-a-days, terrorism and militancy has been much affecting to the world. Its very much important for all of us to prevent us from this disaster.
         \n\nTo root outradicalism, extremism and militancy from the country, Bangladesh government has declared “Zero Tolerance” and Anti-Terrorism Unit (ATU) of Bangladesh Police is a result of this philosophy. ATU is committed to the endeavor of rendering upon a full fledge dedicated, responsive and professional police unit to combat against terrorism, extremism and violence.
         \n\nATU has a nationwide jurisdiction to combat militancy and terrorism and is also assigned with combating cybercrimes, terror financing and creating mass awareness against terrorism, violent extremism and radicalization. This unit is an intelligence based and modern technology depended one and working as a self sustained organization.
         \n\nATU is continuing to work under the super observation of an Addl. Inspector General of   Police (Addl. IGP). Having Five Major wings, ATU is operating fully to its current capacity. The full-fledged unit with advanced technology and arms is working to resist the terrors and radicals outfit organizations and maintaining the law and order for public safety. ATU is gathering intelligence and taking preventive measures to curb terrorism besides trying to create resource and action plan to correct the misguided people with explanations from the Holy Quran and the Hadith. This unit is promised to play the biggest role in efforts to free Bangladesh from terrorism and militancy.
         \n\nThe people of this country have always been the driving force against every crisis this nation has ever faced and this time is no exception. With the help and goodwill of people, ATU will diminish all the extremist and terrorist activities to ashes which ATU is committed to.
+
     </string>
 
 
     <string name="user_manual_text">
-        Comming soon..
+
+
+
+        অপরাধের তথ্য
+\n\nএই বক্সে আপনার দেখা বা শুনা বা জানা ঘটনার বিবরণ লিখুন।
+\n\nঘটনাস্থল
+\n\nএর অধীনে থাকা ঘরগুলোর ড্রপডাউন বাটনে ক্লিক করে আপনার দেখা বা শুনা বা জানা ঘটনার সাথে সংশ্লিষ্ট স্থানসমূহ নির্বাচন করুন।
+\n\n তথ্যদাতার পরিচয়
+\n\n আপনি যদি আপনার পরিচয় দিতে চান তাহলে এর অধীনে থাকা ঘর গুলোতে তথ্য দিন। (তথ্যদাতার পরিচয় প্রদান সম্পূর্ণ ঐচ্ছিক, তবে প্রদত্ত তথ্য গোপন রাখা হবে)
+\n\nটেক্সট/পিডিএফ/ছবি/ভিডিও/অডিও সংযুক্তকরণ
+\n\nআপানার প্রদত্ত তথ্য সংক্রান্ত কোন টেক্সট/পিডিএফ/ছবি/ভিডিও/অডিও যদি থাকে তা সংশ্লিষ্ট বাটনে ক্লিক করে সংযুক্ত করতে পারবেন।
+\n\nSUBMIT/CANCEL বাটন
+\n\nঅপরাধের তথ্য, ঘটনাস্থলের তথ্য, তথ্যদাতার পরিচয়, প্রদত্ত তথ্য সংক্রান্ত টেক্স/পিডিএফ/ছবি/ভিডিও/অডিও সংযুক্তকরণ পূর্বক “SUBMIT” বাটনে ক্লিক করলে “তথ্য প্রেরণের জন্য আপনাকে ধন্যবাদ। আপনার প্রেরিত তথ্যের আইডি নম্বর..........। প্রয়োাজনে এই তথ্যটি আপনি সংশোধন, সংযোজ অথবা এতদসংক্রান্তে আমাদের সাথে ‘বেনামী আলাপন’ করতে পারবেন।” ম্যাসেজ সম্বলিত পপআপ আসবে। পপআপ হতে ‘ঠিক আছে’ বাটনে ক্লিক করলে আপনার প্রদত্ত তথ্য দাখিল হবে।
+\n\nঅপরাধের তথ্য, ঘটনাস্থলের তথ্য, তথ্যদাতার পরিচয়, প্রদত্ত তথ্য সংক্রান্ত টেক্সট/পিডিএফ/ছবি/ভিডিও/অডিও সংযুক্তকরার পরেও আপনি তথ্য প্রেরণ করতে না চাইলে “CANCEL” বাটনে ক্লিক করুন।
+\n\nতথ্য সংশোধন বাটন
+\n\nআপনার প্রদত্ত কোন তথ্য সংশোধন বা নতুন কোন তথ্য সংযোজন করার প্রয়োজন হলে ইতোপূর্বে প্রদত্ত সন্ত্রাসবাদ/উগ্রবাদ বা সাইবার অপরাধ/সাইবার সন্ত্রাসবাদ বা বোমা/বিস্ফোরক/অস্ত্র/মাদক বা সন্ত্রাসবাদে অর্থায়ন/চোরাচালান/ফেক কারেন্সি সংক্রান্ত যে তথ্যটি সংশোধন বা সংযোজন করতে চান সংশ্লিষ্ট সেই ট্যাবে ক্লিক করে পাওয়া পেইজের নীচেয় ডান কর্ণারে থাকা তথ্য সংশোধন বাটন ক্লিক করুন এবং আসা পেইজ হতে সংশ্লিষ্ট তথ্যের আইডি নম্বরে ক্লিক করে তথ্য সংশোধন বা নতুন তথ্য সংযোজন করে পুনরায় “SUBMIT” বাটনে ক্লিক করুন।
+\n\nSUBMIT বাটনে ক্লিক করলে “তথ্য প্রেরণের জন্য আপনাকে ধন্যবাদ। আপনার প্রেরিত তথ্যের আইডি নম্বরঃ..........। প্রয়োাজনে এই তথ্যটি আপনি সংশোধন, সংযোজ অথবা এতদসংক্রান্তে আমাদের সাথে ‘বেনামী আলাপন’ করতে পারবেন।” ম্যাসেজ সম্বলিত পপআপ আসবে। পপআপ হতে ‘ঠিক আছে’ বাটনে ক্লিক করলে আপনার প্রদত্ত তথ্য দাখিল হবে। তবে তথ্য সংশোধন বা সংযোজন করলে তথ্য আইডি নম্বরের কোন পরিবর্তন হবে না।
+\n\nনতুন তথ্য বাটন
+\n\nএই বাটনে ক্লিক করলে অপরাধের তথ্য দাখিলের নতুন পেইজ আসবে।
+\n\nবেনামী আলাপন
+\n\nতথ্য কণিকা বাটনের মধ্যে আছে “বেনামী আলাপন” বাটন। এই বাটনে ক্লিক করলে দেখতে পাবেন ইতোপূর্বে আপনার দাখিলকৃত সকল তথ্যের আইডি নম্বর। “বেনামী আলাপন” এর মাধ্যমে আপনি আপনার দাখিলকৃত যেকোন তথ্য আইডি নম্বেরের বিষয়ে সিটিটিসি কর্তৃপক্ষের সাথে চ্যাট করতে পারবেন।
+সিটিটিসি কর্তৃপক্ষও আপনার কোন তথ্য আইডি নম্বরের বিষয়ে চ্যাট করতে পারবে।সিটিটিসি তথ্যদাতার পরিচয় কখনোই স্বয়ংক্রিয়ভাবে গ্রহণ, সংরক্ষণ বা প্রকাশ করে না।
+\n\nতথ্যের গোপনীয়তা
+\n\nআমরা তথ্যদাতার কোনও তথ্য স্বয়ংক্রিয়ভাবে গ্রহণ কিংবা সংরক্ষণ করি না, তবে তথ্যদাতা ইচ্ছুক হলে তার পরিচয় ও যোগাযোগের ঠিকানা পাঠাতে পারবেন। আমরা তথ্যদাতার পরিচয় কখনোই প্রকাশ করি না।
+
+
+
+
+
+
+
+
+
+
+
     </string>
     <string name="ok">OK</string>
 
-<!-- TODO: Remove or change this placeholder text -->
+    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="successful_message">Form Filled Up Successfully</string>
+    <string name="failed_message">Unable to submit form. please try again</string>
     <string name="stop">Stop</string>
     <string name="play">Play</string>
     <string name="hide">Hide</string>
@@ -192,6 +230,7 @@
     <string name="progress_message">Please wait...</string>
     <string name="token">rXjPmSrkV7DtTFO</string>
     <string name="missing_data">Data Not added</string>
+    <string name="comming_soon">Comming Soon...</string>
 
 
 </resources>

@@ -81,7 +81,7 @@
                 android:layout_weight="8"
                 android:gravity="left"
                 android:visibility="gone"
-                android:text="@string/unit_detail_text"
+                android:text="@string/user_manual_text"
                 android:textAlignment="gravity"
                 android:textColor="@color/black"
                 android:textSize="@dimen/fifteen" />
@@ -198,7 +198,7 @@
                 android:layout_weight="8"
                 android:gravity="left"
                 android:visibility="gone"
-                android:text="@string/user_manual_text"
+                android:text="@string/comming_soon"
                 android:textAlignment="gravity"
                 android:textColor="@color/black"
                 android:textSize="@dimen/fifteen" />

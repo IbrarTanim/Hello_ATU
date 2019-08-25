@@ -159,6 +159,7 @@
             android:gravity="center"
             android:hint="@string/phone_number"
             android:inputType="number"
+            android:maxLength="11"
             android:overScrollMode="always"
             android:padding="@dimen/five"
             android:scrollbarStyle="insideInset"
@@ -187,11 +188,32 @@
             android:scrollbars="vertical"
             android:textColor="@color/black"
             android:textSize="@dimen/eighteen"
-            app:layout_constraintBottom_toTopOf="@+id/spDimoutInformer"
+            app:layout_constraintBottom_toTopOf="@+id/etInformerEmail"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/etInformerPhone" />
 
+
+        <EditText
+            android:id="@+id/etInformerEmail"
+            android:layout_width="@dimen/zero"
+            android:layout_height="@dimen/thirty_five"
+            android:layout_marginTop="@dimen/ten"
+            android:background="@drawable/cell_border"
+            android:cursorVisible="true"
+            android:gravity="center"
+            android:hint="@string/email"
+            android:inputType="textMultiLine"
+            android:overScrollMode="always"
+            android:padding="@dimen/five"
+            android:scrollbarStyle="insideInset"
+            android:scrollbars="vertical"
+            android:textColor="@color/black"
+            android:textSize="@dimen/eighteen"
+            app:layout_constraintBottom_toTopOf="@+id/spDimoutInformer"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/etInformerAddress" />
 
         <Spinner
             android:id="@+id/spDimoutInformer"
@@ -202,7 +224,7 @@
             app:layout_constraintBottom_toTopOf="@+id/spDistrictInformer"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/etInformerAddress" />
+            app:layout_constraintTop_toBottomOf="@+id/etInformerEmail" />
 
         <Spinner
             android:id="@+id/spDistrictInformer"

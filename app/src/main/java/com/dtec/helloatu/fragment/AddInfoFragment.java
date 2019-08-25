@@ -20,7 +20,10 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.OpenableColumns;
+import android.telephony.PhoneNumberFormattingTextWatcher;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -74,6 +77,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Pattern;
 
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
@@ -93,6 +97,7 @@ import static com.dtec.helloatu.utilities.StaticAccess.TAG_DISTRICT_INFORMER;
 import static com.dtec.helloatu.utilities.StaticAccess.TAG_DIVISION;
 import static com.dtec.helloatu.utilities.StaticAccess.TAG_DIVISION_INFORMER;
 import static com.dtec.helloatu.utilities.StaticAccess.TAG_INFORMER_ADDRESS;
+import static com.dtec.helloatu.utilities.StaticAccess.TAG_INFORMER_EMAIL;
 import static com.dtec.helloatu.utilities.StaticAccess.TAG_INFORMER_NAME;
 import static com.dtec.helloatu.utilities.StaticAccess.TAG_INFORMER_OCCURRENCE;
 import static com.dtec.helloatu.utilities.StaticAccess.TAG_INFORMER_PHONE;
@@ -119,7 +124,8 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
     public Spinner spThana;
     public Spinner spThanaInformer;
     Button btnSubmit, btnCancel;
-    EditText etCrimeInfo, etInformerName, etInformerPhone, etInformerAddress;
+    EditText etCrimeInfo, etInformerName, etInformerPhone, etInformerAddress, etInformerEmail;
+
     PDFView pdfView;
     LinearLayout llPDFView;
     public LinearLayout llDocument, llCamera, llVideo, llAudio;
@@ -128,6 +134,8 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
     FileProcessing fileProcessing;
     List<DistrictMain> listDistrictMain;
     List<MohanogorMain> mohanogorMains;
+
+    String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
 
     ProgressDialog pDialog;
 
@@ -219,6 +227,9 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
         etInformerName = view.findViewById(R.id.etInformerName);
         etInformerPhone = view.findViewById(R.id.etInformerPhone);
         etInformerAddress = view.findViewById(R.id.etInformerAddress);
+        etInformerEmail = view.findViewById(R.id.etInformerEmail);
+
+
         ibDocument = view.findViewById(R.id.ibDocument);
         ibCamera = view.findViewById(R.id.ibCamera);
         ibVideo = view.findViewById(R.id.ibVideo);
@@ -474,6 +485,8 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
                 makeJSONObjectRequest();
                 stopVideoAudioPlayer();
 
+
+
            /*     if (etCrimeInfo.getText().length() > 0) {
                     crime.setCrimCategory(categoryName);
                     crime.setCrimPosition(position);
@@ -583,7 +596,7 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
                         try {
                             //displayDocumentName = Base64.encodeToString(getBytes(uriStringData), Base64.NO_WRAP);
                             InputStream inputStream = activity.getContentResolver().openInputStream(uriData);
-                            byte[] bytes   = getConvertedData(inputStream);
+                            byte[] bytes = getConvertedData(inputStream);
                             displayDocumentName = Base64.encodeToString(bytes, Base64.DEFAULT);
 
                         } catch (IOException e) {
@@ -619,7 +632,7 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
                         try {
                             //displayVideoName = Base64.encodeToString(getBytes(uriStringData), Base64.NO_WRAP);
                             InputStream inputStream = activity.getContentResolver().openInputStream(uriData);
-                            byte[] bytes   = getConvertedData(inputStream);
+                            byte[] bytes = getConvertedData(inputStream);
                             displayVideoName = Base64.encodeToString(bytes, Base64.DEFAULT);
 
                         } catch (IOException e) {
@@ -656,7 +669,7 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
                             //displayAudioName = Base64.encodeToString(getBytes(uriStringData), Base64.NO_WRAP);
 
                             InputStream inputStream = activity.getContentResolver().openInputStream(uriData);
-                            byte[] bytes   = getConvertedData(inputStream);
+                            byte[] bytes = getConvertedData(inputStream);
                             displayAudioName = Base64.encodeToString(bytes, Base64.DEFAULT);
 
 
@@ -676,9 +689,6 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
     }
 
 
-
-
-
     public byte[] getConvertedData(InputStream inputStream) throws IOException {
         ByteArrayOutputStream byteBuffer = new ByteArrayOutputStream();
         int bufferSize = 1024;
@@ -690,12 +700,6 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
         }
         return byteBuffer.toByteArray();
     }
-
-
-
-
-
-
 
 
     public static byte[] getBytes(Object obj) throws java.io.IOException {
@@ -967,7 +971,6 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        Toast.makeText(activity.getApplicationContext(), response, Toast.LENGTH_SHORT).show();
                         hidepDialog();
                         Toast.makeText(activity, getResources().getString(R.string.successful_message), Toast.LENGTH_SHORT).show();
                         backToPrevious();
@@ -985,6 +988,8 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
                             Log.i("log error", errorString);
                         }
                         Toast.makeText(activity.getApplicationContext(), error.toString(), Toast.LENGTH_SHORT).show();
+
+                        //Toast.makeText(activity, getResources().getString(R.string.failed_message), Toast.LENGTH_SHORT).show();
                         hidepDialog();
                     }
                 }) {
@@ -998,6 +1003,8 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
                 String positionvalue = String.valueOf(position);
                 String crimInfoValue = etCrimeInfo.getText().toString();
                 String informerAddressValue = etInformerAddress.getText().toString();
+                String informerEmailValue = etInformerEmail.getText().toString();
+
                 String informerNameValue = etInformerName.getText().toString();
                 String informerPhoneValue = etInformerPhone.getText().toString();
 
@@ -1017,7 +1024,7 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
 
 
                 Map<String, String> params = new HashMap<String, String>();
-                if (etCrimeInfo.getText().length() > 0 && !TextUtils.isEmpty(crimInfoValue)) {
+                if (etCrimeInfo.getText().length() > 0 && !TextUtils.isEmpty(crimInfoValue) || isValidEmailId(informerEmailValue)) {
 
                     params.put(TAG_CREATED_AT, date);
                     params.put(TAG_CRIME_CATEGORY, category);
@@ -1025,11 +1032,12 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
                     params.put(TAG_APP_AUTH_TOKEN, tokenValue);
 
 
-                    if (crimInfoValue != null && !TextUtils.isEmpty(crimInfoValue)) {
+                    if (crimInfoValue != null && !TextUtils.isEmpty(crimInfoValue) ) {
                         params.put(TAG_CRIME_INFO, crimInfoValue);
-                    } else {
-                        params.put(TAG_CRIME_INFO, getString(R.string.missing_data));
                     }
+                    /*else {
+                        params.put(TAG_CRIME_INFO, getString(R.string.missing_data));
+                    }*/
 
 
                     if (informerAddressValue != null && !TextUtils.isEmpty(informerAddressValue)) {
@@ -1038,48 +1046,71 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
                         params.put(TAG_INFORMER_ADDRESS, getString(R.string.missing_data));
                     }
 
+
+                    /*if (isValidEmailId(informerEmailValue)) {
+                        Toast.makeText(activity, "Valid Email Address.", Toast.LENGTH_SHORT).show();
+                        params.put(TAG_INFORMER_EMAIL, informerEmailValue);
+                    } else {
+                        Toast.makeText(activity, "InValid Email Address.", Toast.LENGTH_SHORT).show();
+                        params.put(TAG_INFORMER_EMAIL, getString(R.string.missing_data));
+                    }*/
+
+
+                    if (informerEmailValue != null && !TextUtils.isEmpty(informerEmailValue)) {
+                        params.put(TAG_INFORMER_EMAIL, informerEmailValue);
+                    } else {
+                        params.put(TAG_INFORMER_EMAIL, getString(R.string.missing_data));
+                    }
+
                     if (informerNameValue != null && !TextUtils.isEmpty(informerNameValue)) {
                         params.put(TAG_INFORMER_NAME, informerNameValue);
                     } else {
-                        params.put(TAG_INFORMER_NAME, getString(R.string.missing_data));
+                        params.put(TAG_INFORMER_NAME, "");
                     }
 
                     if (informerPhoneValue != null && !TextUtils.isEmpty(informerPhoneValue)) {
                         params.put(TAG_INFORMER_PHONE, informerPhoneValue);
                     } else {
-                        params.put(TAG_INFORMER_PHONE, getString(R.string.missing_data));
+                        params.put(TAG_INFORMER_PHONE, "");
                     }
 
 
-                    if (spThana.getSelectedItem() != null && !TextUtils.isEmpty(thanaValue)) {
+                    /*if (spThana.getSelectedItem() != null && !TextUtils.isEmpty(thanaValue)) {
                         params.put(TAG_DISTRICT, thanaValue);
                     } else {
                         params.put(TAG_DISTRICT, getString(R.string.missing_data));
+                    }*/
+
+
+                    if (thanaValue != null && !TextUtils.isEmpty(thanaValue)) {
+                        params.put(TAG_DISTRICT, thanaValue);
+                    } else {
+                        params.put(TAG_DISTRICT, "");
                     }
 
 
-                    if (spThanaInformer.getSelectedItem() != null && !TextUtils.isEmpty(thanaInformerValue)) {
+                    if (thanaInformerValue != null && !TextUtils.isEmpty(thanaInformerValue)) {
                         params.put(TAG_DISTRICT_INFORMER, thanaInformerValue);
                     } else {
-                        params.put(TAG_DISTRICT_INFORMER, getString(R.string.missing_data));
+                        params.put(TAG_DISTRICT_INFORMER, "");
                     }
 
 
-                    if (spDistrict.getSelectedItem() != null && !TextUtils.isEmpty(districtValue)) {
+                    if (districtValue != null && !TextUtils.isEmpty(districtValue)) {
                         params.put(TAG_DIVISION, districtValue);
                     } else {
                         params.put(TAG_DIVISION, getString(R.string.missing_data));
                     }
 
 
-                    if (spDistrictInformer.getSelectedItem() != null && !TextUtils.isEmpty(districtInformerValue)) {
+                    if (districtInformerValue != null && !TextUtils.isEmpty(districtInformerValue)) {
                         params.put(TAG_DIVISION_INFORMER, districtInformerValue);
                     } else {
                         params.put(TAG_DIVISION_INFORMER, getString(R.string.missing_data));
                     }
 
 
-                    if (spDimout.getSelectedItem() != null && !TextUtils.isEmpty(dimOutValue)) {
+                    if (dimOutValue != null && !TextUtils.isEmpty(dimOutValue)) {
                         params.put(TAG_OCCURENCE, dimOutValue);
                     } else {
                         params.put(TAG_OCCURENCE, getString(R.string.missing_data));
@@ -1146,6 +1177,7 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
 
                 } else {
                     Toast.makeText(activity, getResources().getString(R.string.inform_terrorism), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(activity, "InValid Email Address.", Toast.LENGTH_SHORT).show();
                 }
 
                 Gson gson = new Gson();
@@ -1171,5 +1203,15 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
             pDialog.dismiss();
     }
 
+
+    private boolean isValidEmailId(String email) {
+
+        return Pattern.compile("^(([\\w-]+\\.)+[\\w-]+|([a-zA-Z]{1}|[\\w-]{2,}))@"
+                + "((([0-1]?[0-9]{1,2}|25[0-5]|2[0-4][0-9])\\.([0-1]?"
+                + "[0-9]{1,2}|25[0-5]|2[0-4][0-9])\\."
+                + "([0-1]?[0-9]{1,2}|25[0-5]|2[0-4][0-9])\\.([0-1]?"
+                + "[0-9]{1,2}|25[0-5]|2[0-4][0-9])){1}|"
+                + "([a-zA-Z]+[\\w-]+\\.)+[a-zA-Z]{2,4})$").matcher(email).matches();
+    }
 
 }

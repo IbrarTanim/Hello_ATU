@@ -39,6 +39,7 @@ public class Generator {
         crime.addStringProperty("informerName").notNull();
         crime.addStringProperty("informerPhone").notNull();
         crime.addStringProperty("informerAddress").notNull();
+        crime.addStringProperty("informerEmail").notNull();
         crime.addStringProperty("infoDocument").notNull();
         crime.addStringProperty("infoPicture").notNull();
         crime.addStringProperty("infoVideo").notNull();
