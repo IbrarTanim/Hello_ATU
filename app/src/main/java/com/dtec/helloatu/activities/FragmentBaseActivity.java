@@ -19,6 +19,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.dtec.helloatu.BuildConfig;
 import com.dtec.helloatu.R;
 import com.dtec.helloatu.dialogue.ImageSelectionDialog;
 import com.dtec.helloatu.fragment.AddInfoFragment;
@@ -39,6 +40,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
@@ -226,12 +228,26 @@ public class FragmentBaseActivity extends FragmentActivity implements View.OnCli
         if (resultCode == RESULT_OK) {
             // Load Image from Gallery
             if (requestCode == SELECT_PICTURE && intent_source == 1) {
+
+                //Uri photoURI = Uri.fromFile(createImageFile());
+                //Uri photoURI = FileProvider.getUriForFile(activity, BuildConfig.APPLICATION_ID + ".provider", createImageFile());
+                //Uri photoURICamera = FileProvider.;
+
                 openCropper(data.getData());
+                /*openCropper(data.getData());*/
+
+
             }
 
             // load image from Camera
             if (requestCode == REQUEST_CODE_TAKE_PICTURE && intent_source == 2) {
-                openCropper(Uri.fromFile(new File(mFileTemp.getAbsolutePath())));
+
+
+                // Uri photoURI = Uri.fromFile(createImageFile());
+                Uri photoURIGallery = FileProvider.getUriForFile(activity, BuildConfig.APPLICATION_ID + ".provider", new File(mFileTemp.getAbsolutePath()));
+                openCropper(photoURIGallery);
+                //openCropper(Uri.fromFile(new File(mFileTemp.getAbsolutePath())));
+
 
             }
 

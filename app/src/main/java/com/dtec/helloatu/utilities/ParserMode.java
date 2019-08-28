@@ -23,7 +23,7 @@ public class ParserMode {
     public ArrayList<Crime> crimeList;
 
     public static final String TAG_CREATED_AT = "createdAt";
-    public static final String TAG_CRIME_CATEGORY = "crimCategory";
+    public static final String TAG_CRIME_TYPE = "crimCategory";
     public static final String TAG_CRIME_POSITION = "crimPosition";
     public static final String TAG_CRIME_INFO = "crimeInfo";
     public static final String TAG_DISTRICT = "district";
@@ -36,7 +36,7 @@ public class ParserMode {
     public static final String TAG_INFORMER_ADDRESS = "informerAddress";
     public static final String TAG_INFORMER_NAME = "informerName";
     public static final String TAG_INFORMER_PHONE = "informerPhone";
-    public static final String TAG_OCCURENCE = "occurrence";
+    public static final String TAG_DIVISION_OR_COUNTRY = "occurrence";
     public static final String TAG_INFORMER_OCCURRENCE = "occurrenceInformer";
 
 

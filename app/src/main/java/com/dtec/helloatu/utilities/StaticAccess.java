@@ -16,32 +16,32 @@ public class StaticAccess {
     public static final int PICK_AUDIO_REQUEST = 0x4;
 
     //public static final String ROOT_URL_ATU= "http://192.168.3.65:5566//api/fileUpload/upload";
-    public static final String ROOT_URL_ATU= "http://192.168.3.92:8000/api/fileUpload/upload";
-    /*public static final String ROOT_URL_ATU= "http://informatu.dohatec.com.bd:8060/";*/
+    //public static final String ROOT_URL_ATU = "http://192.168.3.92:8000/api/fileUpload/upload";
+    public static final String ROOT_URL_ATU = "http://informatu.dohatec.com.bd:8060/api/fileUpload/upload";
 
-    public static final String TAG_CREATED_AT = "createdAt";
-    public static final String TAG_APP_AUTH_TOKEN = "appAuthToken";
-    public static final String TAG_CRIME_CATEGORY = "crimCategory";
-    public static final String TAG_CRIME_POSITION = "crimPosition";
-    public static final String TAG_CRIME_INFO = "crimeInfo";
-    public static final String TAG_DISTRICT = "district";
-    public static final String TAG_DISTRICT_INFORMER = "districtInformer";
-    public static final String TAG_DIVISION = "division";
-    public static final String TAG_DIVISION_INFORMER = "divisionInformer";
-    public static final String TAG_INFO_AUDIO_NAME = "infoAudioName";
-    public static final String TAG_INFO_AUDIO = "infoAudio";
-    public static final String TAG_INFO_DOCUMENT_NAME = "infoDocumentName";
-    public static final String TAG_INFO_DOCUMENT = "infoDocument";
-    public static final String TAG_INFO_PICTURE_NAME = "infoPictureName";
-    public static final String TAG_INFO_PICTURE = "infoPicture";
-    public static final String TAG_INFO_VIDEO_NAME = "infoVideoName";
-    public static final String TAG_INFO_VIDEO = "infoVideo";
-    public static final String TAG_INFORMER_ADDRESS = "informerAddress";
-    public static final String TAG_INFORMER_EMAIL = "informerEmail";
-    public static final String TAG_INFORMER_NAME = "informerName";
-    public static final String TAG_INFORMER_PHONE = "informerPhone";
-    public static final String TAG_OCCURENCE = "occurrence";
-    public static final String TAG_INFORMER_OCCURRENCE = "occurrenceInformer";
+    //public static final String TAG_CREATED_AT = "createdAt";
+    //public static final String TAG_CRIME_POSITION = "crimPosition";
 
+    public static final String TAG_APP_AUTH_TOKEN = "AppAuthToken";
+    public static final String TAG_CRIME_TYPE = "CrimeType";
+    public static final String TAG_CRIME_INFO = "CrimeInfo";
+    public static final String TAG_DIVISION_OR_COUNTRY = "PlaceOfCrime";
+    public static final String TAG_DISTRICT_OR_METROPOLITAN = "DistrictOrCountry";
+    public static final String TAG_THANA = "Thana";
+    public static final String TAG_INFORMER_DIVISION_OR_COUNTRY = "PlaceOfInformer";
+    public static final String TAG_INFORMER_DISTRICT_OR_METROPOLITAN = "InformerDistrictOrCountry";
+    public static final String TAG_INFORMER_THANA = "InformerThana";
+    public static final String TAG_INFORMER_ADDRESS = "InformerAddress";
+    public static final String TAG_INFORMER_EMAIL = "InformerEmail";
+    public static final String TAG_INFORMER_NAME = "InformerName";
+    public static final String TAG_INFORMER_PHONE = "InformerPhone";
+    public static final String TAG_INFO_AUDIO_NAME = "InfoAudioFilename";
+    public static final String TAG_INFO_AUDIO = "InfoAudioContent";
+    public static final String TAG_INFO_DOCUMENT_NAME = "InfoDocumentFilename";
+    public static final String TAG_INFO_DOCUMENT = "InfoDocumentContent";
+    public static final String TAG_INFO_PICTURE_NAME = "InfoImageFilename";
+    public static final String TAG_INFO_PICTURE = "InfoImageContent";
+    public static final String TAG_INFO_VIDEO_NAME = "InfoVideoFilename";
+    public static final String TAG_INFO_VIDEO = "InfoVideoContent";
 
 }

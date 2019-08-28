@@ -1,9 +1,16 @@
 package com.dtec.helloatu.fragment;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.NetworkError;
 import com.android.volley.NetworkResponse;
+import com.android.volley.NoConnectionError;
+import com.android.volley.ParseError;
 import com.android.volley.Request;
 import com.android.volley.Response;
+import com.android.volley.RetryPolicy;
+import com.android.volley.ServerError;
+import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.dtec.helloatu.R;
@@ -80,6 +87,7 @@ import java.util.Map;
 import java.util.regex.Pattern;
 
 import androidx.annotation.RequiresApi;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import static android.app.Activity.RESULT_OK;
@@ -88,19 +96,16 @@ import static com.dtec.helloatu.utilities.StaticAccess.PICK_FILE_REQUEST;
 import static com.dtec.helloatu.utilities.StaticAccess.PICK_VIDEO_REQUEST;
 import static com.dtec.helloatu.utilities.StaticAccess.ROOT_URL_ATU;
 import static com.dtec.helloatu.utilities.StaticAccess.TAG_APP_AUTH_TOKEN;
-import static com.dtec.helloatu.utilities.StaticAccess.TAG_CREATED_AT;
-import static com.dtec.helloatu.utilities.StaticAccess.TAG_CRIME_CATEGORY;
+import static com.dtec.helloatu.utilities.StaticAccess.TAG_CRIME_TYPE;
 import static com.dtec.helloatu.utilities.StaticAccess.TAG_CRIME_INFO;
-import static com.dtec.helloatu.utilities.StaticAccess.TAG_CRIME_POSITION;
-import static com.dtec.helloatu.utilities.StaticAccess.TAG_DISTRICT;
-import static com.dtec.helloatu.utilities.StaticAccess.TAG_DISTRICT_INFORMER;
-import static com.dtec.helloatu.utilities.StaticAccess.TAG_DIVISION;
-import static com.dtec.helloatu.utilities.StaticAccess.TAG_DIVISION_INFORMER;
+import static com.dtec.helloatu.utilities.StaticAccess.TAG_DISTRICT_OR_METROPOLITAN;
 import static com.dtec.helloatu.utilities.StaticAccess.TAG_INFORMER_ADDRESS;
+import static com.dtec.helloatu.utilities.StaticAccess.TAG_INFORMER_DISTRICT_OR_METROPOLITAN;
+import static com.dtec.helloatu.utilities.StaticAccess.TAG_INFORMER_DIVISION_OR_COUNTRY;
 import static com.dtec.helloatu.utilities.StaticAccess.TAG_INFORMER_EMAIL;
 import static com.dtec.helloatu.utilities.StaticAccess.TAG_INFORMER_NAME;
-import static com.dtec.helloatu.utilities.StaticAccess.TAG_INFORMER_OCCURRENCE;
 import static com.dtec.helloatu.utilities.StaticAccess.TAG_INFORMER_PHONE;
+import static com.dtec.helloatu.utilities.StaticAccess.TAG_INFORMER_THANA;
 import static com.dtec.helloatu.utilities.StaticAccess.TAG_INFO_AUDIO;
 import static com.dtec.helloatu.utilities.StaticAccess.TAG_INFO_AUDIO_NAME;
 import static com.dtec.helloatu.utilities.StaticAccess.TAG_INFO_DOCUMENT;
@@ -109,7 +114,8 @@ import static com.dtec.helloatu.utilities.StaticAccess.TAG_INFO_PICTURE;
 import static com.dtec.helloatu.utilities.StaticAccess.TAG_INFO_PICTURE_NAME;
 import static com.dtec.helloatu.utilities.StaticAccess.TAG_INFO_VIDEO;
 import static com.dtec.helloatu.utilities.StaticAccess.TAG_INFO_VIDEO_NAME;
-import static com.dtec.helloatu.utilities.StaticAccess.TAG_OCCURENCE;
+import static com.dtec.helloatu.utilities.StaticAccess.TAG_DIVISION_OR_COUNTRY;
+import static com.dtec.helloatu.utilities.StaticAccess.TAG_THANA;
 
 public class AddInfoFragment extends Fragment implements View.OnClickListener, AdapterView.OnItemSelectedListener {
 
@@ -126,6 +132,7 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
     Button btnSubmit, btnCancel;
     EditText etCrimeInfo, etInformerName, etInformerPhone, etInformerAddress, etInformerEmail;
 
+    CharSequence charSequence;
     PDFView pdfView;
     LinearLayout llPDFView;
     public LinearLayout llDocument, llCamera, llVideo, llAudio;
@@ -136,9 +143,17 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
     List<MohanogorMain> mohanogorMains;
 
     String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
+    String informerEmailValue;
+
+    /*String dimOutValue;
+    String dimOutInformerValue;
+    String thanaValue;
+    String thanaInformerValue;
+    String districtValue;
+    String districtInformerValue;*/
+
 
     ProgressDialog pDialog;
-
     public ImageView ivCamera;
     String imgPath = "";
     String byteConvertedImage;
@@ -227,8 +242,35 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
         etInformerName = view.findViewById(R.id.etInformerName);
         etInformerPhone = view.findViewById(R.id.etInformerPhone);
         etInformerAddress = view.findViewById(R.id.etInformerAddress);
+
         etInformerEmail = view.findViewById(R.id.etInformerEmail);
 
+        etInformerEmail.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                informerEmailValue = etInformerEmail.getText().toString().trim();
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                charSequence = s;
+                if (informerEmailValue.matches(emailPattern) && s.length() > 0) {
+                    //Toast.makeText(activity, "valid email address", Toast.LENGTH_SHORT).show();
+                    etInformerEmail.setBackgroundResource(R.drawable.cell_border);
+                } else {
+                    //Toast.makeText(activity, "Invalid email address", Toast.LENGTH_SHORT).show();
+                    etInformerEmail.setBackgroundResource(R.drawable.cell_border_red);
+                }
+            }
+        });
+        https:
+//drive.google.com/file/d/1XXf3pUb3OC3xkcu4_Dje51xtCBzKDiaW/view?usp=sharing
 
         ibDocument = view.findViewById(R.id.ibDocument);
         ibCamera = view.findViewById(R.id.ibCamera);
@@ -300,6 +342,8 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
         position = activity.passedPosition;
         categoryName = activity.passedCategoryName;
         crimeTitle();
+
+
         return view;
     }
 
@@ -307,6 +351,7 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         switch (parent.getId()) {
             case R.id.spDimout:
+                spDimout.setBackgroundResource(R.drawable.selector_dropdown);
                 itemOccurrence = parent.getItemAtPosition(position).toString();
                 if (itemOccurrence == getString(R.string.mohanogor)) {
                     districtAdapter = new ArrayAdapter<String>(activity, android.R.layout.simple_spinner_item, listMohanogor);
@@ -328,7 +373,11 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
                     spDistrict.setAdapter(districtAdapter);
                     spDistrict.setVisibility(View.VISIBLE);
                     spThana.setVisibility(View.GONE);
+                } else if (itemOccurrence == getString(R.string.mohanogor_district_bdout)) {
+                    spDistrict.setVisibility(View.GONE);
+                    spThana.setVisibility(View.GONE);
                 }
+
                 break;
             case R.id.spDistrict:
                 String itemDistrict = parent.getItemAtPosition(position).toString();
@@ -368,6 +417,9 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
                     districtAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     spDistrictInformer.setAdapter(districtAdapter);
                     spDistrictInformer.setVisibility(View.VISIBLE);
+                    spThanaInformer.setVisibility(View.GONE);
+                } else if (itemOccurrenceInformer == getString(R.string.mohanogor_district_bdout)) {
+                    spDistrictInformer.setVisibility(View.GONE);
                     spThanaInformer.setVisibility(View.GONE);
                 }
                 break;
@@ -482,8 +534,29 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
 
             case R.id.btnSubmit:
 
-                makeJSONObjectRequest();
-                stopVideoAudioPlayer();
+                if (etCrimeInfo.getText().length() > 0) {
+                    if (spDimout.getSelectedItemPosition() != 0) {
+                        makeJSONObjectRequest();
+                        stopVideoAudioPlayer();
+                        spDimout.setBackgroundResource(R.drawable.selector_dropdown);
+                    } else {
+                        Toast.makeText(activity, getString(R.string.select_occurence_place), Toast.LENGTH_SHORT).show();
+                        spDimout.setBackgroundResource(R.drawable.selector_dropdown_red);
+
+                    }
+                    etCrimeInfo.setBackgroundResource(R.drawable.cell_border);
+                } else {
+                    etCrimeInfo.setBackgroundResource(R.drawable.cell_border_red);
+                    Toast.makeText(activity, getResources().getString(R.string.inform_terrorism), Toast.LENGTH_SHORT).show();
+                }
+
+
+
+
+
+
+
+
 
 
 
@@ -961,13 +1034,16 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
         }
     }
 
+    StringRequest stringRequest;
+
 
     /// making json request
     private void makeJSONObjectRequest() {
 
         showpDialog();
 
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, ROOT_URL_ATU,
+
+        stringRequest = new StringRequest(Request.Method.POST, ROOT_URL_ATU,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -981,15 +1057,36 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
                     @Override
                     public void onErrorResponse(VolleyError error) {
 
-                        NetworkResponse response = error.networkResponse;
+                       /* NetworkResponse response = error.networkResponse;
                         String errorMsg = "";
                         if (response != null && response.data != null) {
                             String errorString = new String(response.data);
                             Log.i("log error", errorString);
                         }
                         Toast.makeText(activity.getApplicationContext(), error.toString(), Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(activity, getResources().getString(R.string.failed_message), Toast.LENGTH_SHORT).show();
+
+                        */
 
                         //Toast.makeText(activity, getResources().getString(R.string.failed_message), Toast.LENGTH_SHORT).show();
+
+                        String message = null;
+                        if (error instanceof NetworkError) {
+                            message = "Cannot connect to Internet...Please check your connection!";
+                        } else if (error instanceof ServerError) {
+                            message = "The server could not be found. Please try again after some time!!";
+                        } else if (error instanceof AuthFailureError) {
+                            message = "Cannot connect to Internet...Please check your connection!";
+                        } else if (error instanceof ParseError) {
+                            message = "Parsing error! Please try again after some time!!";
+                        } else if (error instanceof NoConnectionError) {
+                            message = "Cannot connect to Internet...Please check your connection!";
+                        } else if (error instanceof TimeoutError) {
+                            message = "Connection TimeOut! Please check your internet connection.";
+                        }
+                        Toast.makeText(activity, message, Toast.LENGTH_LONG).show();
+
+
                         hidepDialog();
                     }
                 }) {
@@ -1003,76 +1100,68 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
                 String positionvalue = String.valueOf(position);
                 String crimInfoValue = etCrimeInfo.getText().toString();
                 String informerAddressValue = etInformerAddress.getText().toString();
-                String informerEmailValue = etInformerEmail.getText().toString();
+                //informerEmailValue = etInformerEmail.getText().toString().trim();
 
                 String informerNameValue = etInformerName.getText().toString();
                 String informerPhoneValue = etInformerPhone.getText().toString();
 
-                String thanaValue = spThana.getSelectedItem().toString();
-                String thanaInformerValue = spThanaInformer.getSelectedItem().toString();
-
-                String districtValue = spDistrict.getSelectedItem().toString();
-                String districtInformerValue = spDistrictInformer.getSelectedItem().toString();
+                 /*dimOutValue = spDimout.getSelectedItem().toString();
+                 dimOutInformerValue = spDimoutInformer.getSelectedItem().toString();
+                 thanaValue = spThana.getSelectedItem().toString();
+                 thanaInformerValue = spThanaInformer.getSelectedItem().toString();
+                 districtValue = spDistrict.getSelectedItem().toString();
+                 districtInformerValue = spDistrictInformer.getSelectedItem().toString();*/
 
                 String audioFile = activity.audioName;
                 String documentFile = activity.documentName;
                 String imagefile = byteConvertedImage;
                 String videofile = activity.videoName;
 
-                String dimOutValue = spDimout.getSelectedItem().toString();
-                String dimOutInformerValue = spDimoutInformer.getSelectedItem().toString();
-
 
                 Map<String, String> params = new HashMap<String, String>();
-                if (etCrimeInfo.getText().length() > 0 && !TextUtils.isEmpty(crimInfoValue) || isValidEmailId(informerEmailValue)) {
 
-                    params.put(TAG_CREATED_AT, date);
-                    params.put(TAG_CRIME_CATEGORY, category);
-                    params.put(TAG_CRIME_POSITION, positionvalue);
-                    params.put(TAG_APP_AUTH_TOKEN, tokenValue);
-
-
-                    if (crimInfoValue != null && !TextUtils.isEmpty(crimInfoValue) ) {
-                        params.put(TAG_CRIME_INFO, crimInfoValue);
-                    }
-                    /*else {
-                        params.put(TAG_CRIME_INFO, getString(R.string.missing_data));
-                    }*/
+                //params.put(TAG_CREATED_AT, date);
+                params.put(TAG_CRIME_TYPE, category);
+                //params.put(TAG_CRIME_POSITION, positionvalue);
+                params.put(TAG_APP_AUTH_TOKEN, tokenValue);
 
 
-                    if (informerAddressValue != null && !TextUtils.isEmpty(informerAddressValue)) {
-                        params.put(TAG_INFORMER_ADDRESS, informerAddressValue);
-                    } else {
-                        params.put(TAG_INFORMER_ADDRESS, getString(R.string.missing_data));
-                    }
+                if (crimInfoValue != null && !TextUtils.isEmpty(crimInfoValue)) {
+                    params.put(TAG_CRIME_INFO, crimInfoValue);
+                }
 
+                if (informerAddressValue != null && !TextUtils.isEmpty(informerAddressValue)) {
+                    params.put(TAG_INFORMER_ADDRESS, informerAddressValue);
+                } else {
+                    params.put(TAG_INFORMER_ADDRESS, "");
+                }
 
-                    /*if (isValidEmailId(informerEmailValue)) {
-                        Toast.makeText(activity, "Valid Email Address.", Toast.LENGTH_SHORT).show();
-                        params.put(TAG_INFORMER_EMAIL, informerEmailValue);
-                    } else {
-                        Toast.makeText(activity, "InValid Email Address.", Toast.LENGTH_SHORT).show();
-                        params.put(TAG_INFORMER_EMAIL, getString(R.string.missing_data));
-                    }*/
+                if (informerEmailValue != null && !TextUtils.isEmpty(informerEmailValue)) {
+                    params.put(TAG_INFORMER_EMAIL, informerEmailValue);
+                } else {
+                    params.put(TAG_INFORMER_EMAIL, "");
+                }
 
+                //etInformerEmail.setBackgroundResource(R.drawable.cell_border_red)
+               /* if (informerEmailValue.matches(emailPattern) && charSequence.length() > 0) {
+                    params.put(TAG_INFORMER_EMAIL, informerEmailValue);
+                } else {
+                    //params.put(TAG_INFORMER_EMAIL, "");
+                    Toast.makeText(activity, "Invalid email address", Toast.LENGTH_SHORT).show();
+                }
+*/
 
-                    if (informerEmailValue != null && !TextUtils.isEmpty(informerEmailValue)) {
-                        params.put(TAG_INFORMER_EMAIL, informerEmailValue);
-                    } else {
-                        params.put(TAG_INFORMER_EMAIL, getString(R.string.missing_data));
-                    }
+                if (informerNameValue != null && !TextUtils.isEmpty(informerNameValue)) {
+                    params.put(TAG_INFORMER_NAME, informerNameValue);
+                } else {
+                    params.put(TAG_INFORMER_NAME, "");
+                }
 
-                    if (informerNameValue != null && !TextUtils.isEmpty(informerNameValue)) {
-                        params.put(TAG_INFORMER_NAME, informerNameValue);
-                    } else {
-                        params.put(TAG_INFORMER_NAME, "");
-                    }
-
-                    if (informerPhoneValue != null && !TextUtils.isEmpty(informerPhoneValue)) {
-                        params.put(TAG_INFORMER_PHONE, informerPhoneValue);
-                    } else {
-                        params.put(TAG_INFORMER_PHONE, "");
-                    }
+                if (informerPhoneValue != null && !TextUtils.isEmpty(informerPhoneValue)) {
+                    params.put(TAG_INFORMER_PHONE, informerPhoneValue);
+                } else {
+                    params.put(TAG_INFORMER_PHONE, "");
+                }
 
 
                     /*if (spThana.getSelectedItem() != null && !TextUtils.isEmpty(thanaValue)) {
@@ -1082,103 +1171,108 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
                     }*/
 
 
-                    if (thanaValue != null && !TextUtils.isEmpty(thanaValue)) {
-                        params.put(TAG_DISTRICT, thanaValue);
-                    } else {
-                        params.put(TAG_DISTRICT, "");
-                    }
+
+                    /*dimOutValue = spDimout.getSelectedItem().toString();
+                 dimOutInformerValue = spDimoutInformer.getSelectedItem().toString();
+                 thanaValue = spThana.getSelectedItem().toString();
+                 thanaInformerValue = spThanaInformer.getSelectedItem().toString();
+                 districtValue = spDistrict.getSelectedItem().toString();
+                 districtInformerValue = spDistrictInformer.getSelectedItem().toString();*/
 
 
-                    if (thanaInformerValue != null && !TextUtils.isEmpty(thanaInformerValue)) {
-                        params.put(TAG_DISTRICT_INFORMER, thanaInformerValue);
-                    } else {
-                        params.put(TAG_DISTRICT_INFORMER, "");
-                    }
-
-
-                    if (districtValue != null && !TextUtils.isEmpty(districtValue)) {
-                        params.put(TAG_DIVISION, districtValue);
-                    } else {
-                        params.put(TAG_DIVISION, getString(R.string.missing_data));
-                    }
-
-
-                    if (districtInformerValue != null && !TextUtils.isEmpty(districtInformerValue)) {
-                        params.put(TAG_DIVISION_INFORMER, districtInformerValue);
-                    } else {
-                        params.put(TAG_DIVISION_INFORMER, getString(R.string.missing_data));
-                    }
-
-
-                    if (dimOutValue != null && !TextUtils.isEmpty(dimOutValue)) {
-                        params.put(TAG_OCCURENCE, dimOutValue);
-                    } else {
-                        params.put(TAG_OCCURENCE, getString(R.string.missing_data));
-                    }
-
-                    if (spDimoutInformer.getSelectedItem() != null && !TextUtils.isEmpty(dimOutInformerValue)) {
-                        params.put(TAG_INFORMER_OCCURRENCE, dimOutInformerValue);
-                    } else {
-                        params.put(TAG_INFORMER_OCCURRENCE, getString(R.string.missing_data));
-                    }
-
-
-                    if (audioFile != null && !TextUtils.isEmpty(audioFile)) {
-                        params.put(TAG_INFO_AUDIO_NAME, displayAudioFileName);
-                    } else {
-                        params.put(TAG_INFO_AUDIO_NAME, getString(R.string.missing_data));
-                    }
-
-                    if (audioFile != null && !TextUtils.isEmpty(audioFile)) {
-                        params.put(TAG_INFO_AUDIO, audioFile);
-                    } else {
-                        params.put(TAG_INFO_AUDIO, getString(R.string.missing_data));
-                    }
-
-                    if (documentFile != null && !TextUtils.isEmpty(documentFile)) {
-                        params.put(TAG_INFO_DOCUMENT_NAME, displayDocumentFileName);
-                    } else {
-                        params.put(TAG_INFO_DOCUMENT_NAME, getString(R.string.missing_data));
-                    }
-
-
-                    if (documentFile != null && !TextUtils.isEmpty(documentFile)) {
-                        params.put(TAG_INFO_DOCUMENT, documentFile);
-                    } else {
-                        params.put(TAG_INFO_DOCUMENT, getString(R.string.missing_data));
-                    }
-
-
-                    if (imagefile != null && !TextUtils.isEmpty(imagefile)) {
-                        params.put(TAG_INFO_PICTURE_NAME, imgPath);
-                    } else {
-                        params.put(TAG_INFO_PICTURE_NAME, getString(R.string.missing_data));
-                    }
-
-                    if (imagefile != null && !TextUtils.isEmpty(imagefile)) {
-                        params.put(TAG_INFO_PICTURE, imagefile);
-                    } else {
-                        params.put(TAG_INFO_PICTURE, getString(R.string.missing_data));
-                    }
-
-
-                    if (videofile != null && !TextUtils.isEmpty(videofile)) {
-                        params.put(TAG_INFO_VIDEO_NAME, displayVideoFileName);
-                    } else {
-                        params.put(TAG_INFO_VIDEO_NAME, getString(R.string.missing_data));
-                    }
-
-
-                    if (videofile != null && !TextUtils.isEmpty(videofile)) {
-                        params.put(TAG_INFO_VIDEO, videofile);
-                    } else {
-                        params.put(TAG_INFO_VIDEO, getString(R.string.missing_data));
-                    }
-
+                if (spThana.getSelectedItem() != null) {
+                    params.put(TAG_THANA, spThana.getSelectedItem().toString());
                 } else {
-                    Toast.makeText(activity, getResources().getString(R.string.inform_terrorism), Toast.LENGTH_SHORT).show();
-                    Toast.makeText(activity, "InValid Email Address.", Toast.LENGTH_SHORT).show();
+                    params.put(TAG_THANA, "");
                 }
+
+
+                if (spThanaInformer.getSelectedItem() != null) {
+                    params.put(TAG_INFORMER_THANA, spThanaInformer.getSelectedItem().toString());
+                } else {
+                    params.put(TAG_INFORMER_THANA, "");
+                }
+
+                //Rokan
+                if (spDistrict.getSelectedItem() != null) {
+                    params.put(TAG_DISTRICT_OR_METROPOLITAN, spDistrict.getSelectedItem().toString());
+                } else {
+                    params.put(TAG_DISTRICT_OR_METROPOLITAN, "");
+                }
+
+
+                if (spDistrictInformer.getSelectedItem() != null) {
+                    params.put(TAG_INFORMER_DISTRICT_OR_METROPOLITAN, spDistrictInformer.getSelectedItem().toString());
+                } else {
+                    params.put(TAG_INFORMER_DISTRICT_OR_METROPOLITAN, "");
+                }
+
+                //Rokan
+                if (spDimout.getSelectedItem() != null) {
+                    params.put(TAG_DIVISION_OR_COUNTRY, spDimout.getSelectedItem().toString());
+                } else {
+                    params.put(TAG_DIVISION_OR_COUNTRY, "");
+                }
+
+                //Rokan
+                if (spDimoutInformer.getSelectedItem() != null) {
+                    params.put(TAG_INFORMER_DIVISION_OR_COUNTRY, spDimoutInformer.getSelectedItem().toString());
+                } else {
+                    params.put(TAG_INFORMER_DIVISION_OR_COUNTRY, "");
+                }
+
+
+                if (audioFile != null && !TextUtils.isEmpty(audioFile)) {
+                    params.put(TAG_INFO_AUDIO_NAME, displayAudioFileName);
+                } else {
+                    params.put(TAG_INFO_AUDIO_NAME, "");
+                }
+
+                if (audioFile != null && !TextUtils.isEmpty(audioFile)) {
+                    params.put(TAG_INFO_AUDIO, audioFile);
+                } else {
+                    params.put(TAG_INFO_AUDIO, "");
+                }
+
+                if (documentFile != null && !TextUtils.isEmpty(documentFile)) {
+                    params.put(TAG_INFO_DOCUMENT_NAME, displayDocumentFileName);
+                } else {
+                    params.put(TAG_INFO_DOCUMENT_NAME, "");
+                }
+
+                if (documentFile != null && !TextUtils.isEmpty(documentFile)) {
+                    params.put(TAG_INFO_DOCUMENT, documentFile);
+                } else {
+                    params.put(TAG_INFO_DOCUMENT, "");
+                }
+
+
+                if (imagefile != null && !TextUtils.isEmpty(imagefile)) {
+                    params.put(TAG_INFO_PICTURE_NAME, imgPath);
+                } else {
+                    params.put(TAG_INFO_PICTURE_NAME, "");
+                }
+
+                if (imagefile != null && !TextUtils.isEmpty(imagefile)) {
+                    params.put(TAG_INFO_PICTURE, imagefile);
+                } else {
+                    params.put(TAG_INFO_PICTURE, "");
+                }
+
+
+                if (videofile != null && !TextUtils.isEmpty(videofile)) {
+                    params.put(TAG_INFO_VIDEO_NAME, displayVideoFileName);
+                } else {
+                    params.put(TAG_INFO_VIDEO_NAME, "");
+                }
+
+
+                if (videofile != null && !TextUtils.isEmpty(videofile)) {
+                    params.put(TAG_INFO_VIDEO, videofile);
+                } else {
+                    params.put(TAG_INFO_VIDEO, "");
+                }
+
 
                 Gson gson = new Gson();
                 String json = gson.toJson(params); //convert
@@ -1187,7 +1281,17 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
                 return params;
             }
 
+
         };
+
+        //new DefaultRetryPolicy(0, -1, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        //request.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS * 2, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+
+
+        stringRequest.setRetryPolicy(new DefaultRetryPolicy(
+                0,
+                -1,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         AppController.getInstance().addToRequestQueue(stringRequest);
 
     }

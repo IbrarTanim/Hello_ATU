@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:whatever="http://schemas.android.com/tools"
     android:id="@+id/scrollViewAddInfo"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -14,12 +15,13 @@
             android:id="@+id/tvCrimeTitle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:gravity="center"
+            android:gravity="left"
+            android:drawableLeft="@drawable/ic_red_star"
             android:text="@string/a"
             android:textAlignment="gravity"
             android:textColor="@color/black"
             android:textSize="@dimen/fifteen"
-            android:textStyle="bold"
+
             app:layout_constraintBottom_toTopOf="@+id/tvInfoCrime"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
@@ -32,6 +34,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/ten"
             android:gravity="left"
+            android:drawableLeft="@drawable/ic_red_star"
             android:text="@string/crime_info"
             android:textColor="@color/black"
             android:textSize="@dimen/fifteen"
@@ -69,6 +72,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/fifteen"
             android:gravity="left"
+            android:drawableLeft="@drawable/ic_red_star"
             android:text="@string/occurrence_place"
             android:textColor="@color/black"
             android:textSize="@dimen/fifteen"
@@ -194,8 +198,11 @@
             app:layout_constraintTop_toBottomOf="@+id/etInformerPhone" />
 
 
-        <EditText
+        <com.andreabaccega.widget.FormEditText
             android:id="@+id/etInformerEmail"
+            whatever:testType="regexp"
+            whatever:customRegexp="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$"
+            whatever:testErrorString="@string/error_emailnotvalid"
             android:layout_width="@dimen/zero"
             android:layout_height="@dimen/thirty_five"
             android:layout_marginTop="@dimen/ten"
@@ -203,7 +210,7 @@
             android:cursorVisible="true"
             android:gravity="center"
             android:hint="@string/email"
-            android:inputType="textMultiLine"
+            android:inputType="textEmailAddress"
             android:overScrollMode="always"
             android:padding="@dimen/five"
             android:scrollbarStyle="insideInset"
