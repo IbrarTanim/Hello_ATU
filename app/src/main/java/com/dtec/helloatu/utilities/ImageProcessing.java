@@ -50,8 +50,8 @@ public class ImageProcessing {
 
         imageLoader.init(ImageLoaderConfiguration.createDefault(context));
         options = new DisplayImageOptions.Builder()
-                .showImageForEmptyUri(R.drawable.atu)
-                .showImageOnFail(R.drawable.atu)
+                .showImageForEmptyUri(R.drawable.ic_atu)
+                .showImageOnFail(R.drawable.ic_atu)
                 .resetViewBeforeLoading(true).cacheOnDisc(false)
                 .imageScaleType(ImageScaleType.EXACTLY)
                 .displayer(new FadeInBitmapDisplayer(0)).build();
@@ -60,8 +60,8 @@ public class ImageProcessing {
         imageLoaderRound.init(ImageLoaderConfiguration.createDefault(context));
         optionsRound = new DisplayImageOptions.Builder()
                 .displayer(new RoundedBitmapDisplayer(100))
-                .showImageForEmptyUri(R.drawable.atu)
-                .showImageOnFail(R.drawable.atu)
+                .showImageForEmptyUri(R.drawable.ic_atu)
+                .showImageOnFail(R.drawable.ic_atu)
                 .cacheInMemory(true)
                 .cacheOnDisc(true)
                 .considerExifParams(true)
@@ -73,8 +73,8 @@ public class ImageProcessing {
 
         imageLoaderWeb.init(ImageLoaderConfiguration.createDefault(context));
         webOption = new DisplayImageOptions.Builder()
-                .showImageForEmptyUri(R.drawable.atu)
-                .showImageOnFail(R.drawable.atu)
+                .showImageForEmptyUri(R.drawable.ic_atu)
+                .showImageOnFail(R.drawable.ic_atu)
                 .cacheInMemory(true)
                 .imageScaleType(ImageScaleType.EXACTLY)
                 .displayer(new FadeInBitmapDisplayer(0))

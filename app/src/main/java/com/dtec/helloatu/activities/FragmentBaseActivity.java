@@ -243,10 +243,11 @@ public class FragmentBaseActivity extends FragmentActivity implements View.OnCli
             if (requestCode == REQUEST_CODE_TAKE_PICTURE && intent_source == 2) {
 
 
-                // Uri photoURI = Uri.fromFile(createImageFile());
-                Uri photoURIGallery = FileProvider.getUriForFile(activity, BuildConfig.APPLICATION_ID + ".provider", new File(mFileTemp.getAbsolutePath()));
-                openCropper(photoURIGallery);
-                //openCropper(Uri.fromFile(new File(mFileTemp.getAbsolutePath())));
+
+                /*Uri photoURIGallery = FileProvider.getUriForFile(activity, BuildConfig.APPLICATION_ID + ".provider", new File(mFileTemp.getAbsolutePath()));
+                openCropper(photoURIGallery);*/
+
+                openCropper(Uri.fromFile(new File(mFileTemp.getAbsolutePath())));
 
 
             }
@@ -328,7 +329,19 @@ public class FragmentBaseActivity extends FragmentActivity implements View.OnCli
             Uri mImageCaptureUri = null;
             String state2 = Environment.getExternalStorageState();
             if (Environment.MEDIA_MOUNTED.equals(state2)) {
-                mImageCaptureUri = Uri.fromFile(activity.mFileTemp);
+
+                // N is for Nougat Api 24 Android 7
+                if (Build.VERSION_CODES.N <= android.os.Build.VERSION.SDK_INT) {
+                    // FileProvider required for Android 7.  Sending a file URI throws exception.
+                    mImageCaptureUri = FileProvider.getUriForFile(activity, BuildConfig.APPLICATION_ID + ".provider", activity.mFileTemp);
+                } else {
+                    // For older devices:
+                    // Samsung Galaxy Tab 7" 2 (Samsung GT-P3113 Android 4.2.2, API 17)
+                    // Samsung S3
+                    mImageCaptureUri = Uri.fromFile(activity.mFileTemp);
+                }
+                //mImageCaptureUri = Uri.fromFile(activity.mFileTemp);
+
             } else {
                 mImageCaptureUri = InternalStorageContentProvider.CONTENT_URI;
             }

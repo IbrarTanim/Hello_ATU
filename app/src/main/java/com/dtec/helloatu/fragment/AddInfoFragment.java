@@ -534,7 +534,7 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
 
             case R.id.btnSubmit:
 
-                if (etCrimeInfo.getText().length() > 0) {
+                if (etCrimeInfo.getText().toString().trim().length() > 0) {
                     if (spDimout.getSelectedItemPosition() != 0) {
                         makeJSONObjectRequest();
                         stopVideoAudioPlayer();
@@ -898,7 +898,7 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
         if (imgPath.length() > 0) {
             imgFilePath = imgPath;
         } else {
-            Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.atu);
+            Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.ic_atu);
 //            imgProc.imageSave(bitmap);
             imgFilePath = imageProcessing.imageSave(bitmap);
         }
@@ -1099,6 +1099,7 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
                 String category = categoryName;
                 String positionvalue = String.valueOf(position);
                 String crimInfoValue = etCrimeInfo.getText().toString();
+
                 String informerAddressValue = etInformerAddress.getText().toString();
                 //informerEmailValue = etInformerEmail.getText().toString().trim();
 
@@ -1126,17 +1127,17 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
                 params.put(TAG_APP_AUTH_TOKEN, tokenValue);
 
 
-                if (crimInfoValue != null && !TextUtils.isEmpty(crimInfoValue)) {
+                if ( etCrimeInfo.getText().toString().trim().length() > 0) {
                     params.put(TAG_CRIME_INFO, crimInfoValue);
                 }
 
-                if (informerAddressValue != null && !TextUtils.isEmpty(informerAddressValue)) {
+                if (etInformerAddress.getText().toString().trim().length() >0) {
                     params.put(TAG_INFORMER_ADDRESS, informerAddressValue);
                 } else {
                     params.put(TAG_INFORMER_ADDRESS, "");
                 }
 
-                if (informerEmailValue != null && !TextUtils.isEmpty(informerEmailValue)) {
+                if (etInformerEmail.getText().toString().trim().length() >0) {
                     params.put(TAG_INFORMER_EMAIL, informerEmailValue);
                 } else {
                     params.put(TAG_INFORMER_EMAIL, "");
@@ -1151,13 +1152,13 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
                 }
 */
 
-                if (informerNameValue != null && !TextUtils.isEmpty(informerNameValue)) {
+                if (etInformerName.getText().toString().trim().length() >0) {
                     params.put(TAG_INFORMER_NAME, informerNameValue);
                 } else {
                     params.put(TAG_INFORMER_NAME, "");
                 }
 
-                if (informerPhoneValue != null && !TextUtils.isEmpty(informerPhoneValue)) {
+                if (etInformerPhone.getText().toString().trim().length() >0) {
                     params.put(TAG_INFORMER_PHONE, informerPhoneValue);
                 } else {
                     params.put(TAG_INFORMER_PHONE, "");
@@ -1169,8 +1170,6 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
                     } else {
                         params.put(TAG_DISTRICT, getString(R.string.missing_data));
                     }*/
-
-
 
                     /*dimOutValue = spDimout.getSelectedItem().toString();
                  dimOutInformerValue = spDimoutInformer.getSelectedItem().toString();

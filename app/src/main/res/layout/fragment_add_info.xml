@@ -484,7 +484,7 @@
         <ImageView
             android:id="@+id/ivCamera"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/hundred_fifty"
+            android:layout_height="@dimen/two_hundred"
             android:layout_gravity="center"
             android:layout_marginTop="@dimen/twenty"
             android:background="@drawable/cell_border"
