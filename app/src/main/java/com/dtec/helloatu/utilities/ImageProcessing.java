@@ -140,7 +140,7 @@ public class ImageProcessing {
                 sdCardDirectory.mkdirs();
             }
 
-            imageNameForSDCard = "md_" + System.currentTimeMillis() + ".png";
+            imageNameForSDCard = "atu_" + System.currentTimeMillis() + ".png";
             File image = new File(sdCardDirectory, imageNameForSDCard);
             FileOutputStream outStream;
 

@@ -4,11 +4,13 @@ import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.ParcelFileDescriptor;
 import android.provider.MediaStore;
 
 import android.util.Base64;
@@ -36,6 +38,7 @@ import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 
 import java.io.File;
+import java.io.FileDescriptor;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -199,10 +202,6 @@ public class FragmentBaseActivity extends FragmentActivity implements View.OnCli
         addInfoFragment = (AddInfoFragment) getSupportFragmentManager().getFragments().get(0);
         imageSelection(requestCode, resultCode, data, addInfoFragment.tvCamera, addInfoFragment.llCamera);
 
-       /* documentName = addInfoFragment.resultActivity(requestCode, resultCode, data, addInfoFragment.tvDocument, addInfoFragment.llDocument);
-        videoName = addInfoFragment.resultActivity(requestCode, resultCode, data, addInfoFragment.tvVideo, addInfoFragment.llVideo);
-        audioName = addInfoFragment.resultActivity(requestCode, resultCode, data, addInfoFragment.tvAudio, addInfoFragment.llAudio);*/
-
         switch (requestCode) {
 
             case PICK_FILE_REQUEST:
@@ -233,7 +232,8 @@ public class FragmentBaseActivity extends FragmentActivity implements View.OnCli
                 //Uri photoURI = FileProvider.getUriForFile(activity, BuildConfig.APPLICATION_ID + ".provider", createImageFile());
                 //Uri photoURICamera = FileProvider.;
 
-                openCropper(data.getData());
+                Uri uriTest = data.getData();
+                openCropper(uriTest);
                 /*openCropper(data.getData());*/
 
 
@@ -244,10 +244,10 @@ public class FragmentBaseActivity extends FragmentActivity implements View.OnCli
 
 
 
-                /*Uri photoURIGallery = FileProvider.getUriForFile(activity, BuildConfig.APPLICATION_ID + ".provider", new File(mFileTemp.getAbsolutePath()));
-                openCropper(photoURIGallery);*/
+                Uri photoURIGallery = FileProvider.getUriForFile(activity, BuildConfig.APPLICATION_ID + ".provider", new File(mFileTemp.getAbsolutePath()));
+                openCropper(photoURIGallery);
 
-                openCropper(Uri.fromFile(new File(mFileTemp.getAbsolutePath())));
+                //openCropper(Uri.fromFile(new File(mFileTemp.getAbsolutePath())));
 
 
             }
@@ -256,6 +256,8 @@ public class FragmentBaseActivity extends FragmentActivity implements View.OnCli
             if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
                 CropImage.ActivityResult result = CropImage.getActivityResult(data);
                 Uri resultUri = result.getUri();
+
+
                 Bitmap bitmap = null;
                 try {
                     bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), resultUri);

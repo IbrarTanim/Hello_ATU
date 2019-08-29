@@ -1105,14 +1105,6 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
 
                 String informerNameValue = etInformerName.getText().toString();
                 String informerPhoneValue = etInformerPhone.getText().toString();
-
-                 /*dimOutValue = spDimout.getSelectedItem().toString();
-                 dimOutInformerValue = spDimoutInformer.getSelectedItem().toString();
-                 thanaValue = spThana.getSelectedItem().toString();
-                 thanaInformerValue = spThanaInformer.getSelectedItem().toString();
-                 districtValue = spDistrict.getSelectedItem().toString();
-                 districtInformerValue = spDistrictInformer.getSelectedItem().toString();*/
-
                 String audioFile = activity.audioName;
                 String documentFile = activity.documentName;
                 String imagefile = byteConvertedImage;
