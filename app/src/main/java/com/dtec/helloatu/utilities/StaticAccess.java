@@ -16,8 +16,8 @@ public class StaticAccess {
     public static final int PICK_AUDIO_REQUEST = 0x4;
 
     //public static final String ROOT_URL_ATU= "http://192.168.3.65:5566//api/fileUpload/upload";
-    //public static final String ROOT_URL_ATU = "http://192.168.3.92:8000/api/fileUpload/upload";
-    public static final String ROOT_URL_ATU = "http://informatu.dohatec.com.bd:8060/api/fileUpload/upload";
+    public static final String ROOT_URL_ATU = "http://192.168.3.92:8000/api/fileUpload/upload";
+    //public static final String ROOT_URL_ATU = "http://informatu.dohatec.com.bd:8060/api/fileUpload/upload";
 
     //public static final String TAG_CREATED_AT = "createdAt";
     //public static final String TAG_CRIME_POSITION = "crimPosition";
@@ -35,6 +35,7 @@ public class StaticAccess {
     public static final String TAG_INFORMER_EMAIL = "InformerEmail";
     public static final String TAG_INFORMER_NAME = "InformerName";
     public static final String TAG_INFORMER_PHONE = "InformerPhone";
+    public static final String TAG_INFORMER_NID = "InformerNID";
     public static final String TAG_INFO_AUDIO_NAME = "InfoAudioFilename";
     public static final String TAG_INFO_AUDIO = "InfoAudioContent";
     public static final String TAG_INFO_DOCUMENT_NAME = "InfoDocumentFilename";

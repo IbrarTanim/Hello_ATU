@@ -47,6 +47,7 @@
     <string name="inform_name">তথ্য দাতার নাম </string>
     <string name="phone_number">ফোন নম্বর</string>
     <string name="address">ঠিকানা</string>
+    <string name="nid">জাতীয় পরিচয়পত্র</string>
     <string name="email"> ই-মেইল</string>
     <string name="aditional_info">প্রদত্ত তথ্য সংক্রান্ত কোন ছবি,ডকুমেন্ট,ভিডিও বা অডিও যদি থাকে সংযুক্ত করুন</string>
     <string name="picture">ছবি</string>
@@ -242,6 +243,8 @@
     <string name="token">rXjPmSrkV7DtTFO</string>
     <string name="comming_soon">Comming Soon...</string>
     <string name="select_occurence_place">ঘটনাস্থল নির্বাচন করুন</string>
+    <string name="path_cancel">Clear</string>
+    <string name="invalid_email">Invalid email address</string>
 
 
 </resources>

@@ -15,8 +15,8 @@
             android:id="@+id/tvCrimeTitle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:gravity="left"
             android:drawableLeft="@drawable/ic_red_star"
+            android:gravity="left"
             android:text="@string/a"
             android:textAlignment="gravity"
             android:textColor="@color/black"
@@ -33,8 +33,8 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/ten"
-            android:gravity="left"
             android:drawableLeft="@drawable/ic_red_star"
+            android:gravity="left"
             android:text="@string/crime_info"
             android:textColor="@color/black"
             android:textSize="@dimen/fifteen"
@@ -71,8 +71,8 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/fifteen"
-            android:gravity="left"
             android:drawableLeft="@drawable/ic_red_star"
+            android:gravity="left"
             android:text="@string/occurrence_place"
             android:textColor="@color/black"
             android:textSize="@dimen/fifteen"
@@ -197,12 +197,8 @@
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/etInformerPhone" />
 
-
-        <com.andreabaccega.widget.FormEditText
+        <EditText
             android:id="@+id/etInformerEmail"
-            whatever:testType="regexp"
-            whatever:customRegexp="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$"
-            whatever:testErrorString="@string/error_emailnotvalid"
             android:layout_width="@dimen/zero"
             android:layout_height="@dimen/thirty_five"
             android:layout_marginTop="@dimen/ten"
@@ -211,6 +207,26 @@
             android:gravity="center"
             android:hint="@string/email"
             android:inputType="textEmailAddress"
+            android:padding="@dimen/five"
+            android:textColor="@color/black"
+            android:textSize="@dimen/eighteen"
+            app:layout_constraintBottom_toTopOf="@+id/etInformerNID"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/etInformerAddress"
+             />
+
+
+        <EditText
+            android:id="@+id/etInformerNID"
+            android:layout_width="@dimen/zero"
+            android:layout_height="@dimen/thirty_five"
+            android:layout_marginTop="@dimen/ten"
+            android:background="@drawable/cell_border"
+            android:cursorVisible="true"
+            android:gravity="center"
+            android:hint="@string/nid"
+            android:inputType="number"
             android:overScrollMode="always"
             android:padding="@dimen/five"
             android:scrollbarStyle="insideInset"
@@ -220,7 +236,8 @@
             app:layout_constraintBottom_toTopOf="@+id/spDimoutInformer"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/etInformerAddress" />
+            app:layout_constraintTop_toBottomOf="@+id/etInformerEmail" />
+
 
         <Spinner
             android:id="@+id/spDimoutInformer"
@@ -231,7 +248,7 @@
             app:layout_constraintBottom_toTopOf="@+id/spDistrictInformer"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/etInformerEmail" />
+            app:layout_constraintTop_toBottomOf="@+id/etInformerNID" />
 
         <Spinner
             android:id="@+id/spDistrictInformer"
@@ -457,7 +474,7 @@
                 android:id="@+id/tvCamera"
                 android:layout_width="@dimen/zero"
                 android:layout_height="match_parent"
-                android:layout_weight=".8"
+                android:layout_weight=".7"
                 android:gravity="left|center"
                 android:paddingLeft="@dimen/five"
                 android:textColor="@color/black"
@@ -465,17 +482,31 @@
                 android:visibility="visible" />
 
             <TextView
+                android:id="@+id/tvPicClear"
+                android:layout_width="@dimen/zero"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_weight=".15"
+                android:background="@drawable/clear_border"
+                android:gravity="center"
+                android:text="@string/path_cancel"
+                android:textColor="@color/white"
+                android:textSize="@dimen/fifteen"
+                android:visibility="visible" />
+
+
+            <TextView
                 android:id="@+id/tvPicShowHide"
                 android:layout_width="@dimen/zero"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
-                android:layout_weight=".2"
+                android:layout_weight=".15"
                 android:background="@drawable/play_border"
                 android:gravity="center"
-                android:paddingLeft="@dimen/five"
+                android:paddingLeft="@dimen/zero"
                 android:text="@string/show"
                 android:textColor="@color/white"
-                android:textSize="@dimen/eighteen"
+                android:textSize="@dimen/fifteen"
                 android:visibility="visible" />
 
         </LinearLayout>
@@ -514,7 +545,7 @@
                 android:id="@+id/tvDocument"
                 android:layout_width="@dimen/zero"
                 android:layout_height="match_parent"
-                android:layout_weight=".8"
+                android:layout_weight=".7"
                 android:gravity="left|center"
                 android:paddingLeft="@dimen/five"
                 android:textColor="@color/black"
@@ -522,18 +553,31 @@
                 android:visibility="visible" />
 
             <TextView
+                android:id="@+id/tvDocumentClear"
+                android:layout_width="@dimen/zero"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_weight=".15"
+                android:background="@drawable/clear_border"
+                android:gravity="center"
+                android:text="@string/path_cancel"
+                android:textColor="@color/white"
+                android:textSize="@dimen/fifteen"
+                android:visibility="visible" />
+
+            <TextView
                 android:id="@+id/tvDocumentShowHide"
                 android:layout_width="@dimen/zero"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
-                android:layout_weight=".2"
+                android:layout_weight=".15"
                 android:background="@drawable/play_border"
                 android:gravity="center"
-                android:paddingLeft="@dimen/five"
                 android:text="@string/show"
                 android:textColor="@color/white"
-                android:textSize="@dimen/eighteen"
+                android:textSize="@dimen/fifteen"
                 android:visibility="visible" />
+
 
         </LinearLayout>
 
@@ -576,7 +620,7 @@
                 android:id="@+id/tvVideo"
                 android:layout_width="@dimen/zero"
                 android:layout_height="match_parent"
-                android:layout_weight=".8"
+                android:layout_weight=".7"
                 android:gravity="left|center"
                 android:paddingLeft="@dimen/five"
                 android:textColor="@color/black"
@@ -584,17 +628,29 @@
                 android:visibility="visible" />
 
             <TextView
+                android:id="@+id/tvVideoClear"
+                android:layout_width="@dimen/zero"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_weight=".15"
+                android:background="@drawable/clear_border"
+                android:gravity="center"
+                android:text="@string/path_cancel"
+                android:textColor="@color/white"
+                android:textSize="@dimen/fifteen"
+                android:visibility="visible" />
+
+            <TextView
                 android:id="@+id/tvVideoPlayStop"
                 android:layout_width="@dimen/zero"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
-                android:layout_weight=".2"
+                android:layout_weight=".15"
                 android:background="@drawable/play_border"
                 android:gravity="center"
-                android:paddingLeft="@dimen/five"
                 android:text="@string/play"
                 android:textColor="@color/white"
-                android:textSize="@dimen/eighteen"
+                android:textSize="@dimen/fifteen"
                 android:visibility="visible" />
 
         </LinearLayout>
@@ -632,7 +688,7 @@
                 android:id="@+id/tvAudio"
                 android:layout_width="@dimen/zero"
                 android:layout_height="match_parent"
-                android:layout_weight=".8"
+                android:layout_weight=".7"
                 android:gravity="left|center"
                 android:paddingLeft="@dimen/five"
                 android:textColor="@color/black"
@@ -640,17 +696,29 @@
                 android:visibility="visible" />
 
             <TextView
+                android:id="@+id/tvAudioClear"
+                android:layout_width="@dimen/zero"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_weight=".15"
+                android:background="@drawable/clear_border"
+                android:gravity="center"
+                android:text="@string/path_cancel"
+                android:textColor="@color/white"
+                android:textSize="@dimen/fifteen"
+                android:visibility="visible" />
+
+            <TextView
                 android:id="@+id/tvAudioPlayStop"
                 android:layout_width="@dimen/zero"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
-                android:layout_weight=".2"
+                android:layout_weight=".15"
                 android:background="@drawable/play_border"
                 android:gravity="center"
-                android:paddingLeft="@dimen/five"
                 android:text="@string/play"
                 android:textColor="@color/white"
-                android:textSize="@dimen/eighteen"
+                android:textSize="@dimen/fifteen"
                 android:visibility="visible" />
 
         </LinearLayout>
