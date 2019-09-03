@@ -15,10 +15,12 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.dtec.helloatu.R;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -74,12 +76,15 @@ import com.dtec.helloatu.pojo.MohanogorMain;
 import com.dtec.helloatu.utilities.AppController;
 import com.dtec.helloatu.utilities.FileProcessing;
 import com.dtec.helloatu.utilities.ImageProcessing;
+import com.dtec.helloatu.utilities.InternetConnectionCheck;
 import com.dtec.helloatu.utilities.MarshMallowPermission;
+import com.dtec.helloatu.utilities.StaticAccess;
 import com.github.barteksc.pdfviewer.PDFView;
 import com.github.barteksc.pdfviewer.listener.OnLoadCompleteListener;
 import com.github.barteksc.pdfviewer.listener.OnPageChangeListener;
 import com.github.barteksc.pdfviewer.scroll.DefaultScrollHandle;
 import com.google.gson.Gson;
+import com.nbsp.materialfilepicker.ui.FilePickerActivity;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -87,9 +92,15 @@ import java.util.List;
 import java.util.Map;
 import java.util.regex.Pattern;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
+import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.OkHttpClient;
+import okhttp3.RequestBody;
 
 import static android.app.Activity.RESULT_OK;
 import static com.dtec.helloatu.utilities.StaticAccess.PICK_AUDIO_REQUEST;
@@ -145,13 +156,15 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
     List<MohanogorMain> mohanogorMains;
 
     //String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
+    //String emailPattern = ("^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9\\-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$");
     //String emailPattern = "^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
-    String emailPattern = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@" + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
-    //String emailPattern = "[a-zA-Z0-9+._\\%-+]{1,256}\\@[a-zA-Z0-9][a-zA-Z0-9-]{0,64}(.[a-zA-Z0-9][a-zA-Z0-9-]{0,25})+";
-    //String emailPattern = "^(([\\w-]+\\.)+[\\w-]+|([a-zA-Z]{1}|[\\w-]{2,}))@" + "((([0-1]?[0-9]{1,2}|25[0-5]|2[0-4][0-9])\\.([0-1]?" + "[0-9]{1,2}|25[0-5]|2[0-4][0-9])\\." + "([0-1]?[0-9]{1,2}|25[0-5]|2[0-4][0-9])\\.([0-1]?" + "[0-9]{1,2}|25[0-5]|2[0-4][0-9])){1}|" + "([a-zA-Z]+[\\w-]+\\.)+[a-zA-Z]{2,4})$";
+    //String emailPattern = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@" + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
+    String emailPattern = "[a-zA-Z0-9+._\\%-+]{1,256}\\@[a-zA-Z0-9][a-zA-Z0-9-]{0,64}(.[a-zA-Z0-9][a-zA-Z0-9-]{0,25})+";
+    //String emailPattern = "^[a-zA-Z0-9#_~!$&'()*+,;=:.\"(),:;<>@\\[\\]\\\\]+@[a-zA-Z0-9-]+(\\.[a-zA-Z0-9-]+)*$";
+    //String emailPattern = "[a-zA-Z0-9+._%-+]{1,256}" + "@" + "[a-zA-Z0-9][a-zA-Z0-9-]{0,64}" + "(" + "." + "[a-zA-Z0-9][a-zA-Z0-9-]{0,25}" + ")+";
+
 
     String informerEmailValue;
-
     ProgressDialog pDialog;
     public ImageView ivCamera;
     String imgPath = "";
@@ -305,6 +318,7 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
         ibVideo.setOnClickListener(this);
         ibAudio.setOnClickListener(this);
 
+
         tvDocumentShowHide.setOnClickListener(this);
         tvPicShowHide.setOnClickListener(this);
         tvVideoPlayStop.setOnClickListener(this);
@@ -357,6 +371,9 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
 
         return view;
     }
+
+
+
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -591,32 +608,37 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
 
 
             case R.id.btnSubmit:
-                if (etCrimeInfo.getText().toString().trim().length() > 0) {
-                    if (spDimout.getSelectedItemPosition() != 0) {
-                        if (etInformerEmail.getText().toString().trim().length() > 0) {
-                            if ((informerEmailValue.matches(emailPattern) && charSequence.length() > 0)) {
+
+                if(InternetConnectionCheck.getConnectivityStatus(activity) != StaticAccess.TYPE_NOT_CONNECTED) {
+
+                    if (etCrimeInfo.getText().toString().trim().length() > 0) {
+                        if (spDimout.getSelectedItemPosition() != 0) {
+                            if (etInformerEmail.getText().toString().trim().length() > 0) {
+                                if ((informerEmailValue.matches(emailPattern) && charSequence.length() > 0)) {
+                                    makeJSONObjectRequest();
+                                    stopVideoAudioPlayer();
+                                    spDimout.setBackgroundResource(R.drawable.selector_dropdown);
+                                } else {
+                                    Toast.makeText(activity, getString(R.string.invalid_email), Toast.LENGTH_SHORT).show();
+                                }
+                            } else {
                                 makeJSONObjectRequest();
                                 stopVideoAudioPlayer();
                                 spDimout.setBackgroundResource(R.drawable.selector_dropdown);
-                            } else {
-                                Toast.makeText(activity, getString(R.string.invalid_email), Toast.LENGTH_SHORT).show();
                             }
                         } else {
-                            makeJSONObjectRequest();
-                            stopVideoAudioPlayer();
-                            spDimout.setBackgroundResource(R.drawable.selector_dropdown);
+                            Toast.makeText(activity, getString(R.string.select_occurence_place), Toast.LENGTH_SHORT).show();
+                            spDimout.setBackgroundResource(R.drawable.selector_dropdown_red);
+
                         }
+                        etCrimeInfo.setBackgroundResource(R.drawable.cell_border);
                     } else {
-                        Toast.makeText(activity, getString(R.string.select_occurence_place), Toast.LENGTH_SHORT).show();
-                        spDimout.setBackgroundResource(R.drawable.selector_dropdown_red);
-
+                        etCrimeInfo.setBackgroundResource(R.drawable.cell_border_red);
+                        Toast.makeText(activity, getResources().getString(R.string.inform_terrorism), Toast.LENGTH_SHORT).show();
                     }
-                    etCrimeInfo.setBackgroundResource(R.drawable.cell_border);
-                } else {
-                    etCrimeInfo.setBackgroundResource(R.drawable.cell_border_red);
-                    Toast.makeText(activity, getResources().getString(R.string.inform_terrorism), Toast.LENGTH_SHORT).show();
+                }else {
+                    Toast.makeText(activity, getString(R.string.internet_check), Toast.LENGTH_SHORT).show();
                 }
-
 
 
 
@@ -867,9 +889,6 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
         }
         return byteBuffer.toByteArray();
     }
-
-
-
 
 
     public static byte[] getBytes(Object obj) throws java.io.IOException {
@@ -1135,6 +1154,9 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
     StringRequest stringRequest;
 
 
+    ////Rokannnnnnnnnnnnnnnnnnnnn
+
+
     /// making json request
     private void makeJSONObjectRequest() {
 
@@ -1362,6 +1384,7 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
         AppController.getInstance().addToRequestQueue(stringRequest);
 
     }
+
 
 
     private void showpDialog() {

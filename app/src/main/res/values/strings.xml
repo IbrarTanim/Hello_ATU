@@ -244,7 +244,8 @@
     <string name="comming_soon">Comming Soon...</string>
     <string name="select_occurence_place">ঘটনাস্থল নির্বাচন করুন</string>
     <string name="path_cancel">Clear</string>
-    <string name="invalid_email">Invalid email address</string>
+    <string name="invalid_email">Please enter Valid E-mail address</string>
+    <string name="internet_check">Please check your Internet connection!!</string>
 
 
 </resources>
