@@ -46,6 +46,11 @@
         <activity
             android:name=".activities.MainActivity"
             android:windowSoftInputMode="stateHidden" />
+
+         <activity
+            android:name=".activities.TransparentToastActivity"
+            android:windowSoftInputMode="stateHidden" />
+
         <activity
             android:name=".activities.BaseActivity"
             android:windowSoftInputMode="stateHidden" />

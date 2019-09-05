@@ -206,7 +206,7 @@
             android:cursorVisible="true"
             android:gravity="center"
             android:hint="@string/email"
-            android:inputType="textEmailAddress"
+            android:inputType="text"
             android:padding="@dimen/five"
             android:textColor="@color/black"
             android:textSize="@dimen/eighteen"

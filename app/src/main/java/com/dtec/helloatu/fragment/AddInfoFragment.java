@@ -18,6 +18,7 @@ import com.dtec.helloatu.R;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -74,6 +75,7 @@ import com.dtec.helloatu.pojo.DistrictMain;
 import com.dtec.helloatu.pojo.Mohanogor;
 import com.dtec.helloatu.pojo.MohanogorMain;
 import com.dtec.helloatu.utilities.AppController;
+import com.dtec.helloatu.utilities.CustomToast;
 import com.dtec.helloatu.utilities.FileProcessing;
 import com.dtec.helloatu.utilities.ImageProcessing;
 import com.dtec.helloatu.utilities.InternetConnectionCheck;
@@ -145,6 +147,17 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
     Button btnSubmit, btnCancel;
     EditText etCrimeInfo, etInformerName, etInformerPhone, etInformerAddress, etInformerEmail, etInformerNID;
 
+    float videoFileSize = 0;
+    float audioFileSize = 0;
+    float documentFileSize = 0;
+
+    String audioFile;
+    String documentFile;
+    String imagefile;
+    String videofile;
+    Map<String, String> params = new HashMap<String, String>();
+
+
     Editable charSequence;
     PDFView pdfView;
     LinearLayout llPDFView;
@@ -157,9 +170,9 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
 
     //String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
     //String emailPattern = ("^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9\\-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$");
-    //String emailPattern = "^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
+    String emailPattern = "^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
     //String emailPattern = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@" + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
-    String emailPattern = "[a-zA-Z0-9+._\\%-+]{1,256}\\@[a-zA-Z0-9][a-zA-Z0-9-]{0,64}(.[a-zA-Z0-9][a-zA-Z0-9-]{0,25})+";
+    //String emailPattern = "[a-zA-Z0-9+._\\%-+]{1,256}\\@[a-zA-Z0-9][a-zA-Z0-9-]{0,64}(.[a-zA-Z0-9][a-zA-Z0-9-]{0,25})+";
     //String emailPattern = "^[a-zA-Z0-9#_~!$&'()*+,;=:.\"(),:;<>@\\[\\]\\\\]+@[a-zA-Z0-9-]+(\\.[a-zA-Z0-9-]+)*$";
     //String emailPattern = "[a-zA-Z0-9+._%-+]{1,256}" + "@" + "[a-zA-Z0-9][a-zA-Z0-9-]{0,64}" + "(" + "." + "[a-zA-Z0-9][a-zA-Z0-9-]{0,25}" + ")+";
 
@@ -204,6 +217,10 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
     boolean isPicsShow = false;
     boolean isVideoPlay = false;
     boolean isAudioPlay = false;
+    boolean isVideoClearClicked = false;
+    boolean isAudioClearClicked = false;
+    boolean isDocumentClearClicked = false;
+    boolean isImageClearClicked = false;
 
     VideoView videoView;
     public MediaPlayer mediaPlayer;
@@ -256,11 +273,12 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
         etInformerAddress = view.findViewById(R.id.etInformerAddress);
         etInformerNID = view.findViewById(R.id.etInformerNID);
 
+        mediaPlayer = new MediaPlayer();
         etInformerEmail = view.findViewById(R.id.etInformerEmail);
         etInformerEmail.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                informerEmailValue = etInformerEmail.getText().toString().trim();
+                //informerEmailValue = etInformerEmail.getText().toString().trim();
 
             }
 
@@ -272,6 +290,7 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
             @Override
             public void afterTextChanged(Editable s) {
                 charSequence = s;
+                informerEmailValue = etInformerEmail.getText().toString().trim();
                 if (informerEmailValue.matches(emailPattern) && s.length() > 0) {
                     etInformerEmail.setBackgroundResource(R.drawable.cell_border);
                 } else {
@@ -339,7 +358,7 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
         isPicsShow = true;
         isVideoPlay = true;
         isAudioPlay = true;
-
+        //isVideoClearClicked = true;
 
         getDistrictJsonFile();
         getMohanogorJsonFile();
@@ -371,8 +390,6 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
 
         return view;
     }
-
-
 
 
     @Override
@@ -486,20 +503,25 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
             case R.id.ibDocument:
                 enterStorage(getString(R.string.type_docs), PICK_FILE_REQUEST);
                 stopVideoAudioPlayer();
+                isDocumentClearClicked = false;
                 break;
             case R.id.ibCamera:
                 activity.imageSelectionDialog = new ImageSelectionDialog(activity, activity, itemPicFlag);
                 DialogNavBarHide.navBarHide(activity, activity.imageSelectionDialog);
                 stopVideoAudioPlayer();
+                isImageClearClicked = false;
                 break;
             case R.id.ibVideo:
                 enterStorage(getString(R.string.type_video), PICK_VIDEO_REQUEST);
                 stopVideoAudioPlayer();
+                isVideoClearClicked = false;
                 break;
+
 
             case R.id.ibAudio:
                 enterStorage(getString(R.string.type_audio), PICK_AUDIO_REQUEST);
                 stopVideoAudioPlayer();
+                isAudioClearClicked = false;
                 break;
 
             case R.id.tvDocumentShowHide:
@@ -515,6 +537,7 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
                     scrollViewAddInfo.requestDisallowInterceptTouchEvent(false);
                     isDocumentShow = true;
                 }
+
                 break;
 
             case R.id.tvPicShowHide:
@@ -545,17 +568,6 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
                 }
                 break;
 
-            case R.id.tvVideoClear:
-                if (tvVideo != null || videoView.isPlaying()) {
-                    tvVideo.setText("");
-                    videoView.setVisibility(View.GONE);
-                    llVideo.setVisibility(View.GONE);
-                    tvVideoPlayStop.setText(getString(R.string.play));
-                    isVideoPlay = true;
-                }
-
-                break;
-
 
             case R.id.tvAudioPlayStop:
                 if (isAudioPlay) {
@@ -573,8 +585,28 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
 
                 break;
 
+
+            case R.id.tvVideoClear:
+                displayVideoFileName = "";
+                displayVideoName = "";
+                isVideoClearClicked = true;
+
+                if (tvVideo != null || videoView.isPlaying()) {
+                    tvVideo.setText("");
+                    videoView.setVisibility(View.GONE);
+                    llVideo.setVisibility(View.GONE);
+                    tvVideoPlayStop.setText(getString(R.string.play));
+                    isVideoPlay = true;
+                }
+                break;
+
+
             case R.id.tvAudioClear:
-                if (tvAudio != null || mediaPlayer.isPlaying()) {
+                displayAudioFileName = "";
+                displayAudioName = "";
+                isAudioClearClicked = true;
+
+                if (tvAudio != null || mediaPlayer != null && mediaPlayer.isPlaying()) {
                     tvAudio.setText("");
                     mediaPlayer.stop();
                     llAudio.setVisibility(View.GONE);
@@ -585,6 +617,11 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
                 break;
 
             case R.id.tvPicClear:
+
+                byteConvertedImage = "";
+                imgPath = "";
+                isImageClearClicked = false;
+
                 if (tvCamera != null || ivCamera.isShown()) {
                     tvCamera.setText("");
                     ivCamera.setVisibility(View.GONE);
@@ -595,7 +632,12 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
 
                 break;
 
+
             case R.id.tvDocumentClear:
+                displayDocumentFileName = "";
+                displayDocumentName = "";
+                isDocumentClearClicked = true;
+
                 if (tvDocument != null || llPDFView.isShown()) {
                     tvDocument.setText("");
                     llPDFView.setVisibility(View.GONE);
@@ -609,7 +651,7 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
 
             case R.id.btnSubmit:
 
-                if(InternetConnectionCheck.getConnectivityStatus(activity) != StaticAccess.TYPE_NOT_CONNECTED) {
+                if (InternetConnectionCheck.getConnectivityStatus(activity) != StaticAccess.TYPE_NOT_CONNECTED) {
 
                     if (etCrimeInfo.getText().toString().trim().length() > 0) {
                         if (spDimout.getSelectedItemPosition() != 0) {
@@ -636,7 +678,7 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
                         etCrimeInfo.setBackgroundResource(R.drawable.cell_border_red);
                         Toast.makeText(activity, getResources().getString(R.string.inform_terrorism), Toast.LENGTH_SHORT).show();
                     }
-                }else {
+                } else {
                     Toast.makeText(activity, getString(R.string.internet_check), Toast.LENGTH_SHORT).show();
                 }
 
@@ -775,6 +817,21 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
             linearLayout.setVisibility(View.VISIBLE);
             if (requestCode == PICK_FILE_REQUEST && textView == tvDocument) {
                 Uri uriData = data.getData();
+
+                String scheme = uriData.getScheme();
+                System.out.println("Scheme type " + scheme);
+                if (scheme.equals(ContentResolver.SCHEME_CONTENT)) {
+                    try {
+                        InputStream fileInputStream = activity.getApplicationContext().getContentResolver().openInputStream(uriData);
+                        documentFileSize = ((fileInputStream.available()) / 1024) / 1024;
+
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    //Toast.makeText(activity,  documentFileSize +"MB", Toast.LENGTH_LONG).show();
+                }
+
+
                 String uriStringData = uriData.toString();
 
                 try {
@@ -783,9 +840,21 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
                         displayDocumentFileName = cursor.getString(cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME));
                         try {
                             //displayDocumentName = Base64.encodeToString(getBytes(uriStringData), Base64.NO_WRAP);
-                            InputStream inputStream = activity.getContentResolver().openInputStream(uriData);
+
+
+                            if (documentFileSize > 3) {
+                                CustomToast.t(activity, getResources().getString(R.string.not_supported_document));
+                                llDocument.setVisibility(View.GONE);
+                            } else {
+                                InputStream inputStream = activity.getContentResolver().openInputStream(uriData);
+                                byte[] bytes = getConvertedData(inputStream);
+                                displayDocumentName = Base64.encodeToString(bytes, Base64.DEFAULT);
+                            }
+
+
+                            /*InputStream inputStream = activity.getContentResolver().openInputStream(uriData);
                             byte[] bytes = getConvertedData(inputStream);
-                            displayDocumentName = Base64.encodeToString(bytes, Base64.DEFAULT);
+                            displayDocumentName = Base64.encodeToString(bytes, Base64.DEFAULT);*/
 
                         } catch (IOException e) {
                             e.printStackTrace();
@@ -812,6 +881,23 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
             linearLayout.setVisibility(View.VISIBLE);
             if (requestCode == PICK_VIDEO_REQUEST && textView == tvVideo) {
                 Uri uriData = data.getData();
+
+
+                String scheme = uriData.getScheme();
+                System.out.println("Scheme type " + scheme);
+                if (scheme.equals(ContentResolver.SCHEME_CONTENT)) {
+                    try {
+                        InputStream fileInputStream = activity.getApplicationContext().getContentResolver().openInputStream(uriData);
+                        videoFileSize = ((fileInputStream.available()) / 1024) / 1024;
+
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    //Toast.makeText(activity,  videoFileSize +"MB", Toast.LENGTH_LONG).show();
+
+                }
+
+
                 String uriStringData = uriData.toString();
                 try {
                     cursor = activity.getContentResolver().query(uriData, null, null, null, null);
@@ -819,10 +905,19 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
                         displayVideoFileName = cursor.getString(cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME));
                         try {
                             //displayVideoName = Base64.encodeToString(getBytes(uriStringData), Base64.NO_WRAP);
-                            InputStream inputStream = activity.getContentResolver().openInputStream(uriData);
-                            byte[] bytes = getConvertedData(inputStream);
-                            displayVideoName = Base64.encodeToString(bytes, Base64.DEFAULT);
 
+                            if (videoFileSize > 10) {
+                                CustomToast.t(activity, getResources().getString(R.string.not_supported_video));
+                                llVideo.setVisibility(View.GONE);
+                            } else {
+                                InputStream inputStream = activity.getContentResolver().openInputStream(uriData);
+                                byte[] bytes = getConvertedData(inputStream);
+                                displayVideoName = Base64.encodeToString(bytes, Base64.DEFAULT);
+                            }
+
+                            /*InputStream inputStream = activity.getContentResolver().openInputStream(uriData);
+                            byte[] bytes = getConvertedData(inputStream);
+                            displayVideoName = Base64.encodeToString(bytes, Base64.DEFAULT);*/
 
                         } catch (IOException e) {
                             e.printStackTrace();
@@ -849,17 +944,36 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
             linearLayout.setVisibility(View.VISIBLE);
             if (requestCode == PICK_AUDIO_REQUEST && textView == tvAudio) {
                 Uri uriData = data.getData();
-                String uriStringData = uriData.toString();
+
+                String scheme = uriData.getScheme();
+                System.out.println("Scheme type " + scheme);
+                if (scheme.equals(ContentResolver.SCHEME_CONTENT)) {
+                    try {
+                        InputStream fileInputStream = activity.getApplicationContext().getContentResolver().openInputStream(uriData);
+                        audioFileSize = ((fileInputStream.available()) / 1024) / 1024;
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    //Toast.makeText(activity,  audioFileSize +"MB", Toast.LENGTH_LONG).show();
+                }
+                //String uriStringData = uriData.toString();
                 try {
                     cursor = activity.getContentResolver().query(uriData, null, null, null, null);
                     if (cursor != null && cursor.moveToFirst()) {
                         displayAudioFileName = cursor.getString(cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME));
                         try {
                             //displayAudioName = Base64.encodeToString(getBytes(uriStringData), Base64.NO_WRAP);
-
-                            InputStream inputStream = activity.getContentResolver().openInputStream(uriData);
+                            if (audioFileSize > 5) {
+                                CustomToast.t(activity, getResources().getString(R.string.not_supported_audio));
+                                llAudio.setVisibility(View.GONE);
+                            } else {
+                                InputStream inputStream = activity.getContentResolver().openInputStream(uriData);
+                                byte[] bytes = getConvertedData(inputStream);
+                                displayAudioName = Base64.encodeToString(bytes, Base64.DEFAULT);
+                            }
+                           /* InputStream inputStream = activity.getContentResolver().openInputStream(uriData);
                             byte[] bytes = getConvertedData(inputStream);
-                            displayAudioName = Base64.encodeToString(bytes, Base64.DEFAULT);
+                            displayAudioName = Base64.encodeToString(bytes, Base64.DEFAULT);*/
 
 
                         } catch (IOException e) {
@@ -998,7 +1112,6 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
             textView.setText(getString(R.string.picture) + ": " + imgPath);
             imgProc.setImageWith_loader(ivCamera, imgPath);
             b.recycle();
-
         }
     }
 
@@ -1205,7 +1318,8 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
                         } else if (error instanceof TimeoutError) {
                             message = "Connection TimeOut! Please check your internet connection.";
                         }
-                        Toast.makeText(activity, message, Toast.LENGTH_LONG).show();
+                        //Toast.makeText(activity, message, Toast.LENGTH_LONG).show();
+                        CustomToast.t(activity, message);
 
                         hidepDialog();
                     }
@@ -1222,13 +1336,13 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
                 String informerNIDValue = etInformerNID.getText().toString();
                 String informerNameValue = etInformerName.getText().toString();
                 String informerPhoneValue = etInformerPhone.getText().toString();
-                String audioFile = activity.audioName;
-                String documentFile = activity.documentName;
-                String imagefile = byteConvertedImage;
-                String videofile = activity.videoName;
+                audioFile = activity.audioName;
+                documentFile = activity.documentName;
+                imagefile = byteConvertedImage;
+                videofile = activity.videoName;
 
 
-                Map<String, String> params = new HashMap<String, String>();
+                //Map<String, String> params = new HashMap<String, String>();
                 params.put(TAG_CRIME_TYPE, category);
                 params.put(TAG_APP_AUTH_TOKEN, tokenValue);
 
@@ -1318,10 +1432,16 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
                 }
 
                 if (audioFile != null && !TextUtils.isEmpty(audioFile)) {
-                    params.put(TAG_INFO_AUDIO, audioFile);
+                    if (isAudioClearClicked) {
+                        params.put(TAG_INFO_AUDIO, "");
+                        isAudioClearClicked = false;
+                    } else {
+                        params.put(TAG_INFO_AUDIO, audioFile);
+                    }
                 } else {
                     params.put(TAG_INFO_AUDIO, "");
                 }
+
 
                 if (documentFile != null && !TextUtils.isEmpty(documentFile)) {
                     params.put(TAG_INFO_DOCUMENT_NAME, displayDocumentFileName);
@@ -1330,7 +1450,13 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
                 }
 
                 if (documentFile != null && !TextUtils.isEmpty(documentFile)) {
-                    params.put(TAG_INFO_DOCUMENT, documentFile);
+                    if (isDocumentClearClicked) {
+                        params.put(TAG_INFO_DOCUMENT, "");
+                        isDocumentClearClicked = false;
+                    } else {
+                        params.put(TAG_INFO_DOCUMENT, documentFile);
+                    }
+
                 } else {
                     params.put(TAG_INFO_DOCUMENT, "");
                 }
@@ -1343,7 +1469,12 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
                 }
 
                 if (imagefile != null && !TextUtils.isEmpty(imagefile)) {
-                    params.put(TAG_INFO_PICTURE, imagefile);
+                    if (isImageClearClicked) {
+                        params.put(TAG_INFO_PICTURE, "");
+                        isImageClearClicked = false;
+                    } else {
+                        params.put(TAG_INFO_PICTURE, imagefile);
+                    }
                 } else {
                     params.put(TAG_INFO_PICTURE, "");
                 }
@@ -1357,7 +1488,12 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
 
 
                 if (videofile != null && !TextUtils.isEmpty(videofile)) {
-                    params.put(TAG_INFO_VIDEO, videofile);
+                    if (isVideoClearClicked) {
+                        params.put(TAG_INFO_VIDEO, "");
+                        isVideoClearClicked = false;
+                    } else {
+                        params.put(TAG_INFO_VIDEO, videofile);
+                    }
                 } else {
                     params.put(TAG_INFO_VIDEO, "");
                 }
@@ -1384,7 +1520,6 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
         AppController.getInstance().addToRequestQueue(stringRequest);
 
     }
-
 
 
     private void showpDialog() {
