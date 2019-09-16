@@ -222,7 +222,7 @@ public class ImageProcessing {
             bmp.compress(Bitmap.CompressFormat.PNG, 100, outStream);
             outStream.flush();
             outStream.close();
-            bmp.recycle();
+            //bmp.recycle();
             return imageFile;
         } catch (Exception e) {
             e.printStackTrace();

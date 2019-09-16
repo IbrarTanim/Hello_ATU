@@ -6,7 +6,6 @@ import java.util.List;
 public class StaticAccess {
 
     public static final int TAG_SOUND_FILE_SIZE = 3000;
-
     public static final String TEMP_PHOTO_FILE_NAME = "temp_photo.jpg";
     public static final int SELECT_PICTURE = 0x1;
     public static final int REQUEST_CODE_TAKE_PICTURE = 0x8;
@@ -19,10 +18,6 @@ public class StaticAccess {
     public static final int TYPE_WIFI = 1;
     public static final int TYPE_MOBILE = 2;
     public static final int TYPE_NOT_CONNECTED = 0;
-
-
-
-
 
     //public static final String ROOT_URL_ATU= "http://192.168.3.65:5566//api/fileUpload/upload";
     //public static final String ROOT_URL_ATU = "http://192.168.3.92:8000/api/fileUpload/upload";

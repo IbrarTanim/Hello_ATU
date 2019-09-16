@@ -1123,7 +1123,7 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
             imgPath = imgProc.imageSave(bitmapImage);
             textView.setText(getString(R.string.picture) + ": " + imgPath);
             imgProc.setImageWith_loader(ivCamera, imgPath);
-            bitmapImage.recycle();
+            //bitmapImage.recycle();
 
 
         }
@@ -1281,16 +1281,10 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
     //StringRequest stringRequest;
     VolleyMultipartRequest stringRequest;
 
-
-    ////Rokannnnnnnnnnnnnnnnnnnnn
-
-
     /// making json request
     private void makeJSONObjectRequest() {
 
         showpDialog();
-
-
         stringRequest = new VolleyMultipartRequest(Request.Method.POST, ROOT_URL_ATU,
                 new Response.Listener<NetworkResponse>() {
                     @Override
@@ -1480,7 +1474,7 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
 
                 Uri uriEmpty = Uri.parse("");
                 String abc = "";
-                byte[] emtyBytes = abc.getBytes();
+                byte[] emptyBytes = abc.getBytes();
 
 
 /*
@@ -1496,48 +1490,48 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
 
                 if (imagefile != null && !TextUtils.isEmpty(imagefile)) {
                     if (isImageClearClicked) {
-                        params.put(TAG_INFO_PICTURE, new DataPart("", emtyBytes));
+                        params.put(TAG_INFO_PICTURE, new DataPart("", emptyBytes));
                         isImageClearClicked = false;
                     } else {
                         params.put(TAG_INFO_PICTURE, new DataPart(imgPath, imgProc.getBytesFromBitmap(bitmapImage)));
                     }
                 } else {
-                    params.put(TAG_INFO_PICTURE, new DataPart("", emtyBytes));
+                    params.put(TAG_INFO_PICTURE, new DataPart("", emptyBytes));
                 }
 
 
                 if (videofile != null && !TextUtils.isEmpty(videofile)) {
                     if (isVideoClearClicked) {
-                        params.put(TAG_INFO_VIDEO, new DataPart("", emtyBytes));
+                        params.put(TAG_INFO_VIDEO, new DataPart("", emptyBytes));
                         isVideoClearClicked = false;
                     } else {
                         params.put(TAG_INFO_VIDEO, new DataPart(displayVideoFileName, getFileDataFromDrawable(getActivity(), uriDataVideo)));
                     }
                 } else {
-                    params.put(TAG_INFO_VIDEO, new DataPart("", emtyBytes));
+                    params.put(TAG_INFO_VIDEO, new DataPart("", emptyBytes));
                 }
 
                 if (audioFile != null && !TextUtils.isEmpty(audioFile)) {
                     if (isAudioClearClicked) {
-                        params.put(TAG_INFO_AUDIO, new DataPart("", emtyBytes));
+                        params.put(TAG_INFO_AUDIO, new DataPart("", emptyBytes));
                         isAudioClearClicked = false;
                     } else {
                         params.put(TAG_INFO_AUDIO, new DataPart(displayAudioFileName, getFileDataFromDrawable(getActivity(), uriDataAudio)));
                     }
                 } else {
-                    params.put(TAG_INFO_AUDIO, new DataPart("", emtyBytes));
+                    params.put(TAG_INFO_AUDIO, new DataPart("", emptyBytes));
                 }
 
 
                 if (documentFile != null && !TextUtils.isEmpty(documentFile)) {
                     if (isDocumentClearClicked) {
-                        params.put(TAG_INFO_DOCUMENT, new DataPart("", emtyBytes));
+                        params.put(TAG_INFO_DOCUMENT, new DataPart("", emptyBytes));
                         isDocumentClearClicked = false;
                     } else {
                         params.put(TAG_INFO_DOCUMENT, new DataPart(displayDocumentFileName, getFileDataFromDrawable(getActivity(), uriDataDocument)));
                     }
                 } else {
-                    params.put(TAG_INFO_DOCUMENT, new DataPart("", emtyBytes));
+                    params.put(TAG_INFO_DOCUMENT, new DataPart("", emptyBytes));
                 }
 
 
