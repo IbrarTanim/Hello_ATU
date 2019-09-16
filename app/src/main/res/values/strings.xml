@@ -247,9 +247,9 @@
     <string name="path_cancel">Clear</string>
     <string name="invalid_email">Please enter Valid E-mail address</string>
     <string name="internet_check">Please check your Internet connection!!</string>
-    <string name="not_supported_audio">This audio size is not supported.Please add below 15 MB</string>
-    <string name="not_supported_video">This video size is not supported.Please add below 20 MB</string>
-    <string name="not_supported_document">This document size is not supported.Please add below 5 MB</string>
+    <string name="not_supported_audio">This audio size is not supported.Please add below 20 MB</string>
+    <string name="not_supported_video">This video size is not supported.Please add below 50 MB</string>
+    <string name="not_supported_document">This document size is not supported.Please add below 15 MB</string>
 
 
 </resources>

@@ -26,6 +26,7 @@ import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.provider.OpenableColumns;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -75,6 +76,7 @@ import com.dtec.helloatu.utilities.CustomToast;
 import com.dtec.helloatu.utilities.FileProcessing;
 import com.dtec.helloatu.utilities.ImageProcessing;
 import com.dtec.helloatu.utilities.InternetConnectionCheck;
+import com.dtec.helloatu.utilities.LargeDataSend;
 import com.dtec.helloatu.utilities.MarshMallowPermission;
 import com.dtec.helloatu.utilities.StaticAccess;
 import com.dtec.helloatu.utilities.VolleyMultipartRequest;
@@ -659,6 +661,7 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
 
             case R.id.btnSubmit:
 
+
                 if (InternetConnectionCheck.getConnectivityStatus(activity) != StaticAccess.TYPE_NOT_CONNECTED) {
 
                     if (etCrimeInfo.getText().toString().trim().length() > 0) {
@@ -854,7 +857,7 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
                             //displayDocumentName = Base64.encodeToString(getBytes(uriStringData), Base64.NO_WRAP);
 
 
-                            if (documentFileSize >5) {
+                            if (documentFileSize > 15) {
                                 CustomToast.t(activity, getResources().getString(R.string.not_supported_document));
                                 llDocument.setVisibility(View.GONE);
                             } else {
@@ -918,7 +921,7 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
                         try {
                             //displayVideoName = Base64.encodeToString(getBytes(uriStringData), Base64.NO_WRAP);
 
-                            if (videoFileSize > 100) {
+                            if (videoFileSize > 50) {
                                 CustomToast.t(activity, getResources().getString(R.string.not_supported_video));
                                 llVideo.setVisibility(View.GONE);
                             } else {
@@ -975,7 +978,7 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
                         displayAudioFileName = cursor.getString(cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME));
                         try {
                             //displayAudioName = Base64.encodeToString(getBytes(uriStringData), Base64.NO_WRAP);
-                            if (audioFileSize > 15) {
+                            if (audioFileSize > 20) {
                                 CustomToast.t(activity, getResources().getString(R.string.not_supported_audio));
                                 llAudio.setVisibility(View.GONE);
                             } else {
@@ -1006,7 +1009,8 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
 
     public byte[] getConvertedData(InputStream inputStream) throws IOException {
         ByteArrayOutputStream byteBuffer = new ByteArrayOutputStream();
-        int bufferSize = 1024;
+        //int bufferSize = 1024;
+        int bufferSize =  1 * 1024 * 1024;
         byte[] buffer = new byte[bufferSize];
 
         int len = 0;
@@ -1461,9 +1465,9 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
                 }
 
 
-                Gson gson = new Gson();
+               /* Gson gson = new Gson();
                 String json = gson.toJson(params); //convert
-                System.out.println(json);
+                System.out.println(json);*/
 
                 return params;
             }
@@ -1535,9 +1539,10 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
                 }
 
 
-                Gson gson = new Gson();
+               /* Gson gson = new Gson();
                 String json = gson.toJson(params); //convert
-                System.out.println(json);
+                System.out.println(json);*/
+
 
                 return params;
             }
@@ -1557,8 +1562,7 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
     }
 
 
-
-    public static String toBase64(String value){
+    public static String toBase64(String value) {
         if (value == null)
             value = "";
         return Base64.encodeToString(value.trim().getBytes(), android.util.Base64.DEFAULT);
