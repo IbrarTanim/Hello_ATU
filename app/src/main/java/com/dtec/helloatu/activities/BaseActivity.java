@@ -17,7 +17,6 @@ public class BaseActivity extends Activity {
         activity  = this;
         fullScreencall();
         UiChangeListener();
-
         Thread.setDefaultUncaughtExceptionHandler(new ExceptionHandler(this));
     }
 

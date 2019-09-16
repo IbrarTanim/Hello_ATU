@@ -126,6 +126,12 @@ public class ImageProcessing {
         return stream.toByteArray();
     }
 
+    public byte[] getImageDataFromDrawable(Bitmap bitmap) {
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG, 80, byteArrayOutputStream);
+        return byteArrayOutputStream.toByteArray();
+    }
+
 
   /*  // get the base 64 string
     String imgString = Base64.encodeToString(getBytesFromBitmap(Bitmap bitmap),
@@ -148,7 +154,7 @@ public class ImageProcessing {
             bmp.compress(Bitmap.CompressFormat.PNG, 100, outStream);
             outStream.flush();
             outStream.close();
-            bmp.recycle();
+            //bmp.recycle();
             return imageNameForSDCard;
         } catch (Exception e) {
             e.printStackTrace();
@@ -216,7 +222,7 @@ public class ImageProcessing {
             bmp.compress(Bitmap.CompressFormat.PNG, 100, outStream);
             outStream.flush();
             outStream.close();
-            //bmp.recycle();
+            bmp.recycle();
             return imageFile;
         } catch (Exception e) {
             e.printStackTrace();

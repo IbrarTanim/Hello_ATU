@@ -77,7 +77,8 @@ public class FragmentBaseActivity extends FragmentActivity implements View.OnCli
     public String documentName;
     public String videoName;
     public String audioName;
-
+    public Uri uriDataImage;
+    public Bitmap imageBitMap;
 
     public MarshMallowPermission marshMallowPermission;
     FileProcessing fileProcessing;
@@ -255,17 +256,16 @@ public class FragmentBaseActivity extends FragmentActivity implements View.OnCli
             // Load image after Cropping (Transparent)
             if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
                 CropImage.ActivityResult result = CropImage.getActivityResult(data);
-                Uri resultUri = result.getUri();
+                uriDataImage = result.getUri();
 
-
-                Bitmap bitmap = null;
+                 imageBitMap = null;
                 try {
-                    bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), resultUri);
+                    imageBitMap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), uriDataImage);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
 
-                addInfoFragment.setImagePro(bitmap, textView);
+                addInfoFragment.setImagePro(imageBitMap, textView);
                 linearLayout.setVisibility(View.VISIBLE);
 
 
@@ -372,6 +372,7 @@ public class FragmentBaseActivity extends FragmentActivity implements View.OnCli
         transactionMonth.addToBackStack(null);
         transactionMonth.replace(R.id.flContentView, addInfoFragment, "AddInfoFragment").commit();
     }
+
 
 
 
