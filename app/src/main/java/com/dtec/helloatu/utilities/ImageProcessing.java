@@ -97,7 +97,7 @@ public class ImageProcessing {
     }
 
     public void setImageWith_loader(ImageView iv, String path) {
-        imageLoader.displayImage("file:///" + getAbsolutepath_Of_Image(path), iv, options);
+        imageLoader.displayImage(String.format("file:///%s", getAbsolutepath_Of_Image(path)), iv, options);
     }
 
     public void setImageWith_loaderRound(ImageView iv, String path) {

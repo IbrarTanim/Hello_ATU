@@ -1,5 +1,6 @@
 package com.dtec.helloatu.activities;
 
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
@@ -43,6 +44,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
@@ -60,8 +62,8 @@ import static com.dtec.helloatu.utilities.StaticAccess.REQUEST_CODE_TAKE_PICTURE
 import static com.dtec.helloatu.utilities.StaticAccess.SELECT_PICTURE;
 import static com.dtec.helloatu.utilities.StaticAccess.TEMP_PHOTO_FILE_NAME;
 
-
-public class FragmentBaseActivity extends FragmentActivity implements View.OnClickListener {
+//FragmentActivity
+public class FragmentBaseActivity extends AppCompatActivity implements View.OnClickListener {
 
     FragmentBaseActivity activity;
     private TabLayout tabLayout;
@@ -220,6 +222,7 @@ public class FragmentBaseActivity extends FragmentActivity implements View.OnCli
         super.onActivityResult(requestCode, resultCode, data);
     }
 
+    @TargetApi(Build.VERSION_CODES.O)
     public void imageSelection(int requestCode, int resultCode, Intent data, TextView textView, LinearLayout linearLayout) {
         addInfoFragment = (AddInfoFragment) getSupportFragmentManager().getFragments().get(0);
         fileProcessing = new FileProcessing(activity);

@@ -281,7 +281,7 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
         etInformerPhone = view.findViewById(R.id.etInformerPhone);
         etInformerAddress = view.findViewById(R.id.etInformerAddress);
         etInformerNID = view.findViewById(R.id.etInformerNID);
-        //requestMultiplePermissions();
+        requestMultiplePermissions();
 
         mediaPlayer = new MediaPlayer();
         etInformerEmail = view.findViewById(R.id.etInformerEmail);
@@ -660,7 +660,6 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
 
 
             case R.id.btnSubmit:
-
 
                 if (InternetConnectionCheck.getConnectivityStatus(activity) != StaticAccess.TYPE_NOT_CONNECTED) {
 
@@ -1315,20 +1314,19 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
 
                         String message = null;
                         if (error instanceof NetworkError) {
-                            message = "Cannot connect to Internet...Please check your connection!";
+                            message = "NetworkError, Cannot connect to Internet...Please check your connection!";
                         } else if (error instanceof ServerError) {
-                            message = "The server could not be found. Please try again after some time!!";
+                            message = "ServerError, The server could not be found. Please try again after some time!!";
 
                         } else if (error instanceof AuthFailureError) {
-                            message = "Cannot connect to Internet...Please check your connection!";
+                            message = "AuthFailureError, Cannot connect to Internet...Please check your connection!";
                         } else if (error instanceof ParseError) {
-                            message = "Parsing error! Please try again after some time!!";
+                            message = "ParseError, Parsing error! Please try again after some time!!";
                         } else if (error instanceof NoConnectionError) {
-                            message = "Cannot connect to Internet...Please check your connection!";
+                            message = "NoConnectionError, Cannot connect to Internet...Please check your connection!";
                         } else if (error instanceof TimeoutError) {
-                            message = "Connection TimeOut! Please check your internet connection.";
+                            message = "TimeoutError, Connection TimeOut! Please check your internet connection.";
                         }
-                        //Toast.makeText(activity, message, Toast.LENGTH_LONG).show();
                         CustomToast.t(activity, message);
 
                         hidepDialog();
@@ -1608,9 +1606,9 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
                     @Override
                     public void onPermissionsChecked(MultiplePermissionsReport report) {
                         // check if all permissions are granted
-                        if (report.areAllPermissionsGranted()) {
+                       /* if (report.areAllPermissionsGranted()) {
                             Toast.makeText(activity, "All permissions are granted by user!", Toast.LENGTH_SHORT).show();
-                        }
+                        }*/
 
                         // check for permanent denial of any permission
                         if (report.isAnyPermissionPermanentlyDenied()) {
