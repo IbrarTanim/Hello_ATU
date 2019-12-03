@@ -157,6 +157,16 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
     //Map<String, String> params = new HashMap<String, String>();
 
 
+    String date;
+    String tokenValue;
+    String category;
+    String positionvalue;
+    String crimInfoValue;
+    String informerAddressValue;
+    String informerNIDValue;
+    String informerNameValue;
+    String informerPhoneValue;
+
     Editable charSequence;
     PDFView pdfView;
     LinearLayout llPDFView;
@@ -167,13 +177,9 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
     List<DistrictMain> listDistrictMain;
     List<MohanogorMain> mohanogorMains;
 
-    //String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
     //String emailPattern = ("^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9\\-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$");
     String emailPattern = "^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
     //String emailPattern = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@" + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
-    //String emailPattern = "[a-zA-Z0-9+._\\%-+]{1,256}\\@[a-zA-Z0-9][a-zA-Z0-9-]{0,64}(.[a-zA-Z0-9][a-zA-Z0-9-]{0,25})+";
-    //String emailPattern = "^[a-zA-Z0-9#_~!$&'()*+,;=:.\"(),:;<>@\\[\\]\\\\]+@[a-zA-Z0-9-]+(\\.[a-zA-Z0-9-]+)*$";
-    //String emailPattern = "[a-zA-Z0-9+._%-+]{1,256}" + "@" + "[a-zA-Z0-9][a-zA-Z0-9-]{0,64}" + "(" + "." + "[a-zA-Z0-9][a-zA-Z0-9-]{0,25}" + ")+";
 
 
     String informerEmailValue;
@@ -217,7 +223,6 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
     Uri uriDataVideo;
     Uri uriDataAudio;
     Uri uriDataDocument;
-    Uri uriDataImage;
 
     String itemOccurrence;
     String itemOccurrenceInformer;
@@ -668,7 +673,7 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
                             if (etInformerEmail.getText().toString().trim().length() > 0) {
                                 if ((informerEmailValue.matches(emailPattern) && charSequence.length() > 0)) {
                                     makeJSONObjectRequest();
-                                    //new JsonSendRequest().execute();
+                                    //databaseManager.insertCrime(crime);
                                     stopVideoAudioPlayer();
                                     spDimout.setBackgroundResource(R.drawable.selector_dropdown);
                                 } else {
@@ -676,8 +681,7 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
                                 }
                             } else {
                                 makeJSONObjectRequest();
-
-                                //new JsonSendRequest().execute();
+                                //databaseManager.insertCrime(crime);
                                 stopVideoAudioPlayer();
                                 spDimout.setBackgroundResource(R.drawable.selector_dropdown);
                             }
@@ -697,12 +701,131 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
 
 
 
+                //dbInsertionValue();
+
+
+
+
+                /*if (etCrimeInfo.getText().length() > 0) {
+                    crime.setCrimPosition(position);
+                    crime.setCrimType(category);
+                    crime.setAppAuthToken(tokenValue);
+                    if (etCrimeInfo.getText().toString().trim().length() > 0) {
+                        crime.setCrimeInfo(crimInfoValue);
+                        crime.setCreatedAt(new Date());
+                    }
+
+                    if (etInformerAddress.getText().toString().trim().length() > 0) {
+                        crime.setInformerAddress(informerAddressValue);
+                    }
+
+                    if (etInformerEmail.getText().toString().trim().length() > 0) {
+                        crime.setInformerEmail(informerEmailValue);
+                    }
+
+                    if (etInformerNID.getText().toString().trim().length() > 0) {
+                        crime.setInformerNID(informerNIDValue);
+                    }
+
+                    if (etInformerName.getText().toString().trim().length() > 0) {
+                        crime.setInformerName(informerNameValue);
+                    }
+
+                    if (etInformerPhone.getText().toString().trim().length() > 0) {
+                        crime.setInformerPhone(informerPhoneValue);
+                    }
+
+                    if (spThana.getSelectedItem() != null) {
+                        crime.setThana(spThana.getSelectedItem().toString());
+                    }
+
+                    if (spThanaInformer.getSelectedItem() != null) {
+                        crime.setInformerThana(spThanaInformer.getSelectedItem().toString());
+                    }
+
+                    if (spDistrict.getSelectedItem() != null) {
+                        crime.setDistrictOrCountry(spDistrict.getSelectedItem().toString());
+                    }
+
+                    if (spDistrictInformer.getSelectedItem() != null) {
+                        crime.setInformerDistrictOrCountry(spDistrictInformer.getSelectedItem().toString());
+                    }
+
+                    if (spDimout.getSelectedItem() != null) {
+                        crime.setPlaceOfCrime(spDimout.getSelectedItem().toString());
+                    }
+
+                    if (spDimoutInformer.getSelectedItem() != null) {
+                        crime.setPlaceOfInformer(spDimoutInformer.getSelectedItem().toString());
+                    }
+
+                    if (displayAudioFileName != null ) {
+                        crime.setInfoAudioFilename(displayAudioFileName);
+                        crime.setInfoAudioContent(displayAudioFileName);
+                        //crime.setInfoAudioContent(getFileDataFromDrawable(getActivity(), uriDataAudio));
+                    }
+
+                    if (displayDocumentFileName != null ) {
+                        crime.setInfoDocumentFilename(displayDocumentFileName);
+                        crime.setInfoDocumentContent(displayDocumentFileName);
+                        //crime.setInfoDocumentContent(getFileDataFromDrawable(getActivity(), uriDataDocument));
+                    }*/
+
+                    /*if (imgPath != null ) {
+                        crime.setInfoImageFilename(imgPath);
+                        crime.setInfoImageContent(imgPath);
+                        //crime.setInfoImageContent(imgProc.getBytesFromBitmap(bitmapImage));
+
+                    }
+
+                    if (displayVideoFileName != null ) {
+                        crime.setInfoVideoFilename(displayVideoFileName);
+                        crime.setInfoVideoContent(displayVideoFileName);
+                        //crime.setInfoVideoContent(getFileDataFromDrawable(getActivity(), uriDataVideo));
+                    }*/
+
+                    /*databaseManager.insertCrime(crime);
+                    Toast.makeText(activity, getResources().getString(R.string.successful_message), Toast.LENGTH_SHORT).show();
+
+                    backToPrevious();
+                } else {
+                    Toast.makeText(activity, getResources().getString(R.string.inform_terrorism), Toast.LENGTH_SHORT).show();
+                }*/
 
 
 
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                //databaseManager.insertCrime(crime);
 
                /* if (etCrimeInfo.getText().toString().trim().length() > 0) {
                     if (spDimout.getSelectedItemPosition() != 0) {
@@ -800,6 +923,7 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
                     crime.setCreatedAt(new Date());
                     imageProcessing.setImageWith_loader(ivCamera, byteConvertedImage);
                     //imageProcessing.setImageWith_loader(ivCamera, imgPath);
+                    crime.setCreatedAt(new Date());
                     databaseManager.insertCrime(crime);
 
                     Gson gson = new Gson();
@@ -1009,7 +1133,7 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
     public byte[] getConvertedData(InputStream inputStream) throws IOException {
         ByteArrayOutputStream byteBuffer = new ByteArrayOutputStream();
         //int bufferSize = 1024;
-        int bufferSize =  1 * 1024 * 1024;
+        int bufferSize = 1 * 1024 * 1024;
         byte[] buffer = new byte[bufferSize];
 
         int len = 0;
@@ -1302,15 +1426,6 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
                     @Override
                     public void onErrorResponse(VolleyError error) {
 
-                       /* NetworkResponse response = error.networkResponse;
-                        String errorMsg = "";
-                        if (response != null && response.data != null) {
-                            String errorString = new String(response.data);
-                            Log.i("log error", errorString);
-                        }
-                        Toast.makeText(activity.getApplicationContext(), error.toString(), Toast.LENGTH_SHORT).show();
-                        //Toast.makeText(activity, getResources().getString(R.string.failed_message), Toast.LENGTH_SHORT).show();
-*/
 
                         String message = null;
                         if (error instanceof NetworkError) {
@@ -1335,15 +1450,16 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
 
-                String date = String.valueOf(new Date());
-                String tokenValue = getString(R.string.token);
-                String category = categoryName;
-                String positionvalue = String.valueOf(position);
-                String crimInfoValue = etCrimeInfo.getText().toString();
-                String informerAddressValue = etInformerAddress.getText().toString();
-                String informerNIDValue = etInformerNID.getText().toString();
-                String informerNameValue = etInformerName.getText().toString();
-                String informerPhoneValue = etInformerPhone.getText().toString();
+                date = String.valueOf(new Date());
+                tokenValue = getString(R.string.token);
+                category = categoryName;
+                positionvalue = String.valueOf(position);
+                crime.setCrimPosition(position);
+                crimInfoValue = etCrimeInfo.getText().toString();
+                informerAddressValue = etInformerAddress.getText().toString();
+                informerNIDValue = etInformerNID.getText().toString();
+                informerNameValue = etInformerName.getText().toString();
+                informerPhoneValue = etInformerPhone.getText().toString();
                 audioFile = activity.audioName;
                 documentFile = activity.documentName;
                 imagefile = byteConvertedImage;
@@ -1352,14 +1468,19 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
                 Map<String, String> params = new HashMap<String, String>();
                 //params.put("Content-Type", "multipart/form-data");
                 params.put(TAG_CRIME_TYPE, toBase64(category));
+                crime.setCrimType(category);
                 params.put(TAG_APP_AUTH_TOKEN, toBase64(tokenValue));
+                crime.setAppAuthToken(tokenValue);
 
                 if (etCrimeInfo.getText().toString().trim().length() > 0) {
                     params.put(TAG_CRIME_INFO, toBase64(crimInfoValue));
+                    crime.setCrimeInfo(crimInfoValue);
+                    crime.setCreatedAt(new Date());
                 }
 
                 if (etInformerAddress.getText().toString().trim().length() > 0) {
                     params.put(TAG_INFORMER_ADDRESS, toBase64(informerAddressValue));
+                    crime.setInformerAddress(informerAddressValue);
                 } else {
                     params.put(TAG_INFORMER_ADDRESS, "");
                 }
@@ -1367,6 +1488,7 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
 
                 if (etInformerEmail.getText().toString().trim().length() > 0) {
                     params.put(TAG_INFORMER_EMAIL, toBase64(informerEmailValue));
+                    crime.setInformerEmail(informerEmailValue);
                 } else {
                     params.put(TAG_INFORMER_EMAIL, "");
                 }
@@ -1374,28 +1496,28 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
 
                 if (etInformerNID.getText().toString().trim().length() > 0) {
                     params.put(TAG_INFORMER_NID, toBase64(informerNIDValue));
+                    crime.setInformerNID(informerNIDValue);
                 } else {
                     params.put(TAG_INFORMER_NID, "");
                 }
 
                 if (etInformerName.getText().toString().trim().length() > 0) {
                     params.put(TAG_INFORMER_NAME, toBase64(informerNameValue));
+                    crime.setInformerName(informerNameValue);
                 } else {
                     params.put(TAG_INFORMER_NAME, "");
                 }
 
                 if (etInformerPhone.getText().toString().trim().length() > 0) {
                     params.put(TAG_INFORMER_PHONE, toBase64(informerPhoneValue));
+                    crime.setInformerPhone(informerPhoneValue);
                 } else {
                     params.put(TAG_INFORMER_PHONE, "");
                 }
 
-
-                //toBase64(spThana.getSelectedItem().toString());
-
                 if (spThana.getSelectedItem() != null) {
-                    //params.put(TAG_THANA, spThana.getSelectedItem().toString());
                     params.put(TAG_THANA, toBase64(spThana.getSelectedItem().toString()));
+                    crime.setThana(spThana.getSelectedItem().toString());
                 } else {
                     params.put(TAG_THANA, "");
                 }
@@ -1403,12 +1525,14 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
 
                 if (spThanaInformer.getSelectedItem() != null) {
                     params.put(TAG_INFORMER_THANA, toBase64(spThanaInformer.getSelectedItem().toString()));
+                    crime.setInformerThana(spThanaInformer.getSelectedItem().toString());
                 } else {
                     params.put(TAG_INFORMER_THANA, "");
                 }
 
                 if (spDistrict.getSelectedItem() != null) {
                     params.put(TAG_DISTRICT_OR_METROPOLITAN, toBase64(spDistrict.getSelectedItem().toString()));
+                    crime.setDistrictOrCountry(spDistrict.getSelectedItem().toString());
                 } else {
                     params.put(TAG_DISTRICT_OR_METROPOLITAN, "");
                 }
@@ -1416,6 +1540,7 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
 
                 if (spDistrictInformer.getSelectedItem() != null) {
                     params.put(TAG_INFORMER_DISTRICT_OR_METROPOLITAN, toBase64(spDistrictInformer.getSelectedItem().toString()));
+                    crime.setInformerDistrictOrCountry(spDistrictInformer.getSelectedItem().toString());
                 } else {
                     params.put(TAG_INFORMER_DISTRICT_OR_METROPOLITAN, "");
                 }
@@ -1423,6 +1548,7 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
 
                 if (spDimout.getSelectedItem() != null) {
                     params.put(TAG_DIVISION_OR_COUNTRY, toBase64(spDimout.getSelectedItem().toString()));
+                    crime.setPlaceOfCrime(spDimout.getSelectedItem().toString());
                 } else {
                     params.put(TAG_DIVISION_OR_COUNTRY, "");
                 }
@@ -1430,6 +1556,7 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
                 //Rokan
                 if (spDimoutInformer.getSelectedItem() != null) {
                     params.put(TAG_INFORMER_DIVISION_OR_COUNTRY, toBase64(spDimoutInformer.getSelectedItem().toString()));
+                    crime.setPlaceOfInformer(spDimoutInformer.getSelectedItem().toString());
                 } else {
                     params.put(TAG_INFORMER_DIVISION_OR_COUNTRY, "");
                 }
@@ -1437,6 +1564,7 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
 
                 if (audioFile != null && !TextUtils.isEmpty(audioFile)) {
                     params.put(TAG_INFO_AUDIO_NAME, toBase64(displayAudioFileName));
+                    crime.setInfoAudioFilename(displayAudioFileName);
                 } else {
                     params.put(TAG_INFO_AUDIO_NAME, "");
                 }
@@ -1444,6 +1572,7 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
 
                 if (documentFile != null && !TextUtils.isEmpty(documentFile)) {
                     params.put(TAG_INFO_DOCUMENT_NAME, toBase64(displayDocumentFileName));
+                    crime.setInfoDocumentFilename(displayDocumentFileName);
                 } else {
                     params.put(TAG_INFO_DOCUMENT_NAME, "");
                 }
@@ -1451,6 +1580,7 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
 
                 if (imagefile != null && !TextUtils.isEmpty(imagefile)) {
                     params.put(TAG_INFO_PICTURE_NAME, toBase64(imgPath));
+                    crime.setInfoImageFilename(imgPath);
                 } else {
                     params.put(TAG_INFO_PICTURE_NAME, "");
                 }
@@ -1458,14 +1588,16 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
 
                 if (videofile != null && !TextUtils.isEmpty(videofile)) {
                     params.put(TAG_INFO_VIDEO_NAME, toBase64(displayVideoFileName));
+                    crime.setInfoVideoFilename(displayVideoFileName);
                 } else {
                     params.put(TAG_INFO_VIDEO_NAME, "");
                 }
 
 
-               /* Gson gson = new Gson();
+                /*Gson gson = new Gson();
                 String json = gson.toJson(params); //convert
                 System.out.println(json);*/
+
 
                 return params;
             }
@@ -1479,83 +1611,63 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
                 byte[] emptyBytes = abc.getBytes();
 
 
-/*
-
-                //params.put(TAG_INFO_PICTURE, new DataPart(imgPath, getImageDataFromDrawable(bitmapImage)));
-                params.put(TAG_INFO_PICTURE, new DataPart(imgPath, imgProc.getBytesFromBitmap(bitmapImage)));
-                //params.put(TAG_INFO_PICTURE, new DataPart(imgPath, getFileDataFromDrawable(getActivity(), activity.uriDataImage)));
-                params.put(TAG_INFO_VIDEO, new DataPart(displayVideoFileName, getFileDataFromDrawable(getActivity(), uriDataVideo)));
-                params.put(TAG_INFO_AUDIO, new DataPart(displayAudioFileName, getFileDataFromDrawable(getActivity(), uriDataAudio)));
-                params.put(TAG_INFO_DOCUMENT, new DataPart(displayDocumentFileName, getFileDataFromDrawable(getActivity(), uriDataDocument)));
-
-*/
-
-                if (imagefile != null && !TextUtils.isEmpty(imagefile)) {
+                if (imagefile != null ) {
                     if (isImageClearClicked) {
                         params.put(TAG_INFO_PICTURE, new DataPart("", emptyBytes));
                         isImageClearClicked = false;
                     } else {
                         params.put(TAG_INFO_PICTURE, new DataPart(imgPath, imgProc.getBytesFromBitmap(bitmapImage)));
+                        crime.setInfoImageContent(imgProc.getBytesFromBitmap(bitmapImage));
                     }
                 } else {
                     params.put(TAG_INFO_PICTURE, new DataPart("", emptyBytes));
                 }
 
 
-                if (videofile != null && !TextUtils.isEmpty(videofile)) {
+                if (videofile != null ) {
                     if (isVideoClearClicked) {
                         params.put(TAG_INFO_VIDEO, new DataPart("", emptyBytes));
                         isVideoClearClicked = false;
                     } else {
                         params.put(TAG_INFO_VIDEO, new DataPart(displayVideoFileName, getFileDataFromDrawable(getActivity(), uriDataVideo)));
+                        crime.setInfoVideoContent(getFileDataFromDrawable(getActivity(), uriDataVideo));
                     }
                 } else {
                     params.put(TAG_INFO_VIDEO, new DataPart("", emptyBytes));
                 }
 
-                if (audioFile != null && !TextUtils.isEmpty(audioFile)) {
+                if (audioFile != null ) {
                     if (isAudioClearClicked) {
                         params.put(TAG_INFO_AUDIO, new DataPart("", emptyBytes));
                         isAudioClearClicked = false;
                     } else {
                         params.put(TAG_INFO_AUDIO, new DataPart(displayAudioFileName, getFileDataFromDrawable(getActivity(), uriDataAudio)));
+                        crime.setInfoAudioContent(getFileDataFromDrawable(getActivity(), uriDataAudio));
                     }
                 } else {
                     params.put(TAG_INFO_AUDIO, new DataPart("", emptyBytes));
                 }
 
 
-                if (documentFile != null && !TextUtils.isEmpty(documentFile)) {
+                if (documentFile != null ) {
                     if (isDocumentClearClicked) {
                         params.put(TAG_INFO_DOCUMENT, new DataPart("", emptyBytes));
                         isDocumentClearClicked = false;
                     } else {
                         params.put(TAG_INFO_DOCUMENT, new DataPart(displayDocumentFileName, getFileDataFromDrawable(getActivity(), uriDataDocument)));
+                        crime.setInfoDocumentContent(getFileDataFromDrawable(getActivity(), uriDataDocument));
                     }
                 } else {
                     params.put(TAG_INFO_DOCUMENT, new DataPart("", emptyBytes));
                 }
-
-
-               /* Gson gson = new Gson();
-                String json = gson.toJson(params); //convert
-                System.out.println(json);*/
-
-
                 return params;
             }
 
         };
 
-        //new DefaultRetryPolicy(0, -1, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-        //request.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS * 2, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-
         AppController.getInstance().addToRequestQueue(stringRequest);
-        stringRequest.setRetryPolicy(new DefaultRetryPolicy(
-                0,
-                -1,
-                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-
+        stringRequest.setRetryPolicy(new DefaultRetryPolicy(0, -1, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        databaseManager.insertCrime(crime);
 
     }
 
@@ -1565,15 +1677,6 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
             value = "";
         return Base64.encodeToString(value.trim().getBytes(), android.util.Base64.DEFAULT);
     }
-
-
-
-
-  /*  public byte[] getImageDataFromDrawable(Bitmap bitmap) {
-        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.PNG, 80, byteArrayOutputStream);
-        return byteArrayOutputStream.toByteArray();
-    }*/
 
     public static byte[] getFileDataFromDrawable(Context context, Uri uri) {
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
@@ -1644,15 +1747,85 @@ public class AddInfoFragment extends Fragment implements View.OnClickListener, A
     }
 
 
-    private boolean isValidEmailId(String email) {
+    /*private void dbInsertionValue() {
 
-        return Pattern.compile("^(([\\w-]+\\.)+[\\w-]+|([a-zA-Z]{1}|[\\w-]{2,}))@"
-                + "((([0-1]?[0-9]{1,2}|25[0-5]|2[0-4][0-9])\\.([0-1]?"
-                + "[0-9]{1,2}|25[0-5]|2[0-4][0-9])\\."
-                + "([0-1]?[0-9]{1,2}|25[0-5]|2[0-4][0-9])\\.([0-1]?"
-                + "[0-9]{1,2}|25[0-5]|2[0-4][0-9])){1}|"
-                + "([a-zA-Z]+[\\w-]+\\.)+[a-zA-Z]{2,4})$").matcher(email).matches();
-    }
+        crime.setCrimPosition(position);
+        crime.setCrimType(category);
+        crime.setAppAuthToken(tokenValue);
+        if (etCrimeInfo.getText().toString().trim().length() > 0) {
+            crime.setCrimeInfo(crimInfoValue);
+            crime.setCreatedAt(new Date());
+        }
+
+        if (etInformerAddress.getText().toString().trim().length() > 0) {
+            crime.setInformerAddress(informerAddressValue);
+        }
+
+        if (etInformerEmail.getText().toString().trim().length() > 0) {
+            crime.setInformerEmail(informerEmailValue);
+        }
+
+        if (etInformerNID.getText().toString().trim().length() > 0) {
+            crime.setInformerNID(informerNIDValue);
+        }
+
+        if (etInformerName.getText().toString().trim().length() > 0) {
+            crime.setInformerName(informerNameValue);
+        }
+
+        if (etInformerPhone.getText().toString().trim().length() > 0) {
+            crime.setInformerPhone(informerPhoneValue);
+        }
+
+        if (spThana.getSelectedItem() != null) {
+            crime.setThana(spThana.getSelectedItem().toString());
+        }
+
+        if (spThanaInformer.getSelectedItem() != null) {
+            crime.setInformerThana(spThanaInformer.getSelectedItem().toString());
+        }
+
+        if (spDistrict.getSelectedItem() != null) {
+            crime.setDistrictOrCountry(spDistrict.getSelectedItem().toString());
+        }
+
+        if (spDistrictInformer.getSelectedItem() != null) {
+            crime.setInformerDistrictOrCountry(spDistrictInformer.getSelectedItem().toString());
+        }
+
+        if (spDimout.getSelectedItem() != null) {
+            crime.setPlaceOfCrime(spDimout.getSelectedItem().toString());
+        }
+
+        if (spDimoutInformer.getSelectedItem() != null) {
+            crime.setPlaceOfInformer(spDimoutInformer.getSelectedItem().toString());
+        }
+
+        if (audioFile != null && !TextUtils.isEmpty(audioFile)) {
+            crime.setInfoAudioFilename(displayAudioFileName);
+            crime.setInfoAudioContent(getFileDataFromDrawable(getActivity(), uriDataAudio));
+        }
+
+        if (documentFile != null && !TextUtils.isEmpty(documentFile)) {
+            crime.setInfoDocumentFilename(displayDocumentFileName);
+            crime.setInfoDocumentContent(getFileDataFromDrawable(getActivity(), uriDataDocument));
+        }
+
+        if (imagefile != null && !TextUtils.isEmpty(imagefile)) {
+            crime.setInfoImageFilename(imgPath);
+            crime.setInfoImageContent(imgProc.getBytesFromBitmap(bitmapImage));
+
+        }
+
+        if (videofile != null && !TextUtils.isEmpty(videofile)) {
+            crime.setInfoVideoFilename(displayVideoFileName);
+            crime.setInfoVideoContent(getFileDataFromDrawable(getActivity(), uriDataVideo));
+        }
+
+        databaseManager.insertCrime(crime);
+        Toast.makeText(activity, getResources().getString(R.string.successful_message), Toast.LENGTH_SHORT).show();
+        backToPrevious();
+    }*/
 
 
     @Override

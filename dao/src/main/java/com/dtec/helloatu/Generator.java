@@ -30,7 +30,11 @@ public class Generator {
      *
      * @return DBUser entity
      */
-    private static Entity addCrime(Schema schema) {
+
+
+
+
+    /*private static Entity addCrime(Schema schema) {
         Entity crime = schema.addEntity("Crime");
         crime.addIdProperty().primaryKey().autoincrement();
         crime.addIntProperty("crimPosition").notNull();
@@ -52,7 +56,65 @@ public class Generator {
         crime.addStringProperty("districtInformer").notNull();
         crime.addDateProperty("createdAt").notNull();
         return crime;
+    }*/
+    private static Entity addCrime(Schema schema) {
+        Entity crime = schema.addEntity("Crime");
+
+        crime.addIdProperty().primaryKey().autoincrement();
+        crime.addStringProperty("appAuthToken");
+        crime.addIntProperty("crimPosition");
+        crime.addStringProperty("crimType");
+        crime.addStringProperty("crimeInfo");
+        crime.addStringProperty("placeOfCrime");
+        crime.addStringProperty("thana");
+        crime.addStringProperty("districtOrCountry");
+        crime.addStringProperty("informerName");
+        crime.addStringProperty("informerPhone");
+        crime.addStringProperty("informerAddress");
+        crime.addStringProperty("informerEmail");
+        crime.addStringProperty("informerNID");
+        crime.addStringProperty("placeOfInformer");
+        crime.addStringProperty("informerThana");
+        crime.addStringProperty("informerDistrictOrCountry");
+        crime.addStringProperty("infoDocumentFilename");
+        crime.addByteArrayProperty("infoDocumentContent");
+        crime.addStringProperty("infoImageFilename");
+        crime.addByteArrayProperty("infoImageContent");
+        crime.addStringProperty("infoVideoFilename");
+        crime.addByteArrayProperty("infoVideoContent");
+        crime.addStringProperty("infoAudioFilename");
+        crime.addByteArrayProperty("infoAudioContent");
+        crime.addDateProperty("createdAt");
+
+        return crime;
     }
+
+
+
+
+   /* private static Entity addCrime(Schema schema) {
+        Entity crime = schema.addEntity("Crime");
+
+        crime.addIdProperty().primaryKey().autoincrement();
+        crime.addIntProperty("crimPosition").notNull();
+        crime.addStringProperty("crimeInfo").notNull();
+        crime.addStringProperty("informerName").notNull();
+        crime.addStringProperty("informerPhone").notNull();
+        crime.addStringProperty("informerAddress").notNull();
+        crime.addStringProperty("infoDocument").notNull();
+        crime.addStringProperty("infoPicture").notNull();
+        crime.addStringProperty("infoVideo").notNull();
+        crime.addStringProperty("infoAudio").notNull();
+        crime.addIntProperty("occurrence").notNull();
+        crime.addIntProperty("occurrenceInformer").notNull();
+        crime.addIntProperty("division").notNull();
+        crime.addIntProperty("divisionInformer").notNull();
+        crime.addIntProperty("district").notNull();
+        crime.addIntProperty("districtInformer").notNull();
+        crime.addDateProperty("createdAt").notNull();
+
+        return crime;
+    }*/
 
 
 }

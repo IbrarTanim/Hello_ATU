@@ -7,40 +7,29 @@ package com.dtec.helloatu.dao;
 public class Crime {
 
     private Long id;
-    private int crimPosition;
-    /** Not-null value. */
-    private String crimCategory;
-    /** Not-null value. */
+    private String appAuthToken;
+    private Integer crimPosition;
+    private String crimType;
     private String crimeInfo;
-    /** Not-null value. */
+    private String placeOfCrime;
+    private String thana;
+    private String districtOrCountry;
     private String informerName;
-    /** Not-null value. */
     private String informerPhone;
-    /** Not-null value. */
     private String informerAddress;
-    /** Not-null value. */
     private String informerEmail;
-    /** Not-null value. */
-    private String infoDocument;
-    /** Not-null value. */
-    private String infoPicture;
-    /** Not-null value. */
-    private String infoVideo;
-    /** Not-null value. */
-    private String infoAudio;
-    /** Not-null value. */
-    private String occurrence;
-    /** Not-null value. */
-    private String occurrenceInformer;
-    /** Not-null value. */
-    private String division;
-    /** Not-null value. */
-    private String divisionInformer;
-    /** Not-null value. */
-    private String district;
-    /** Not-null value. */
-    private String districtInformer;
-    /** Not-null value. */
+    private String informerNID;
+    private String placeOfInformer;
+    private String informerThana;
+    private String informerDistrictOrCountry;
+    private String infoDocumentFilename;
+    private byte[] infoDocumentContent;
+    private String infoImageFilename;
+    private byte[] infoImageContent;
+    private String infoVideoFilename;
+    private byte[] infoVideoContent;
+    private String infoAudioFilename;
+    private byte[] infoAudioContent;
     private java.util.Date createdAt;
 
     public Crime() {
@@ -50,25 +39,31 @@ public class Crime {
         this.id = id;
     }
 
-    public Crime(Long id, int crimPosition, String crimCategory, String crimeInfo, String informerName, String informerPhone, String informerAddress, String informerEmail, String infoDocument, String infoPicture, String infoVideo, String infoAudio, String occurrence, String occurrenceInformer, String division, String divisionInformer, String district, String districtInformer, java.util.Date createdAt) {
+    public Crime(Long id, String appAuthToken, Integer crimPosition, String crimType, String crimeInfo, String placeOfCrime, String thana, String districtOrCountry, String informerName, String informerPhone, String informerAddress, String informerEmail, String informerNID, String placeOfInformer, String informerThana, String informerDistrictOrCountry, String infoDocumentFilename, byte[] infoDocumentContent, String infoImageFilename, byte[] infoImageContent, String infoVideoFilename, byte[] infoVideoContent, String infoAudioFilename, byte[] infoAudioContent, java.util.Date createdAt) {
         this.id = id;
+        this.appAuthToken = appAuthToken;
         this.crimPosition = crimPosition;
-        this.crimCategory = crimCategory;
+        this.crimType = crimType;
         this.crimeInfo = crimeInfo;
+        this.placeOfCrime = placeOfCrime;
+        this.thana = thana;
+        this.districtOrCountry = districtOrCountry;
         this.informerName = informerName;
         this.informerPhone = informerPhone;
         this.informerAddress = informerAddress;
         this.informerEmail = informerEmail;
-        this.infoDocument = infoDocument;
-        this.infoPicture = infoPicture;
-        this.infoVideo = infoVideo;
-        this.infoAudio = infoAudio;
-        this.occurrence = occurrence;
-        this.occurrenceInformer = occurrenceInformer;
-        this.division = division;
-        this.divisionInformer = divisionInformer;
-        this.district = district;
-        this.districtInformer = districtInformer;
+        this.informerNID = informerNID;
+        this.placeOfInformer = placeOfInformer;
+        this.informerThana = informerThana;
+        this.informerDistrictOrCountry = informerDistrictOrCountry;
+        this.infoDocumentFilename = infoDocumentFilename;
+        this.infoDocumentContent = infoDocumentContent;
+        this.infoImageFilename = infoImageFilename;
+        this.infoImageContent = infoImageContent;
+        this.infoVideoFilename = infoVideoFilename;
+        this.infoVideoContent = infoVideoContent;
+        this.infoAudioFilename = infoAudioFilename;
+        this.infoAudioContent = infoAudioContent;
         this.createdAt = createdAt;
     }
 
@@ -80,180 +75,194 @@ public class Crime {
         this.id = id;
     }
 
-    public int getCrimPosition() {
+    public String getAppAuthToken() {
+        return appAuthToken;
+    }
+
+    public void setAppAuthToken(String appAuthToken) {
+        this.appAuthToken = appAuthToken;
+    }
+
+    public Integer getCrimPosition() {
         return crimPosition;
     }
 
-    public void setCrimPosition(int crimPosition) {
+    public void setCrimPosition(Integer crimPosition) {
         this.crimPosition = crimPosition;
     }
 
-    /** Not-null value. */
-    public String getCrimCategory() {
-        return crimCategory;
+    public String getCrimType() {
+        return crimType;
     }
 
-    /** Not-null value; ensure this value is available before it is saved to the database. */
-    public void setCrimCategory(String crimCategory) {
-        this.crimCategory = crimCategory;
+    public void setCrimType(String crimType) {
+        this.crimType = crimType;
     }
 
-    /** Not-null value. */
     public String getCrimeInfo() {
         return crimeInfo;
     }
 
-    /** Not-null value; ensure this value is available before it is saved to the database. */
     public void setCrimeInfo(String crimeInfo) {
         this.crimeInfo = crimeInfo;
     }
 
-    /** Not-null value. */
+    public String getPlaceOfCrime() {
+        return placeOfCrime;
+    }
+
+    public void setPlaceOfCrime(String placeOfCrime) {
+        this.placeOfCrime = placeOfCrime;
+    }
+
+    public String getThana() {
+        return thana;
+    }
+
+    public void setThana(String thana) {
+        this.thana = thana;
+    }
+
+    public String getDistrictOrCountry() {
+        return districtOrCountry;
+    }
+
+    public void setDistrictOrCountry(String districtOrCountry) {
+        this.districtOrCountry = districtOrCountry;
+    }
+
     public String getInformerName() {
         return informerName;
     }
 
-    /** Not-null value; ensure this value is available before it is saved to the database. */
     public void setInformerName(String informerName) {
         this.informerName = informerName;
     }
 
-    /** Not-null value. */
     public String getInformerPhone() {
         return informerPhone;
     }
 
-    /** Not-null value; ensure this value is available before it is saved to the database. */
     public void setInformerPhone(String informerPhone) {
         this.informerPhone = informerPhone;
     }
 
-    /** Not-null value. */
     public String getInformerAddress() {
         return informerAddress;
     }
 
-    /** Not-null value; ensure this value is available before it is saved to the database. */
     public void setInformerAddress(String informerAddress) {
         this.informerAddress = informerAddress;
     }
 
-    /** Not-null value. */
     public String getInformerEmail() {
         return informerEmail;
     }
 
-    /** Not-null value; ensure this value is available before it is saved to the database. */
     public void setInformerEmail(String informerEmail) {
         this.informerEmail = informerEmail;
     }
 
-    /** Not-null value. */
-    public String getInfoDocument() {
-        return infoDocument;
+    public String getInformerNID() {
+        return informerNID;
     }
 
-    /** Not-null value; ensure this value is available before it is saved to the database. */
-    public void setInfoDocument(String infoDocument) {
-        this.infoDocument = infoDocument;
+    public void setInformerNID(String informerNID) {
+        this.informerNID = informerNID;
     }
 
-    /** Not-null value. */
-    public String getInfoPicture() {
-        return infoPicture;
+    public String getPlaceOfInformer() {
+        return placeOfInformer;
     }
 
-    /** Not-null value; ensure this value is available before it is saved to the database. */
-    public void setInfoPicture(String infoPicture) {
-        this.infoPicture = infoPicture;
+    public void setPlaceOfInformer(String placeOfInformer) {
+        this.placeOfInformer = placeOfInformer;
     }
 
-    /** Not-null value. */
-    public String getInfoVideo() {
-        return infoVideo;
+    public String getInformerThana() {
+        return informerThana;
     }
 
-    /** Not-null value; ensure this value is available before it is saved to the database. */
-    public void setInfoVideo(String infoVideo) {
-        this.infoVideo = infoVideo;
+    public void setInformerThana(String informerThana) {
+        this.informerThana = informerThana;
     }
 
-    /** Not-null value. */
-    public String getInfoAudio() {
-        return infoAudio;
+    public String getInformerDistrictOrCountry() {
+        return informerDistrictOrCountry;
     }
 
-    /** Not-null value; ensure this value is available before it is saved to the database. */
-    public void setInfoAudio(String infoAudio) {
-        this.infoAudio = infoAudio;
+    public void setInformerDistrictOrCountry(String informerDistrictOrCountry) {
+        this.informerDistrictOrCountry = informerDistrictOrCountry;
     }
 
-    /** Not-null value. */
-    public String getOccurrence() {
-        return occurrence;
+    public String getInfoDocumentFilename() {
+        return infoDocumentFilename;
     }
 
-    /** Not-null value; ensure this value is available before it is saved to the database. */
-    public void setOccurrence(String occurrence) {
-        this.occurrence = occurrence;
+    public void setInfoDocumentFilename(String infoDocumentFilename) {
+        this.infoDocumentFilename = infoDocumentFilename;
     }
 
-    /** Not-null value. */
-    public String getOccurrenceInformer() {
-        return occurrenceInformer;
+    public byte[] getInfoDocumentContent() {
+        return infoDocumentContent;
     }
 
-    /** Not-null value; ensure this value is available before it is saved to the database. */
-    public void setOccurrenceInformer(String occurrenceInformer) {
-        this.occurrenceInformer = occurrenceInformer;
+    public void setInfoDocumentContent(byte[] infoDocumentContent) {
+        this.infoDocumentContent = infoDocumentContent;
     }
 
-    /** Not-null value. */
-    public String getDivision() {
-        return division;
+    public String getInfoImageFilename() {
+        return infoImageFilename;
     }
 
-    /** Not-null value; ensure this value is available before it is saved to the database. */
-    public void setDivision(String division) {
-        this.division = division;
+    public void setInfoImageFilename(String infoImageFilename) {
+        this.infoImageFilename = infoImageFilename;
     }
 
-    /** Not-null value. */
-    public String getDivisionInformer() {
-        return divisionInformer;
+    public byte[] getInfoImageContent() {
+        return infoImageContent;
     }
 
-    /** Not-null value; ensure this value is available before it is saved to the database. */
-    public void setDivisionInformer(String divisionInformer) {
-        this.divisionInformer = divisionInformer;
+    public void setInfoImageContent(byte[] infoImageContent) {
+        this.infoImageContent = infoImageContent;
     }
 
-    /** Not-null value. */
-    public String getDistrict() {
-        return district;
+    public String getInfoVideoFilename() {
+        return infoVideoFilename;
     }
 
-    /** Not-null value; ensure this value is available before it is saved to the database. */
-    public void setDistrict(String district) {
-        this.district = district;
+    public void setInfoVideoFilename(String infoVideoFilename) {
+        this.infoVideoFilename = infoVideoFilename;
     }
 
-    /** Not-null value. */
-    public String getDistrictInformer() {
-        return districtInformer;
+    public byte[] getInfoVideoContent() {
+        return infoVideoContent;
     }
 
-    /** Not-null value; ensure this value is available before it is saved to the database. */
-    public void setDistrictInformer(String districtInformer) {
-        this.districtInformer = districtInformer;
+    public void setInfoVideoContent(byte[] infoVideoContent) {
+        this.infoVideoContent = infoVideoContent;
     }
 
-    /** Not-null value. */
+    public String getInfoAudioFilename() {
+        return infoAudioFilename;
+    }
+
+    public void setInfoAudioFilename(String infoAudioFilename) {
+        this.infoAudioFilename = infoAudioFilename;
+    }
+
+    public byte[] getInfoAudioContent() {
+        return infoAudioContent;
+    }
+
+    public void setInfoAudioContent(byte[] infoAudioContent) {
+        this.infoAudioContent = infoAudioContent;
+    }
+
     public java.util.Date getCreatedAt() {
         return createdAt;
     }
 
-    /** Not-null value; ensure this value is available before it is saved to the database. */
     public void setCreatedAt(java.util.Date createdAt) {
         this.createdAt = createdAt;
     }

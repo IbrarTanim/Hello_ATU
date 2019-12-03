@@ -24,24 +24,30 @@ public class CrimeDao extends AbstractDao<Crime, Long> {
     */
     public static class Properties {
         public final static Property Id = new Property(0, Long.class, "id", true, "_id");
-        public final static Property CrimPosition = new Property(1, int.class, "crimPosition", false, "CRIM_POSITION");
-        public final static Property CrimCategory = new Property(2, String.class, "crimCategory", false, "CRIM_CATEGORY");
-        public final static Property CrimeInfo = new Property(3, String.class, "crimeInfo", false, "CRIME_INFO");
-        public final static Property InformerName = new Property(4, String.class, "informerName", false, "INFORMER_NAME");
-        public final static Property InformerPhone = new Property(5, String.class, "informerPhone", false, "INFORMER_PHONE");
-        public final static Property InformerAddress = new Property(6, String.class, "informerAddress", false, "INFORMER_ADDRESS");
-        public final static Property InformerEmail = new Property(7, String.class, "informerEmail", false, "INFORMER_EMAIL");
-        public final static Property InfoDocument = new Property(8, String.class, "infoDocument", false, "INFO_DOCUMENT");
-        public final static Property InfoPicture = new Property(9, String.class, "infoPicture", false, "INFO_PICTURE");
-        public final static Property InfoVideo = new Property(10, String.class, "infoVideo", false, "INFO_VIDEO");
-        public final static Property InfoAudio = new Property(11, String.class, "infoAudio", false, "INFO_AUDIO");
-        public final static Property Occurrence = new Property(12, String.class, "occurrence", false, "OCCURRENCE");
-        public final static Property OccurrenceInformer = new Property(13, String.class, "occurrenceInformer", false, "OCCURRENCE_INFORMER");
-        public final static Property Division = new Property(14, String.class, "division", false, "DIVISION");
-        public final static Property DivisionInformer = new Property(15, String.class, "divisionInformer", false, "DIVISION_INFORMER");
-        public final static Property District = new Property(16, String.class, "district", false, "DISTRICT");
-        public final static Property DistrictInformer = new Property(17, String.class, "districtInformer", false, "DISTRICT_INFORMER");
-        public final static Property CreatedAt = new Property(18, java.util.Date.class, "createdAt", false, "CREATED_AT");
+        public final static Property AppAuthToken = new Property(1, String.class, "appAuthToken", false, "APP_AUTH_TOKEN");
+        public final static Property CrimPosition = new Property(2, Integer.class, "crimPosition", false, "CRIM_POSITION");
+        public final static Property CrimType = new Property(3, String.class, "crimType", false, "CRIM_TYPE");
+        public final static Property CrimeInfo = new Property(4, String.class, "crimeInfo", false, "CRIME_INFO");
+        public final static Property PlaceOfCrime = new Property(5, String.class, "placeOfCrime", false, "PLACE_OF_CRIME");
+        public final static Property Thana = new Property(6, String.class, "thana", false, "THANA");
+        public final static Property DistrictOrCountry = new Property(7, String.class, "districtOrCountry", false, "DISTRICT_OR_COUNTRY");
+        public final static Property InformerName = new Property(8, String.class, "informerName", false, "INFORMER_NAME");
+        public final static Property InformerPhone = new Property(9, String.class, "informerPhone", false, "INFORMER_PHONE");
+        public final static Property InformerAddress = new Property(10, String.class, "informerAddress", false, "INFORMER_ADDRESS");
+        public final static Property InformerEmail = new Property(11, String.class, "informerEmail", false, "INFORMER_EMAIL");
+        public final static Property InformerNID = new Property(12, String.class, "informerNID", false, "INFORMER_NID");
+        public final static Property PlaceOfInformer = new Property(13, String.class, "placeOfInformer", false, "PLACE_OF_INFORMER");
+        public final static Property InformerThana = new Property(14, String.class, "informerThana", false, "INFORMER_THANA");
+        public final static Property InformerDistrictOrCountry = new Property(15, String.class, "informerDistrictOrCountry", false, "INFORMER_DISTRICT_OR_COUNTRY");
+        public final static Property InfoDocumentFilename = new Property(16, String.class, "infoDocumentFilename", false, "INFO_DOCUMENT_FILENAME");
+        public final static Property InfoDocumentContent = new Property(17, byte[].class, "infoDocumentContent", false, "INFO_DOCUMENT_CONTENT");
+        public final static Property InfoImageFilename = new Property(18, String.class, "infoImageFilename", false, "INFO_IMAGE_FILENAME");
+        public final static Property InfoImageContent = new Property(19, byte[].class, "infoImageContent", false, "INFO_IMAGE_CONTENT");
+        public final static Property InfoVideoFilename = new Property(20, String.class, "infoVideoFilename", false, "INFO_VIDEO_FILENAME");
+        public final static Property InfoVideoContent = new Property(21, byte[].class, "infoVideoContent", false, "INFO_VIDEO_CONTENT");
+        public final static Property InfoAudioFilename = new Property(22, String.class, "infoAudioFilename", false, "INFO_AUDIO_FILENAME");
+        public final static Property InfoAudioContent = new Property(23, byte[].class, "infoAudioContent", false, "INFO_AUDIO_CONTENT");
+        public final static Property CreatedAt = new Property(24, java.util.Date.class, "createdAt", false, "CREATED_AT");
     };
 
 
@@ -58,24 +64,30 @@ public class CrimeDao extends AbstractDao<Crime, Long> {
         String constraint = ifNotExists? "IF NOT EXISTS ": "";
         db.execSQL("CREATE TABLE " + constraint + "\"CRIME\" (" + //
                 "\"_id\" INTEGER PRIMARY KEY AUTOINCREMENT ," + // 0: id
-                "\"CRIM_POSITION\" INTEGER NOT NULL ," + // 1: crimPosition
-                "\"CRIM_CATEGORY\" TEXT NOT NULL ," + // 2: crimCategory
-                "\"CRIME_INFO\" TEXT NOT NULL ," + // 3: crimeInfo
-                "\"INFORMER_NAME\" TEXT NOT NULL ," + // 4: informerName
-                "\"INFORMER_PHONE\" TEXT NOT NULL ," + // 5: informerPhone
-                "\"INFORMER_ADDRESS\" TEXT NOT NULL ," + // 6: informerAddress
-                "\"INFORMER_EMAIL\" TEXT NOT NULL ," + // 7: informerEmail
-                "\"INFO_DOCUMENT\" TEXT NOT NULL ," + // 8: infoDocument
-                "\"INFO_PICTURE\" TEXT NOT NULL ," + // 9: infoPicture
-                "\"INFO_VIDEO\" TEXT NOT NULL ," + // 10: infoVideo
-                "\"INFO_AUDIO\" TEXT NOT NULL ," + // 11: infoAudio
-                "\"OCCURRENCE\" TEXT NOT NULL ," + // 12: occurrence
-                "\"OCCURRENCE_INFORMER\" TEXT NOT NULL ," + // 13: occurrenceInformer
-                "\"DIVISION\" TEXT NOT NULL ," + // 14: division
-                "\"DIVISION_INFORMER\" TEXT NOT NULL ," + // 15: divisionInformer
-                "\"DISTRICT\" TEXT NOT NULL ," + // 16: district
-                "\"DISTRICT_INFORMER\" TEXT NOT NULL ," + // 17: districtInformer
-                "\"CREATED_AT\" INTEGER NOT NULL );"); // 18: createdAt
+                "\"APP_AUTH_TOKEN\" TEXT," + // 1: appAuthToken
+                "\"CRIM_POSITION\" INTEGER," + // 2: crimPosition
+                "\"CRIM_TYPE\" TEXT," + // 3: crimType
+                "\"CRIME_INFO\" TEXT," + // 4: crimeInfo
+                "\"PLACE_OF_CRIME\" TEXT," + // 5: placeOfCrime
+                "\"THANA\" TEXT," + // 6: thana
+                "\"DISTRICT_OR_COUNTRY\" TEXT," + // 7: districtOrCountry
+                "\"INFORMER_NAME\" TEXT," + // 8: informerName
+                "\"INFORMER_PHONE\" TEXT," + // 9: informerPhone
+                "\"INFORMER_ADDRESS\" TEXT," + // 10: informerAddress
+                "\"INFORMER_EMAIL\" TEXT," + // 11: informerEmail
+                "\"INFORMER_NID\" TEXT," + // 12: informerNID
+                "\"PLACE_OF_INFORMER\" TEXT," + // 13: placeOfInformer
+                "\"INFORMER_THANA\" TEXT," + // 14: informerThana
+                "\"INFORMER_DISTRICT_OR_COUNTRY\" TEXT," + // 15: informerDistrictOrCountry
+                "\"INFO_DOCUMENT_FILENAME\" TEXT," + // 16: infoDocumentFilename
+                "\"INFO_DOCUMENT_CONTENT\" BLOB," + // 17: infoDocumentContent
+                "\"INFO_IMAGE_FILENAME\" TEXT," + // 18: infoImageFilename
+                "\"INFO_IMAGE_CONTENT\" BLOB," + // 19: infoImageContent
+                "\"INFO_VIDEO_FILENAME\" TEXT," + // 20: infoVideoFilename
+                "\"INFO_VIDEO_CONTENT\" BLOB," + // 21: infoVideoContent
+                "\"INFO_AUDIO_FILENAME\" TEXT," + // 22: infoAudioFilename
+                "\"INFO_AUDIO_CONTENT\" BLOB," + // 23: infoAudioContent
+                "\"CREATED_AT\" INTEGER);"); // 24: createdAt
     }
 
     /** Drops the underlying database table. */
@@ -93,24 +105,126 @@ public class CrimeDao extends AbstractDao<Crime, Long> {
         if (id != null) {
             stmt.bindLong(1, id);
         }
-        stmt.bindLong(2, entity.getCrimPosition());
-        stmt.bindString(3, entity.getCrimCategory());
-        stmt.bindString(4, entity.getCrimeInfo());
-        stmt.bindString(5, entity.getInformerName());
-        stmt.bindString(6, entity.getInformerPhone());
-        stmt.bindString(7, entity.getInformerAddress());
-        stmt.bindString(8, entity.getInformerEmail());
-        stmt.bindString(9, entity.getInfoDocument());
-        stmt.bindString(10, entity.getInfoPicture());
-        stmt.bindString(11, entity.getInfoVideo());
-        stmt.bindString(12, entity.getInfoAudio());
-        stmt.bindString(13, entity.getOccurrence());
-        stmt.bindString(14, entity.getOccurrenceInformer());
-        stmt.bindString(15, entity.getDivision());
-        stmt.bindString(16, entity.getDivisionInformer());
-        stmt.bindString(17, entity.getDistrict());
-        stmt.bindString(18, entity.getDistrictInformer());
-        stmt.bindLong(19, entity.getCreatedAt().getTime());
+ 
+        String appAuthToken = entity.getAppAuthToken();
+        if (appAuthToken != null) {
+            stmt.bindString(2, appAuthToken);
+        }
+ 
+        Integer crimPosition = entity.getCrimPosition();
+        if (crimPosition != null) {
+            stmt.bindLong(3, crimPosition);
+        }
+ 
+        String crimType = entity.getCrimType();
+        if (crimType != null) {
+            stmt.bindString(4, crimType);
+        }
+ 
+        String crimeInfo = entity.getCrimeInfo();
+        if (crimeInfo != null) {
+            stmt.bindString(5, crimeInfo);
+        }
+ 
+        String placeOfCrime = entity.getPlaceOfCrime();
+        if (placeOfCrime != null) {
+            stmt.bindString(6, placeOfCrime);
+        }
+ 
+        String thana = entity.getThana();
+        if (thana != null) {
+            stmt.bindString(7, thana);
+        }
+ 
+        String districtOrCountry = entity.getDistrictOrCountry();
+        if (districtOrCountry != null) {
+            stmt.bindString(8, districtOrCountry);
+        }
+ 
+        String informerName = entity.getInformerName();
+        if (informerName != null) {
+            stmt.bindString(9, informerName);
+        }
+ 
+        String informerPhone = entity.getInformerPhone();
+        if (informerPhone != null) {
+            stmt.bindString(10, informerPhone);
+        }
+ 
+        String informerAddress = entity.getInformerAddress();
+        if (informerAddress != null) {
+            stmt.bindString(11, informerAddress);
+        }
+ 
+        String informerEmail = entity.getInformerEmail();
+        if (informerEmail != null) {
+            stmt.bindString(12, informerEmail);
+        }
+ 
+        String informerNID = entity.getInformerNID();
+        if (informerNID != null) {
+            stmt.bindString(13, informerNID);
+        }
+ 
+        String placeOfInformer = entity.getPlaceOfInformer();
+        if (placeOfInformer != null) {
+            stmt.bindString(14, placeOfInformer);
+        }
+ 
+        String informerThana = entity.getInformerThana();
+        if (informerThana != null) {
+            stmt.bindString(15, informerThana);
+        }
+ 
+        String informerDistrictOrCountry = entity.getInformerDistrictOrCountry();
+        if (informerDistrictOrCountry != null) {
+            stmt.bindString(16, informerDistrictOrCountry);
+        }
+ 
+        String infoDocumentFilename = entity.getInfoDocumentFilename();
+        if (infoDocumentFilename != null) {
+            stmt.bindString(17, infoDocumentFilename);
+        }
+ 
+        byte[] infoDocumentContent = entity.getInfoDocumentContent();
+        if (infoDocumentContent != null) {
+            stmt.bindBlob(18, infoDocumentContent);
+        }
+ 
+        String infoImageFilename = entity.getInfoImageFilename();
+        if (infoImageFilename != null) {
+            stmt.bindString(19, infoImageFilename);
+        }
+ 
+        byte[] infoImageContent = entity.getInfoImageContent();
+        if (infoImageContent != null) {
+            stmt.bindBlob(20, infoImageContent);
+        }
+ 
+        String infoVideoFilename = entity.getInfoVideoFilename();
+        if (infoVideoFilename != null) {
+            stmt.bindString(21, infoVideoFilename);
+        }
+ 
+        byte[] infoVideoContent = entity.getInfoVideoContent();
+        if (infoVideoContent != null) {
+            stmt.bindBlob(22, infoVideoContent);
+        }
+ 
+        String infoAudioFilename = entity.getInfoAudioFilename();
+        if (infoAudioFilename != null) {
+            stmt.bindString(23, infoAudioFilename);
+        }
+ 
+        byte[] infoAudioContent = entity.getInfoAudioContent();
+        if (infoAudioContent != null) {
+            stmt.bindBlob(24, infoAudioContent);
+        }
+ 
+        java.util.Date createdAt = entity.getCreatedAt();
+        if (createdAt != null) {
+            stmt.bindLong(25, createdAt.getTime());
+        }
     }
 
     /** @inheritdoc */
@@ -124,24 +238,30 @@ public class CrimeDao extends AbstractDao<Crime, Long> {
     public Crime readEntity(Cursor cursor, int offset) {
         Crime entity = new Crime( //
             cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0), // id
-            cursor.getInt(offset + 1), // crimPosition
-            cursor.getString(offset + 2), // crimCategory
-            cursor.getString(offset + 3), // crimeInfo
-            cursor.getString(offset + 4), // informerName
-            cursor.getString(offset + 5), // informerPhone
-            cursor.getString(offset + 6), // informerAddress
-            cursor.getString(offset + 7), // informerEmail
-            cursor.getString(offset + 8), // infoDocument
-            cursor.getString(offset + 9), // infoPicture
-            cursor.getString(offset + 10), // infoVideo
-            cursor.getString(offset + 11), // infoAudio
-            cursor.getString(offset + 12), // occurrence
-            cursor.getString(offset + 13), // occurrenceInformer
-            cursor.getString(offset + 14), // division
-            cursor.getString(offset + 15), // divisionInformer
-            cursor.getString(offset + 16), // district
-            cursor.getString(offset + 17), // districtInformer
-            new java.util.Date(cursor.getLong(offset + 18)) // createdAt
+            cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1), // appAuthToken
+            cursor.isNull(offset + 2) ? null : cursor.getInt(offset + 2), // crimPosition
+            cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3), // crimType
+            cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4), // crimeInfo
+            cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5), // placeOfCrime
+            cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6), // thana
+            cursor.isNull(offset + 7) ? null : cursor.getString(offset + 7), // districtOrCountry
+            cursor.isNull(offset + 8) ? null : cursor.getString(offset + 8), // informerName
+            cursor.isNull(offset + 9) ? null : cursor.getString(offset + 9), // informerPhone
+            cursor.isNull(offset + 10) ? null : cursor.getString(offset + 10), // informerAddress
+            cursor.isNull(offset + 11) ? null : cursor.getString(offset + 11), // informerEmail
+            cursor.isNull(offset + 12) ? null : cursor.getString(offset + 12), // informerNID
+            cursor.isNull(offset + 13) ? null : cursor.getString(offset + 13), // placeOfInformer
+            cursor.isNull(offset + 14) ? null : cursor.getString(offset + 14), // informerThana
+            cursor.isNull(offset + 15) ? null : cursor.getString(offset + 15), // informerDistrictOrCountry
+            cursor.isNull(offset + 16) ? null : cursor.getString(offset + 16), // infoDocumentFilename
+            cursor.isNull(offset + 17) ? null : cursor.getBlob(offset + 17), // infoDocumentContent
+            cursor.isNull(offset + 18) ? null : cursor.getString(offset + 18), // infoImageFilename
+            cursor.isNull(offset + 19) ? null : cursor.getBlob(offset + 19), // infoImageContent
+            cursor.isNull(offset + 20) ? null : cursor.getString(offset + 20), // infoVideoFilename
+            cursor.isNull(offset + 21) ? null : cursor.getBlob(offset + 21), // infoVideoContent
+            cursor.isNull(offset + 22) ? null : cursor.getString(offset + 22), // infoAudioFilename
+            cursor.isNull(offset + 23) ? null : cursor.getBlob(offset + 23), // infoAudioContent
+            cursor.isNull(offset + 24) ? null : new java.util.Date(cursor.getLong(offset + 24)) // createdAt
         );
         return entity;
     }
@@ -150,24 +270,30 @@ public class CrimeDao extends AbstractDao<Crime, Long> {
     @Override
     public void readEntity(Cursor cursor, Crime entity, int offset) {
         entity.setId(cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0));
-        entity.setCrimPosition(cursor.getInt(offset + 1));
-        entity.setCrimCategory(cursor.getString(offset + 2));
-        entity.setCrimeInfo(cursor.getString(offset + 3));
-        entity.setInformerName(cursor.getString(offset + 4));
-        entity.setInformerPhone(cursor.getString(offset + 5));
-        entity.setInformerAddress(cursor.getString(offset + 6));
-        entity.setInformerEmail(cursor.getString(offset + 7));
-        entity.setInfoDocument(cursor.getString(offset + 8));
-        entity.setInfoPicture(cursor.getString(offset + 9));
-        entity.setInfoVideo(cursor.getString(offset + 10));
-        entity.setInfoAudio(cursor.getString(offset + 11));
-        entity.setOccurrence(cursor.getString(offset + 12));
-        entity.setOccurrenceInformer(cursor.getString(offset + 13));
-        entity.setDivision(cursor.getString(offset + 14));
-        entity.setDivisionInformer(cursor.getString(offset + 15));
-        entity.setDistrict(cursor.getString(offset + 16));
-        entity.setDistrictInformer(cursor.getString(offset + 17));
-        entity.setCreatedAt(new java.util.Date(cursor.getLong(offset + 18)));
+        entity.setAppAuthToken(cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1));
+        entity.setCrimPosition(cursor.isNull(offset + 2) ? null : cursor.getInt(offset + 2));
+        entity.setCrimType(cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3));
+        entity.setCrimeInfo(cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4));
+        entity.setPlaceOfCrime(cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5));
+        entity.setThana(cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6));
+        entity.setDistrictOrCountry(cursor.isNull(offset + 7) ? null : cursor.getString(offset + 7));
+        entity.setInformerName(cursor.isNull(offset + 8) ? null : cursor.getString(offset + 8));
+        entity.setInformerPhone(cursor.isNull(offset + 9) ? null : cursor.getString(offset + 9));
+        entity.setInformerAddress(cursor.isNull(offset + 10) ? null : cursor.getString(offset + 10));
+        entity.setInformerEmail(cursor.isNull(offset + 11) ? null : cursor.getString(offset + 11));
+        entity.setInformerNID(cursor.isNull(offset + 12) ? null : cursor.getString(offset + 12));
+        entity.setPlaceOfInformer(cursor.isNull(offset + 13) ? null : cursor.getString(offset + 13));
+        entity.setInformerThana(cursor.isNull(offset + 14) ? null : cursor.getString(offset + 14));
+        entity.setInformerDistrictOrCountry(cursor.isNull(offset + 15) ? null : cursor.getString(offset + 15));
+        entity.setInfoDocumentFilename(cursor.isNull(offset + 16) ? null : cursor.getString(offset + 16));
+        entity.setInfoDocumentContent(cursor.isNull(offset + 17) ? null : cursor.getBlob(offset + 17));
+        entity.setInfoImageFilename(cursor.isNull(offset + 18) ? null : cursor.getString(offset + 18));
+        entity.setInfoImageContent(cursor.isNull(offset + 19) ? null : cursor.getBlob(offset + 19));
+        entity.setInfoVideoFilename(cursor.isNull(offset + 20) ? null : cursor.getString(offset + 20));
+        entity.setInfoVideoContent(cursor.isNull(offset + 21) ? null : cursor.getBlob(offset + 21));
+        entity.setInfoAudioFilename(cursor.isNull(offset + 22) ? null : cursor.getString(offset + 22));
+        entity.setInfoAudioContent(cursor.isNull(offset + 23) ? null : cursor.getBlob(offset + 23));
+        entity.setCreatedAt(cursor.isNull(offset + 24) ? null : new java.util.Date(cursor.getLong(offset + 24)));
      }
     
     /** @inheritdoc */
